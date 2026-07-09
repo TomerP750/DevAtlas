@@ -1,5 +1,5 @@
 import type { UpdateUserDto } from "./dto/UpdateUserDto.js";
-import User from "./user-model.js";
+import User, { type IUser } from "./user-model.js";
 
 export const findById = async (id: string) => {
     return await User.findById(id);
@@ -15,4 +15,8 @@ export const deleteById = async (id: string) => {
 
 export const updateById = async (id: string, updateUserDto: UpdateUserDto) => {
     return await User.findByIdAndUpdate(id, updateUserDto, { new: true });
+};
+
+export const createUser = async (user: Omit<IUser, "_id">) => {
+    return await User.create(user);
 };
