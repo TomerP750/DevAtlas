@@ -1,12 +1,14 @@
 import { Map } from "lucide-react";
 import type { LearningPath } from "../models/LearningPath";
+import { ProgressBar } from "../../../../shared/ui/ProgressBar";
 
 interface LearningPathCardProps {
     learningPath: LearningPath;
 }
 
 export function LearningPathCard({ learningPath }: LearningPathCardProps) {
-    const { title, description, createdAt } = learningPath;
+    
+    const { title, description, createdAt, topicsLength, completedTopicsCount } = learningPath;
 
     return (
         <article className="group rounded-xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:shadow-md">
@@ -39,25 +41,14 @@ export function LearningPathCard({ learningPath }: LearningPathCardProps) {
                 </p>
 
                 {/* Progress */}
-                <div className="flex flex-col gap-2">
-                    <div className="flex justify-between text-sm">
-                        <span className="text-neutral-500">
-                            Progress
-                        </span>
-                        <span className="font-medium">
-                            65%
-                        </span>
-                    </div>
 
-                    <div className="h-2 overflow-hidden rounded-full bg-neutral-100">
-                        <div className="h-full w-[65%] rounded-full bg-primary" />
-                    </div>
-                </div>
+                <ProgressBar completedTopics={completedTopicsCount} topicsLength={topicsLength} />
+
 
                 {/* Footer */}
                 <div className="flex items-center justify-between border-t border-neutral-100 pt-4">
                     <div className="flex gap-4 text-sm text-neutral-500">
-                        <span>12 Topics</span>
+                        <span>{topicsLength} Topics</span>
                         <span>4 Sections</span>
                     </div>
 
