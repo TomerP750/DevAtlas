@@ -3,6 +3,8 @@ import { HomePage } from "../home/pages/HomePage";
 import { AuthLayout } from "../features/authentication/pages/AuthLayout";
 import { LoginPage } from "../features/authentication/pages/LoginPage";
 import { SignupPage } from "../features/authentication/pages/SignupPage";
+import { DashboardLayout } from "../features/dashboard/layout/DashboardLayout";
+import { Suspense } from "react";
 
 export function Routing() {
     return (
@@ -13,6 +15,18 @@ export function Routing() {
                 <Route path="login" element={<LoginPage />} />
                 <Route path="signup" element={<SignupPage />} />
             </Route>
+
+            <Route path="/dashboard" element={<DashboardLayout />}>
+            
+            </Route>
         </Routes>
+    )
+}
+
+const SuspenseWrapper = ({ children }: { children: React.ReactNode }) => {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            {children}
+        </Suspense>
     )
 }
