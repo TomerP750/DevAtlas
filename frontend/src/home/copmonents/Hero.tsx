@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 export function Hero() {
+    
     return (
         <header className="relative min-h-screen bg-neutral-100">
 

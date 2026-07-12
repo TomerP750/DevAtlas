@@ -20,8 +20,8 @@ const THEME_STORAGE_KEY = "theme";
 
 function getStoredTheme(): Theme {
     const storedTheme = localStorage.getItem(THEME_STORAGE_KEY);
-    if (!storedTheme) return "dark";
-    return localStorage.getItem(THEME_STORAGE_KEY) === "dark" ? "dark" : "light";
+    if (!storedTheme) return "light";
+    return localStorage.getItem(THEME_STORAGE_KEY) === "light" ? "light" : "dark";
 }
 
 export function ThemeProvider({ children }: ThemeProviderProps) {

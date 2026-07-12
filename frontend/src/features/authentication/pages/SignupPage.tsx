@@ -23,6 +23,7 @@ export function SignupPage() {
 
                 <div className="grid grid-cols-2 gap-4">
                     <Input
+                        required
                         label="First Name"
                         placeholder="First Name"
                         {...register("firstName", {
@@ -36,6 +37,7 @@ export function SignupPage() {
                     />
 
                     <Input
+                        required
                         label="Last Name"
                         placeholder="Last Name"
                         {...register("lastName", {
@@ -50,6 +52,7 @@ export function SignupPage() {
                 </div>
 
                 <Input
+                    required
                     label="Email"
                     placeholder="Email"
                     {...register("email", {
@@ -63,6 +66,7 @@ export function SignupPage() {
                 />
 
                 <Input
+                    required
                     label="Password"
                     placeholder="Password"
                     {...register("password", {
@@ -77,6 +81,7 @@ export function SignupPage() {
                 />
 
                 <Input
+                    required
                     label="Confirm Password"
                     placeholder="Confirm Password"
                     {...register("confirmPassword", {
