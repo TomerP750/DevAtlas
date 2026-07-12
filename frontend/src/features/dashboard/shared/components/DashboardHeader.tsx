@@ -5,10 +5,10 @@ interface DashboardHeaderProps {
 
 export function DashboardHeader({ title, description }: DashboardHeaderProps) {
     return (
-        <header className="h-20 bg-white dark:bg-gray-800">
-            <div className="container mx-auto px-4">
+        <header className="p-5 min-h-25 bg-brand-primary text-white dark:bg-gray-800">
+            <div className="">
                 <h1 className="text-2xl font-bold">{title}</h1>
-                <p className="text-sm text-gray-500">{description}</p>
+                <p className="text-sm">{description}</p>
             </div>
         </header>
     )

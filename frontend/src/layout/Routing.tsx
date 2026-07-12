@@ -18,7 +18,13 @@ export function Routing() {
             </Route>
 
             <Route path="/dashboard" element={<DashboardLayout />}>
-                <Route index element={<DashboardIndex />} />
+
+                <Route index element={
+                    <SuspenseWrapper>
+                        <DashboardIndex />
+                    </SuspenseWrapper>}
+                />
+
             </Route>
         </Routes>
     )

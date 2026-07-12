@@ -6,7 +6,7 @@ import { Badge } from "../../../../shared/ui/Badge";
 
 export function Sidebar() {
     return (
-        <aside className="w-64 bg-neutral-100 dark:bg-gray-800 p-4">
+        <aside className="w-64 border border-black/10 dark:border-white bg-neutral-100 dark:bg-gray-800 p-4">
 
             <h2 className="mb-8 inline-flex items-center gap-1 text-xl font-semibold tracking-tight text-zinc-900 dark:text-white">
                 <BookCheck size={30} strokeWidth={1.2} />
@@ -36,14 +36,14 @@ export function Sidebar() {
                 })}
             </nav>
 
-            <div className="mt-6 border-t border-zinc-200 pt-4 dark:border-white/10">
+            <div className="mt-auto border-t border-zinc-200 pt-4 dark:border-white/10">
+                
+                {/* User row */}
                 <div className="flex items-center justify-between">
 
                     {/* User badge */}
                     <div className="flex items-center gap-3 min-w-0">
                         <Badge
-                        
-
                             size="sm"
                         />
 
