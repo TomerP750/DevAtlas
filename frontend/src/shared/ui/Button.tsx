@@ -1,7 +1,7 @@
 import { Loader2 } from "lucide-react";
 import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from "react";
 
-type ButtonVariant = "primary" | "secondary" | "ghost";
+type ButtonVariant = "primary" | "secondary" | "ghost" | "danger";
 type ButtonSize = "sm" | "md" | "lg";
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -32,6 +32,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
             "border border-zinc-200 bg-white text-zinc-800 hover:bg-zinc-50 focus:ring-brand-primary/30 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800",
         ghost:
             "bg-transparent text-zinc-700 hover:bg-zinc-100 focus:ring-brand-primary/30 dark:text-zinc-200 dark:hover:bg-zinc-800",
+        danger:
+            "bg-red-600 text-white hover:bg-red-600/90 focus:ring-red-600/40",
     };
 
     const sizeClasses: Record<ButtonSize, string> = {

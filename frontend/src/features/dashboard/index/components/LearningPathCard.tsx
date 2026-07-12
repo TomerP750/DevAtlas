@@ -1,17 +1,23 @@
-import { Map } from "lucide-react";
+import { Map, MoreVertical, Pencil, Trash, Trash2 } from "lucide-react";
 import type { LearningPath } from "../models/LearningPath";
 import { ProgressBar } from "../../../../shared/ui/ProgressBar";
+import { Button } from "../../../../shared/ui/Button";
+import { useState } from "react";
+import { CrudMenu } from "./CrudMenu";
 
 interface LearningPathCardProps {
     learningPath: LearningPath;
 }
 
 export function LearningPathCard({ learningPath }: LearningPathCardProps) {
-    
-    const { title, description, createdAt, topicsLength, completedTopicsCount } = learningPath;
+
+    const [crudMenuOpen, setCrudMenuOpen] = useState<boolean>(false);
+
+    const { id, title, description, createdAt, topicsLength, completedTopicsCount } = learningPath;
 
     return (
-        <article className="group rounded-xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:shadow-md">
+        <article className="group rounded-xl border border-neutral-200 bg-white p-5 
+        shadow-sm transition hover:shadow-md hover:translate-y-[-2px]">
             <div className="flex flex-col gap-4">
                 {/* Header */}
                 <div className="flex items-start justify-between">
@@ -30,9 +36,20 @@ export function LearningPathCard({ learningPath }: LearningPathCardProps) {
                         </div>
                     </div>
 
-                    <button className="text-neutral-400 hover:text-neutral-700">
-                        ⋮
-                    </button>
+                    <div className="relative">
+                        <Button
+                            onClick={() => setCrudMenuOpen(prev => !prev)}
+                            leftIcon={<MoreVertical size={18} />}
+                            variant="ghost"
+                            size="sm"
+                            className="p-2! text-neutral-500 hover:text-neutral-700"
+                        />
+
+                        <CrudMenu isOpen={crudMenuOpen} learningPathId={id} />
+
+                    </div>
+
+
                 </div>
 
                 {/* Description */}
