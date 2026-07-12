@@ -22,7 +22,7 @@ export function DashboardIndex() {
                 {/* Action buttons */}
                 <ActionButtons onLayoutChange={setGridLayout} gridLayout={gridLayout} />
 
-                <div className={`grid ${gridLayout === "grid" ? "grid-cols-2" : "grid-cols-1"} gap-4 mt-8`}>
+                <div className={`grid ${gridLayout === "grid" ? "grid-cols-1 md:grid-cols-2" : "grid-cols-1"} gap-4 mt-8`}>
 
                     {dummyData.map((learningPath) => (
                         <LearningPathCard key={learningPath.id} learningPath={learningPath} />

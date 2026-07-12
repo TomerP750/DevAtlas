@@ -17,7 +17,7 @@ export function ActionButtons({ onLayoutChange, gridLayout }: ActionButtonsProps
     const [filterModalOpen, setFilterModalOpen] = useState<boolean>(false);
 
     return (
-        <div className="flex gap-2">
+        <div className="flex flex-wrap md:flex-nowrap gap-2">
             <Button onClick={() => setAddModalOpen(true)} variant="primary" className="shrink-0 rounded-none!">
                 <PlusIcon className="w-4 h-4" />
                 Add New Path

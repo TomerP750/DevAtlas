@@ -14,10 +14,5 @@ export const navItems: NavItem[] = [
         icon: HomeIcon,
         to: "/dashboard",
     },
-    {
-        label: "Learnings",
-        icon: BookIcon,
-        to: "/dashboard/learnings",
-    },
 
 ]
