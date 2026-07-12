@@ -5,6 +5,7 @@ import { LoginPage } from "../features/authentication/pages/LoginPage";
 import { SignupPage } from "../features/authentication/pages/SignupPage";
 import { DashboardLayout } from "../features/dashboard/layout/DashboardLayout";
 import { Suspense } from "react";
+import { DashboardIndex } from "../features/dashboard/index/pages/DashboardIndex";
 
 export function Routing() {
     return (
@@ -17,7 +18,7 @@ export function Routing() {
             </Route>
 
             <Route path="/dashboard" element={<DashboardLayout />}>
-            
+                <Route index element={<DashboardIndex />} />
             </Route>
         </Routes>
     )
