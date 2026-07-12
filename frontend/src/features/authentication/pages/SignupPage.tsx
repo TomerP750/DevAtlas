@@ -1,0 +1,108 @@
+import { useForm } from "react-hook-form";
+import { type SignupRequestDto } from "../models/SignupRequestDto";
+import { Input } from "../../../shared/ui/Input";
+import { Button } from "../../../shared/ui/Button";
+import { Link } from "react-router-dom";
+
+export function SignupPage() {
+
+    const { register, handleSubmit, formState: { errors } } = useForm<SignupRequestDto>();
+
+    const onSubmit = (data: SignupRequestDto) => {
+        console.log(data);
+    }
+
+    return (
+        <section className="flex flex-col items-center justify-center h-screen">
+            <h1 className="mb-3 text-center text-2xl font-semibold tracking-tight dark:text-white sm:text-3xl">
+                Create an account
+            </h1>
+            <form className="w-md max-w-2xl space-y-5 rounded-2xl border border-white/10 p-6 shadow-2xl backdrop-blur-sm sm:p-10" onSubmit={handleSubmit(onSubmit)}>
+
+                <Input
+                    label="First Name"
+                    placeholder="First Name"
+                    {...register("firstName", {
+                        required: "First name is required",
+                        pattern: {
+                            value: /^[a-zA-Z]+$/,
+                            message: "First name must contain only letters",
+                        },
+                    })}
+                    error={errors.firstName?.message}
+                />
+
+                <Input
+                    label="Last Name"
+                    placeholder="Last Name"
+                    {...register("lastName", {
+                        required: "Last name is required",
+                        pattern: {
+                            value: /^[a-zA-Z]+$/,
+                            message: "Last name must contain only letters",
+                        },
+                    })}
+                    error={errors.lastName?.message}
+                />
+
+                <Input
+                    label="Email"
+                    placeholder="Email"
+                    {...register("email", {
+                        required: "Email is required",
+                        pattern: {
+                            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                            message: "Invalid email address",
+                        },
+                    })}
+                    error={errors.email?.message}
+                />
+
+                <Input
+                    label="Password"
+                    placeholder="Password"
+                    {...register("password", {
+                        required: "Password is required",
+                        minLength: {
+                            value: 8,
+                            message: "Password must be at least 8 characters long",
+                        },
+                    })}
+                    type="password"
+                    error={errors.password?.message}
+                />
+
+                <Input
+                    label="Confirm Password"
+                    placeholder="Confirm Password"
+                    {...register("confirmPassword", {
+                        required: "Confirm password is required",
+                        validate: (value, formValues) => {
+                            if (value !== formValues.password) {
+                                return "Passwords do not match";
+                            }
+                        },
+                    })}
+                    type="password"
+                    error={errors.confirmPassword?.message}
+                />
+
+                <Button
+                    type="submit"
+                    variant="primary"
+                    className="w-full">
+                    Create Account
+                </Button>
+
+                <p className="text-center text-sm text-gray-500">
+                    Already have an account? {" "}
+                    <Link to="/auth/login"
+                        className="text-brand-primary hover:underline font-bold">
+                        Sign in
+                    </Link>
+                </p>
+
+            </form>
+        </section>
+    )
+}

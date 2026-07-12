@@ -23,21 +23,35 @@ export function LoginPage() {
                 <Input
                     label="Email"
                     placeholder="Email"
-                    {...register("email")}
+                    {...register("email", {
+                        required: "Email is required",
+                        pattern: {
+                            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                            message: "Invalid email address",
+                        },
+                    })}
                     error={errors.email?.message}
                 />
                 <Input
                     label="Password"
                     placeholder="Password"
-                    {...register("password")}
+                    {...register("password", {
+                        required: "Password is required",
+                        minLength: {
+                            value: 8,
+                            message: "Password must be at least 8 characters long",
+                        },
+                    })}
+                    type="password"
                     error={errors.password?.message}
                 />
                 <Button
                     type="submit"
                     variant="primary"
-                    className="w-full">
+                    className="w-full mt-2">
                     Login
                 </Button>
+
                 <p className="text-center text-sm text-gray-500">
                     Don't have an account? <Link to="/auth/signup" className="text-brand-primary hover:underline font-bold">Sign up</Link>
                 </p>
