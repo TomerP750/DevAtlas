@@ -19,7 +19,7 @@ export function AuthLayout() {
             </div>
 
             {/* Content */}
-            <div className="relative z-10 mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-md items-center justify-center -translate-y-8">
+            <div className="relative z-10 mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-2xl items-center justify-center -translate-y-8">
                 <Outlet />
             </div>
 

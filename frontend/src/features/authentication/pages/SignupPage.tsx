@@ -17,33 +17,37 @@ export function SignupPage() {
             <h1 className="mb-3 text-center text-2xl font-semibold tracking-tight dark:text-white sm:text-3xl">
                 Create an account
             </h1>
-            <form className="w-md max-w-2xl space-y-5 rounded-2xl border border-white/10 p-6 shadow-2xl backdrop-blur-sm sm:p-10" onSubmit={handleSubmit(onSubmit)}>
+            <form
+                className="w-md max-w-3xl space-y-5 rounded-2xl border border-white/10 p-6 shadow-2xl backdrop-blur-sm sm:p-10"
+                onSubmit={handleSubmit(onSubmit)}>
 
-                <Input
-                    label="First Name"
-                    placeholder="First Name"
-                    {...register("firstName", {
-                        required: "First name is required",
-                        pattern: {
-                            value: /^[a-zA-Z]+$/,
-                            message: "First name must contain only letters",
-                        },
-                    })}
-                    error={errors.firstName?.message}
-                />
+                <div className="grid grid-cols-2 gap-4">
+                    <Input
+                        label="First Name"
+                        placeholder="First Name"
+                        {...register("firstName", {
+                            required: "First name is required",
+                            pattern: {
+                                value: /^[a-zA-Z]+$/,
+                                message: "First name must contain only letters",
+                            },
+                        })}
+                        error={errors.firstName?.message}
+                    />
 
-                <Input
-                    label="Last Name"
-                    placeholder="Last Name"
-                    {...register("lastName", {
-                        required: "Last name is required",
-                        pattern: {
-                            value: /^[a-zA-Z]+$/,
-                            message: "Last name must contain only letters",
-                        },
-                    })}
-                    error={errors.lastName?.message}
-                />
+                    <Input
+                        label="Last Name"
+                        placeholder="Last Name"
+                        {...register("lastName", {
+                            required: "Last name is required",
+                            pattern: {
+                                value: /^[a-zA-Z]+$/,
+                                message: "Last name must contain only letters",
+                            },
+                        })}
+                        error={errors.lastName?.message}
+                    />
+                </div>
 
                 <Input
                     label="Email"

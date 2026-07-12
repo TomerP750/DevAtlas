@@ -30,7 +30,7 @@ export function Hero() {
                         Developer Learning Platform
                     </span>
 
-                    <h1 className="mt-6 bg-gradient-to-r from-brand-purple to-indigo-500 bg-clip-text text-4xl font-bold leading-tight tracking-tight text-transparent sm:text-5xl lg:text-6xl">
+                    <h1 className="mt-6 bg-gradient-to-r from-brand-primary to-indigo-500 bg-clip-text text-4xl font-bold leading-tight tracking-tight text-transparent sm:text-5xl lg:text-6xl">
                         Organize your developer knowledge in one place.
                     </h1>
 
