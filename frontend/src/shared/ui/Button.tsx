@@ -2,7 +2,7 @@ import { Loader2 } from "lucide-react";
 import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from "react";
 
 type ButtonVariant = "primary" | "secondary" | "ghost";
-type ButtonSize = "sm" | "md";
+type ButtonSize = "sm" | "md" | "lg";
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
     variant?: ButtonVariant;
@@ -37,6 +37,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
     const sizeClasses: Record<ButtonSize, string> = {
         sm: "px-3 py-2 text-sm",
         md: "px-4 py-2 text-base",
+        lg: "px-6 py-3 text-lg",
     };
 
     const buttonClasses = [
