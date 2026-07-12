@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { DashboardHeader } from "../../shared/components/DashboardHeader";
 import { ActionButtons } from "../components/ActionButtons";
+import { LearningPathCard } from "../components/LearningPathCard";
+import { dummyData } from "../components/dummyData";
 
 export type GridLayout = "grid" | "row";
 
@@ -20,8 +22,11 @@ export function DashboardIndex() {
                 {/* Action buttons */}
                 <ActionButtons onLayoutChange={setGridLayout} gridLayout={gridLayout} />
 
-                <div className={`grid ${gridLayout === "grid" ? "grid-cols-2" : "grid-cols-1"} gap-4`}>
+                <div className={`grid ${gridLayout === "grid" ? "grid-cols-2" : "grid-cols-1"} gap-4 mt-8`}>
 
+                    {dummyData.map((learningPath) => (
+                        <LearningPathCard key={learningPath.id} learningPath={learningPath} />
+                    ))}
 
                 </div>
 

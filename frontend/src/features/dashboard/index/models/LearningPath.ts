@@ -3,5 +3,4 @@ export interface LearningPath {
     title: string;
     description: string;
     createdAt: Date;
-    updatedAt: Date;
 }
