@@ -5,7 +5,7 @@ export function DisplaySettings() {
     const { theme, setTheme } = useTheme();
 
     return (
-        <section className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900 sm:p-6">
+        <section className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-slate-950 sm:p-6">
             <h2 className="inline-flex items-center gap-2 text-xl font-semibold text-zinc-900 dark:text-zinc-100">
                 <MonitorIcon className="h-5 w-5" />
                 <span>Display</span>
