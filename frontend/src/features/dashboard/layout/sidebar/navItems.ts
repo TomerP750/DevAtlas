@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import { BookIcon, HomeIcon } from "lucide-react";
+import { HomeIcon, SettingsIcon } from "lucide-react";
 
 type NavItem = {
     label: string;
@@ -14,5 +14,9 @@ export const navItems: NavItem[] = [
         icon: HomeIcon,
         to: "/dashboard",
     },
-
+    {
+        label: "Settings",
+        icon: SettingsIcon,
+        to: "/dashboard/settings",
+    },
 ]

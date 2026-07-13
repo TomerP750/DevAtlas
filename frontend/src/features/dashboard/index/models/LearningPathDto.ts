@@ -1,4 +1,4 @@
-export interface LearningPath {
+export interface LearningPathDto {
     id: string;
     title: string;
     description: string;

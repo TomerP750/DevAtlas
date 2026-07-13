@@ -1,12 +1,12 @@
 import { Map, MoreVertical, Pencil, Trash, Trash2 } from "lucide-react";
-import type { LearningPath } from "../models/LearningPath";
+import type { LearningPathDto } from "../models/LearningPathDto";
 import { ProgressBar } from "../../../../shared/ui/ProgressBar";
 import { Button } from "../../../../shared/ui/Button";
 import { useState } from "react";
 import { CrudMenu } from "./CrudMenu";
 
 interface LearningPathCardProps {
-    learningPath: LearningPath;
+    learningPath: LearningPathDto;
 }
 
 export function LearningPathCard({ learningPath }: LearningPathCardProps) {

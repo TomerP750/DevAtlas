@@ -1,4 +1,4 @@
-import type { LearningPath } from "../models/LearningPath";
+import type { LearningPath } from "../models/LearningPathDto";
 
 export const dummyData: LearningPath[] = [
     {
