@@ -3,6 +3,7 @@ import { Button } from "../../../../shared/ui/Button";
 import { SearchInput } from "../../../../shared/ui/SearchInput";
 import { useState } from "react";
 import type { GridLayout } from "../pages/DashboardIndex";
+import { CreateModal } from "./modals/CreateModal";
 
 
 interface ActionButtonsProps {
@@ -13,12 +14,12 @@ interface ActionButtonsProps {
 
 export function ActionButtons({ onLayoutChange, gridLayout }: ActionButtonsProps) {
 
-    const [addModalOpen, setAddModalOpen] = useState<boolean>(false);
+    const [createModalOpen, setCreateModalOpen] = useState<boolean>(false);
     const [filterModalOpen, setFilterModalOpen] = useState<boolean>(false);
 
     return (
         <div className="flex flex-wrap md:flex-nowrap gap-2">
-            <Button onClick={() => setAddModalOpen(true)} variant="primary" className="shrink-0 rounded-none!">
+            <Button onClick={() => setCreateModalOpen(true)} variant="primary" className="shrink-0 rounded-none!">
                 <PlusIcon className="w-4 h-4" />
                 Add New Path
             </Button>
@@ -54,6 +55,7 @@ export function ActionButtons({ onLayoutChange, gridLayout }: ActionButtonsProps
                 </Button>
 
             </div>
+            <CreateModal isOpen={createModalOpen} onClose={() => setCreateModalOpen(false)} />
         </div>
     )
 }
