@@ -1,5 +1,5 @@
 import { MonitorIcon } from "lucide-react";
-import { useTheme } from "../../../../shared/contexts/ThemeContext"
+import { useTheme, type Theme } from "../../../../shared/contexts/ThemeContext"
 
 export function DisplaySettings() {
     const { theme, setTheme } = useTheme();
