@@ -4,8 +4,10 @@ import { AuthLayout } from "../features/authentication/pages/AuthLayout";
 import { LoginPage } from "../features/authentication/pages/LoginPage";
 import { SignupPage } from "../features/authentication/pages/SignupPage";
 import { DashboardLayout } from "../features/dashboard/layout/DashboardLayout";
-import { Suspense } from "react";
+import { lazy, Suspense } from "react";
 import { DashboardIndex } from "../features/dashboard/index/pages/DashboardIndex";
+
+const SettingsPage = lazy(() => import("../features/dashboard/settings/pages/SettingsPage"));
 
 export function Routing() {
     return (
@@ -22,6 +24,12 @@ export function Routing() {
                 <Route index element={
                     <SuspenseWrapper>
                         <DashboardIndex />
+                    </SuspenseWrapper>}
+                />
+
+                <Route path="settings" element={
+                    <SuspenseWrapper>
+                        <SettingsPage />
                     </SuspenseWrapper>}
                 />
 

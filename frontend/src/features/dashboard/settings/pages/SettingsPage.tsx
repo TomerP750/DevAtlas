@@ -1,19 +1,29 @@
+import { SettingsIcon } from "lucide-react";
+import { DashboardHeader } from "../../shared/components/DashboardHeader";
 import { DeleteAccount } from "../components/DeleteAccount";
 import { DisplaySettings } from "../components/DisplaySettings";
 import { PersonalInformationSettings } from "../components/PersonalInformationSettings";
 import { UpdatePassword } from "../components/UpdatePassword";
 
 
-export function SettingsPage() {
+export default function SettingsPage() {
+
     return (
-        <main>
-            <DisplaySettings />
+        <section className="flex min-h-screen flex-col gap-6 pb-24 md:pb-6">
 
-            <PersonalInformationSettings />
+            <DashboardHeader Icon={SettingsIcon} title="Settings" description={"Manage your account settings and preferences."} />
+            
+            <div className="mt-8 p-6">
+                <DisplaySettings />
 
-            <UpdatePassword />
+                <PersonalInformationSettings />
 
-            <DeleteAccount />
-        </main>
+                <UpdatePassword />
+
+                <DeleteAccount />
+            </div>
+
+        </section>
     );
+
 }
