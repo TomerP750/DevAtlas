@@ -6,7 +6,7 @@ import { Badge } from "../../../../shared/ui/Badge";
 
 export function Sidebar() {
     return (
-        <aside className="hidden md:flex flex-col w-64 border border-black/10 dark:border-white bg-neutral-100 dark:bg-gray-800 p-4">
+        <aside className="hidden md:flex flex-col w-64 border border-black/10 dark:border-zinc-700 bg-neutral-100 dark:bg-gray-800 p-4">
 
             <h2 className="mb-8 inline-flex items-center gap-1 text-xl font-semibold tracking-tight text-zinc-900 dark:text-white">
                 <BookCheck size={30} strokeWidth={1.2} />
