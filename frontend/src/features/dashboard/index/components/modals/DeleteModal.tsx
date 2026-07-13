@@ -3,10 +3,11 @@ import { Modal } from "../../../../../shared/ui/Modal";
 
 interface DeleteModalProps {
     learningPathId: string;
+    learningPathTitle: string;
     isOpen: boolean;
     onClose: () => void;
 }
-export function DeleteModal({ learningPathId, isOpen, onClose }: DeleteModalProps) {
+export function DeleteModal({ learningPathId, learningPathTitle, isOpen, onClose }: DeleteModalProps) {
     
     const handleDelete = () => {
         onClose();
@@ -15,7 +16,7 @@ export function DeleteModal({ learningPathId, isOpen, onClose }: DeleteModalProp
     if (!isOpen) return null;
 
     return (
-        <Modal isOpen={isOpen} onClose={onClose} title="Delete Learning Path" description="Are you sure you want to delete this learning path?">
+        <Modal isOpen={isOpen} onClose={onClose} title={`Delete ${learningPathTitle}`} description="Are you sure you want to delete this learning path?">
             <div className="flex flex-col gap-4">
                 <p className="text-sm text-neutral-500">
                     This action cannot be undone.

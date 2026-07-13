@@ -55,6 +55,7 @@ export function ActionButtons({ onLayoutChange, gridLayout }: ActionButtonsProps
                 </Button>
 
             </div>
+
             <CreateModal isOpen={createModalOpen} onClose={() => setCreateModalOpen(false)} />
         </div>
     )
