@@ -1,13 +1,14 @@
 import { Router } from "express";
 import * as userController from "./user-controller.js";
+import { isAuthenticated } from "../authentication/middleware/isAuthenticated.js";
 
 const router = Router();
 
-router.get("/me", userController.me);
+router.get("/me", isAuthenticated, userController.me);
 
-router.delete("/", userController.deleteUser);
+router.delete("/", isAuthenticated, userController.deleteUser);
 
-router.put("/", userController.updateUser);
+router.put("/", isAuthenticated, userController.updateUser);
 
 
 export default router;
