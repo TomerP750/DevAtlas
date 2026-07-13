@@ -7,46 +7,63 @@ import { HttpError } from "../../shared/exceptions/HttpError.js";
 import toUserDto from "../user/user-mapper.js";
 import { createUser } from "../user/user-repository.js";
 import type { IUser } from "../user/user-model.js";
+import bcrypt from "bcryptjs";
 
 export const login = async (loginRequestDto: LoginRequestDto): Promise<AuthResponseDto> => {
 
-    const user = await findByEmail(loginRequestDto.email);
-
-    if (!user) {
+    const existingUser = await findByEmail(loginRequestDto.email);
+    if (!existingUser) {
         throw new HttpError(404, "User not found");
     }
 
+    const isPasswordValid = await bcrypt.compare(loginRequestDto.password, existingUser.password);
+    if (!isPasswordValid) {
+        throw new HttpError(401, "Invalid password");
+    }
+
+    const userDto = toUserDto(existingUser);
+
     return {
         token: "",
-        user: toUserDto(user),
+        user: userDto
     };
 }
 
 export const signUp = async (dto: SignUpRequestDto): Promise<AuthResponseDto> => {
 
     try {
+
+        if (dto.password !== dto.confirmPassword) {
+            throw new HttpError(400, "Password and confirm password do not match");
+        }
+
         const existingUser = await findByEmail(dto.email);
         if (existingUser) {
             throw new HttpError(400, "User already exists");
         }
 
+        const hashedPassword = await bcrypt.hash(dto.password, 12);
+
         const newUser: Omit<IUser, "_id"> = {
             firstName: dto.firstName,
             lastName: dto.lastName,
             email: dto.email,
-            password: dto.password,
+            password: hashedPassword,
             role: Role.USER,
             avatarUrl: "",
         };
+
         const createdUser = await createUser(newUser);
 
         if (!createdUser) {
             throw new HttpError(500, "Failed to create user");
         }
 
+        const userDto = toUserDto(createdUser);
+
         return {
             token: "",
-            user: toUserDto(createdUser),
+            user: userDto,
         };
 
     } catch (error) {
