@@ -1,5 +1,5 @@
-import type { Category } from "./Category";
-import type { Difficulty } from "./Difficulty";
+import type { Category } from "../learningPath/enums/Category";
+import type { Difficulty } from "../learningPath/enums/Difficulty";
 
 
 export interface UpdateLearningPathDto {

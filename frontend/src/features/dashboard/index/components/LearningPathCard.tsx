@@ -2,7 +2,7 @@ import { Map, MoreVertical } from "lucide-react";
 import { useState } from "react";
 import { Button } from "../../../../shared/ui/Button";
 import { ProgressBar } from "../../../../shared/ui/ProgressBar";
-import type { LearningPathDto } from "../models/LearningPathDto";
+import type { LearningPathDto } from "../models/learningPath/LearningPathDto";
 import { CrudMenu } from "./CrudMenu";
 
 interface LearningPathCardProps {

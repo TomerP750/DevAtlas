@@ -3,10 +3,10 @@ import { Input } from "../../../../../shared/ui/Input";
 import { Button } from "../../../../../shared/ui/Button";
 import { Select } from "../../../../../shared/ui/Select";
 import { useForm } from "react-hook-form";
-import { type CreateLearningPathDto } from "../../models/CreateLearningPathDto";
-import { Difficulty } from "../../models/Difficulty";
+import { type CreateLearningPathDto } from "../../models/crud_requests/CreateLearningPathDto";
+import { Difficulty } from "../../models/learningPath/enums/Difficulty";
 import { TextArea } from "../../../../../shared/ui/TextArea";
-import { Category } from "../../models/Category";
+import { Category } from "../../models/learningPath/enums/Category";
 
 interface CreateModalProps {
     isOpen: boolean;
