@@ -1,34 +1,33 @@
 import type { Request, Response, NextFunction } from "express";
 import { isTokenValid } from "../jwt-service.js";
-// import jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { HttpError } from "../../../shared/exceptions/HttpError.js";
 
 export const isAuthenticated = async (req: Request, res: Response, next: NextFunction) => {
-    
 
-    const authHeader = req.get("Authorization");
-    if (!authHeader) {
-        throw new HttpError(401, "Unauthorized");
-    }
-
-    const token = authHeader.split(" ")[1];
-    if (!token) {
-        throw new HttpError(401, "Unauthorized");
-    }
-
-    let decodedToken;
-    
     try {
-        // decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+
+        const authHeader = req.get("Authorization");
+        const [scheme, token] = authHeader?.split(" ") ?? [];
+        if (scheme !== "Bearer" || !token) {
+            throw new HttpError(401, "Unauthorized");
+        }
+
+        if (!isTokenValid(token)) {
+            throw new HttpError(401, "Unauthorized");
+        }
+
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET!);
+        if (!decodedToken) {
+            throw new HttpError(401, "Unauthorized");
+        }
+
+        req.userId = decodedToken.userId;
+        next();
+
     } catch (error) {
-        throw new HttpError(401, "Unauthorized");
+        return next(error);
     }
-
-    if (!decodedToken) {
-        throw new HttpError(401, "Unauthorized");
-    }
-
-    // req.userId = decodedToken.userId;
-    next();
 
 }
+
