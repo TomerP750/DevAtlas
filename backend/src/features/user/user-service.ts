@@ -3,9 +3,9 @@ import type { UpdateUserDto } from "./dto/UpdateUserDto.js";
 import type { UserDto } from "./dto/UserDto.js";
 import * as userRepository from "./user-repository.js";
 import toUserDto from "./user-mapper.js";
-import type { IUser } from "./user-model.js";
 import type { ChangePasswordDto } from "./dto/ChangePasswordDto.js";
 import { hash, compare } from "bcryptjs";
+import type { IUser } from "./user-model.js";
 
 export const me = async (userId: string): Promise<UserDto> => {
     try {
@@ -64,16 +64,8 @@ const fetchUserEntity = async (userId: string): Promise<IUser> => {
         if (!user) {
             throw new HttpError(404,"User not found");
         }
-        return {
-            _id: user._id.toString(),
-            firstName: user.firstName,
-            lastName: user.lastName,
-            email: user.email,
-            password: user.password,
-            avatarUrl: user.avatarUrl,
-            role: user.role,
-        };
+        return user;
     } catch (error) {
-        throw new HttpError(500,"Failed to fetch user");
+        throw new HttpError(500, "Failed to fetch user");
     }
 };
