@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import authRoutes from "./features/authentication/auth-routes.js";
 import userRoutes from "./features/user/user-routes.js";
+import topicRoutes from "./features/learning-path/topic/topic-routes.js";
 
 import { globalExceptionHandler } from "./shared/exceptions/GlobalExceptionHandler.js";
 
@@ -16,6 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/topics", topicRoutes);
 
 app.use(globalExceptionHandler);
 
