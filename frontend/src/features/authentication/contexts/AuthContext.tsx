@@ -1,11 +1,11 @@
 import { createContext, useContext, useMemo, useCallback } from "react";
 import type { UserDto } from "../models/UserDto";
 import type { LoginRequestDto } from "../models/LoginRequestDto";
-import type { SignUpRequestDto } from "../models/SignUpRequestDto";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import authService from "../api/authService";
 import userService from "./UserService";
 import type { AuthResponseDto } from "../models/AuthResponseDto";
+import type { SignUpRequestDto } from "../models/SignUpRequestDto";
 
 
 const TOKEN_STORAGE_KEY = "token";

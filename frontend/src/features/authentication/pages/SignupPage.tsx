@@ -7,6 +7,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 
+
 export function SignupPage() {
 
     const navigate = useNavigate();
@@ -14,11 +15,11 @@ export function SignupPage() {
 
     const { register, handleSubmit, formState: { errors } } = useForm<SignUpRequestDto>();
 
-
     const { mutate: signUpUser, isPending } = useMutation({
         mutationFn: (dto: SignUpRequestDto) => authSignup(dto),
         onSuccess: () => {
             navigate("/dashboard");
+            toast.success("Signup successful");
         },
         onError: (err) => {
             toast.error("Signup failed. Please try again.");

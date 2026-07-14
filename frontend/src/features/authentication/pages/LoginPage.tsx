@@ -20,6 +20,7 @@ export function LoginPage() {
         mutationFn: (dto: LoginRequestDto) => authLogin(dto),
         onSuccess: () => {
             navigate("/dashboard");
+            toast.success("Login successful.");
         },
         onError: (err) => {
             toast.error("Login failed. Please try again.");

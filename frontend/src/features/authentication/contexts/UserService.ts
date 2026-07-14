@@ -7,6 +7,8 @@ class UserService {
     async me(): Promise<UserDto> {
         return (await axios.get(`${baseApiUrl}/api/users/me`)).data;
     }
+
+    
 }
 
 const userService = new UserService();
