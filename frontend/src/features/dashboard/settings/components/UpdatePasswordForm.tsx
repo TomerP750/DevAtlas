@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import type { UpdatePasswordDto } from "../models/UpdatePasswordDto";
+import type { UpdatePasswordDto } from "../models/ChangePasswordDto";
 import { Button } from "../../../../shared/ui/Button";
 import { Input } from "../../../../shared/ui/Input";
 import { LockIcon } from "lucide-react";

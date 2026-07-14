@@ -3,7 +3,7 @@ import type { UserDto } from "../models/UserDto";
 import type { LoginRequestDto } from "../models/LoginRequestDto";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import authService from "../api/authService";
-import userService from "./UserService";
+import userService from "../../dashboard/settings/api/UserService";
 import type { AuthResponseDto } from "../models/AuthResponseDto";
 import type { SignUpRequestDto } from "../models/SignUpRequestDto";
 

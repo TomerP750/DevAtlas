@@ -20,3 +20,7 @@ export const updateById = async (id: string, updateUserDto: UpdateUserDto) => {
 export const createUser = async (user: Omit<IUser, "_id">) => {
     return await User.create(user);
 };
+
+export const updatePassword = async (id: string, password: string) => {
+    return await User.findByIdAndUpdate(id, { password }, { new: true });
+};

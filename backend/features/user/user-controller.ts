@@ -14,3 +14,7 @@ export const deleteUser = async (req: Request, res: Response, next: NextFunction
 export const updateUser = async (req: Request, res: Response, next: NextFunction) => {
 
 };
+
+export const changePassword = async (req: Request, res: Response, next: NextFunction) => {
+
+};
