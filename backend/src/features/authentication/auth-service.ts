@@ -1,14 +1,14 @@
+import bcrypt from "bcryptjs";
+import { HttpError } from "../../shared/exceptions/HttpError.js";
 import { Role } from "../user/Role.js";
+import toUserDto from "../user/user-mapper.js";
+import type { IUser } from "../user/user-model.js";
+import { findByEmail, createUser } from "../user/user-repository.js";
 import type { AuthResponseDto } from "./dto/AuthResponseDto.js";
 import type { LoginRequestDto } from "./dto/LoginRequestDto.js";
 import type { SignUpRequestDto } from "./dto/SignUpRequestDto.js";
-import { findByEmail } from "../user/user-repository.js";
-import { HttpError } from "../../shared/exceptions/HttpError.js";
-import toUserDto from "../user/user-mapper.js";
-import { createUser } from "../user/user-repository.js";
-import type { IUser } from "../user/user-model.js";
-import bcrypt from "bcryptjs";
 import { generateToken } from "./jwt-service.js";
+
 
 export const login = async (loginRequestDto: LoginRequestDto): Promise<AuthResponseDto> => {
 
