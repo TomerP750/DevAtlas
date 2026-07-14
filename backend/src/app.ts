@@ -4,8 +4,8 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import authRoutes from "./features/authentication/auth-routes.js";
 import userRoutes from "./features/user/user-routes.js";
-import topicRoutes from "./features/learning-path/topic/topic-routes.js";
-import sectionRoutes from "./features/learning-path/section/section-routes.js";
+import topicRoutes from "./features/learning/topic/topic-routes.js";
+import sectionRoutes from "./features/learning/section/section-routes.js";
 
 import { globalExceptionHandler } from "./shared/exceptions/GlobalExceptionHandler.js";
 

@@ -35,7 +35,7 @@ export const updateSection = async (req: Request<{ sectionId: string, learningPa
         const userId = req.user.id;
 
         const { name, description, status } = req.body as UpdateSectionDto;
-        const section = await sectionService.updateSection(req.user.id, sectionId, learningPathId, { name, description, status });
+        const section = await sectionService.updateSection(userId, sectionId, learningPathId, { name, description, status });
         res.status(200).json(section);
     } catch (error) {
         next(error);

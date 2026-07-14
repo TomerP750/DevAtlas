@@ -12,8 +12,9 @@ export const oneSection = async (id: string) => {
     return toDto(section);
 }
 
-export const createSection = async (learningPathId: string, createSectionDto: CreateSectionDto) => {
+export const createSection = async (userId: string, learningPathId: string, createSectionDto: CreateSectionDto) => {
 
+    
     const newSection: Omit<ISection, "_id" | "order"> = {
         name: createSectionDto.name,
         description: createSectionDto.description,
@@ -42,7 +43,7 @@ export const deleteSection = async (userId: string, sectionId: string, learningP
     if (section.learningPathId.toString() !== learningPathId) {
         throw new HttpError(403, "You are not authorized to delete this section");
     }
-    
+
     await sectionRepository.deleteById(sectionId);
 }
 
