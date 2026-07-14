@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { type SignupRequestDto } from "../models/SignupRequestDto";
+import { type SignupRequestDto } from "../models/SignUpRequestDto";
 import { Input } from "../../../shared/ui/Input";
 import { Button } from "../../../shared/ui/Button";
 import { Link } from "react-router-dom";
