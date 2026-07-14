@@ -7,5 +7,11 @@ const router = Router();
 
 router.get("/:learningPathId", isAuthenticated, learningPathController.oneLearningPath);
 
+// router.post("/", isAuthenticated, learningPathController.createLearningPath);
+
+// router.put("/:learningPathId", isAuthenticated, learningPathController.updateLearningPath);
+
+// router.delete("/:learningPathId", isAuthenticated, learningPathController.deleteLearningPath);
+
 
 export default router;

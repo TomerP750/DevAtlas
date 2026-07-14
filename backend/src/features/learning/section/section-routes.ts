@@ -1,15 +1,16 @@
 import { Router } from "express";
+import { isAuthenticated } from "../../authentication/middleware/isAuthenticated.js";
 import * as sectionController from "./section-controller.js";
 
 
 const router = Router();
 
-router.get("/:sectionId", sectionController.oneSection);
+router.get("/:sectionId", isAuthenticated, sectionController.oneSection);
 
-router.post("/:learningPathId", sectionController.createSection);
+router.post("/:learningPathId", isAuthenticated, sectionController.createSection);
 
-router.put("/:sectionId/:learningPathId", sectionController.updateSection);
+router.put("/:sectionId/:learningPathId", isAuthenticated, sectionController.updateSection);
 
-router.delete("/:sectionId/:learningPathId", sectionController.deleteSection);
+router.delete("/:sectionId/:learningPathId", isAuthenticated, sectionController.deleteSection);
 
 export default router;
