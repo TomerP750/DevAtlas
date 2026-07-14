@@ -2,15 +2,35 @@ import { useForm } from "react-hook-form";
 import { type LoginRequestDto } from "../models/LoginRequestDto";
 import { Input } from "../../../shared/ui/Input";
 import { Button } from "../../../shared/ui/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import type { AxiosError } from "axios";
+import { useAuth } from "../contexts/AuthContext";
+import { useState } from "react";
 
 export function LoginPage() {
 
+    const { login: authLogin } = useAuth();
+    const navigate = useNavigate();
+
+    const [toastMessage, setToastMessage] = useState<string | null>(null);
+    
     const { register, handleSubmit, formState: { errors } } = useForm<LoginRequestDto>();
 
-    const onSubmit = (data: LoginRequestDto) => {
-        console.log(data);
-    }
+    const { mutate: loginUser, isPending } = useMutation({
+        mutationFn: (dto: LoginRequestDto) => authLogin(dto),
+        onSuccess: () => {
+            navigate("/dashboard");
+        },
+        onError: (err) => {
+            console.error(err);
+        },
+    });
+
+    const handleLogin = (dto: LoginRequestDto) => {
+        loginUser(dto);
+    };
+
 
     return (
         <section className="flex flex-col items-center justify-center h-screen">
@@ -19,7 +39,7 @@ export function LoginPage() {
             </h1>
             <form
                 className="w-md max-w-2xl space-y-5 rounded-2xl border border-white/10 p-6 shadow-2xl backdrop-blur-sm sm:p-10"
-                onSubmit={handleSubmit(onSubmit)}>
+                onSubmit={handleSubmit(handleLogin)}>
                 <Input
                     label="Email"
                     placeholder="Email"

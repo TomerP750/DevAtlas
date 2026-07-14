@@ -1,15 +1,31 @@
 import { useForm } from "react-hook-form";
-import { type SignupRequestDto } from "../models/SignUpRequestDto";
+import { type SignUpRequestDto } from "../models/SignUpRequestDto";
 import { Input } from "../../../shared/ui/Input";
 import { Button } from "../../../shared/ui/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import { useMutation } from "@tanstack/react-query";
 
 export function SignupPage() {
 
-    const { register, handleSubmit, formState: { errors } } = useForm<SignupRequestDto>();
+    const navigate = useNavigate();
+    const { signup: authSignup } = useAuth();
 
-    const onSubmit = (data: SignupRequestDto) => {
-        console.log(data);
+    const { register, handleSubmit, formState: { errors } } = useForm<SignUpRequestDto>();
+
+
+    const { mutate: signUpUser, isPending } = useMutation({
+        mutationFn: (dto: SignUpRequestDto) => authSignup(dto),
+        onSuccess: () => {
+            navigate("/dashboard");
+        },
+        onError: (err) => {
+            console.error(err);
+        },
+    });
+    
+    const handleSignUp = (dto: SignUpRequestDto) => {
+        signUpUser(dto);
     }
 
     return (
@@ -19,7 +35,7 @@ export function SignupPage() {
             </h1>
             <form
                 className="w-md max-w-3xl space-y-5 rounded-2xl border border-white/10 p-6 shadow-2xl backdrop-blur-sm sm:p-10"
-                onSubmit={handleSubmit(onSubmit)}>
+                onSubmit={handleSubmit(handleSignUp)}>
 
                 <div className="grid grid-cols-2 gap-4">
                     <Input
@@ -98,6 +114,7 @@ export function SignupPage() {
 
                 <Button
                     type="submit"
+                    disabled={isPending}
                     variant="primary"
                     className="w-full">
                     Create Account
