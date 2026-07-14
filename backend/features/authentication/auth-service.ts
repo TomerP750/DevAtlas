@@ -8,6 +8,7 @@ import toUserDto from "../user/user-mapper.js";
 import { createUser } from "../user/user-repository.js";
 import type { IUser } from "../user/user-model.js";
 import bcrypt from "bcryptjs";
+import { generateToken } from "./jwt-service.js";
 
 export const login = async (loginRequestDto: LoginRequestDto): Promise<AuthResponseDto> => {
 
@@ -23,8 +24,11 @@ export const login = async (loginRequestDto: LoginRequestDto): Promise<AuthRespo
 
     const userDto = toUserDto(existingUser);
 
+    const token =
+        await generateToken(existingUser._id.toString(), existingUser.role);
+
     return {
-        token: "",
+        token,
         user: userDto
     };
 }
@@ -61,8 +65,11 @@ export const signUp = async (dto: SignUpRequestDto): Promise<AuthResponseDto> =>
 
         const userDto = toUserDto(createdUser);
 
+        const token =
+            await generateToken(createdUser._id.toString(), createdUser.role);
+
         return {
-            token: "",
+            token,
             user: userDto,
         };
 
