@@ -1,8 +1,8 @@
-import { Schema, model } from "mongoose";
+import { Schema, Types, model } from "mongoose";
 import { Role } from "./Role.js";
 
 export interface IUser {
-    _id: string;
+    _id: Types.ObjectId;
     firstName: string;
     lastName: string;
     email: string;

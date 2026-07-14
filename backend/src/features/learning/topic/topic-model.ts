@@ -2,7 +2,7 @@ import { Types, Schema, model } from "mongoose";
 import { TopicStatus } from "./topic-status.js";
 
 export interface ITopic {
-    _id: string,
+    _id: Types.ObjectId,
     name: string, 
     explanation: string,
     status: TopicStatus
