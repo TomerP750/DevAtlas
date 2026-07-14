@@ -5,6 +5,7 @@ import { Button } from "../../../shared/ui/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 
 export function SignupPage() {
 
@@ -20,7 +21,7 @@ export function SignupPage() {
             navigate("/dashboard");
         },
         onError: (err) => {
-            console.error(err);
+            toast.error("Signup failed. Please try again.");
         },
     });
     

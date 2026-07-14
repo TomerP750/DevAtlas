@@ -7,14 +7,13 @@ import { useMutation } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
 import { useAuth } from "../contexts/AuthContext";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export function LoginPage() {
 
     const { login: authLogin } = useAuth();
     const navigate = useNavigate();
 
-    const [toastMessage, setToastMessage] = useState<string | null>(null);
-    
     const { register, handleSubmit, formState: { errors } } = useForm<LoginRequestDto>();
 
     const { mutate: loginUser, isPending } = useMutation({
@@ -23,7 +22,7 @@ export function LoginPage() {
             navigate("/dashboard");
         },
         onError: (err) => {
-            console.error(err);
+            toast.error("Login failed. Please try again.");
         },
     });
 
