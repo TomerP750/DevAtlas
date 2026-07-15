@@ -1,15 +1,18 @@
 import { Router } from "express";
 import * as topicController from "./topic-controller.js";
+import { validate } from "../../../shared/middleware/validate.js";
+import { createTopicRequestSchema, updateTopicRequestSchema } from "./topic-validator.js";
+import { isAuthenticated } from "../../authentication/middleware/isAuthenticated.js";
 
 const router = Router();
 
-router.get("/:topicId", topicController.oneTopic);
+router.get("/:topicId", isAuthenticated, topicController.oneTopic);
 
-router.post("/:sectionId", topicController.createTopic);
+router.post("/:sectionId", isAuthenticated, validate(createTopicRequestSchema), topicController.createTopic);
 
-router.put("/:topicId", topicController.updateTopic);
+router.put("/:topicId", isAuthenticated, validate(updateTopicRequestSchema), topicController.updateTopic);
 
-router.delete("/:topicId", topicController.deleteTopic);
+router.delete("/:topicId", isAuthenticated, topicController.deleteTopic);
 
 
 export default router;

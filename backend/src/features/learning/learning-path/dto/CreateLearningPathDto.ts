@@ -1,5 +1,4 @@
-export interface CreateLearningPathDto {
-    name: string;
-    description: string;
-    ImageUrl: string;
-}
+import type { createLearningPathRequestSchema } from "../LearningPath-validator.js";
+import type { z } from "zod";
+
+export type CreateLearningPathDto = z.infer<typeof createLearningPathRequestSchema>;

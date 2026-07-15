@@ -1,8 +1,4 @@
+import type { updateUserDtoSchema } from "../user-validator.js";
+import type { z } from "zod";
 
-
-export interface UpdateUserDto {
-    firstName: string;
-    lastName: string;
-    email: string;
-    avatarUrl: string;
-}
+export type UpdateUserDto = z.infer<typeof updateUserDtoSchema>;

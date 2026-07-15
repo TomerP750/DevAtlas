@@ -9,6 +9,13 @@ type AuthTokenPayload = JwtPayload & {
     role: Role;
 };
 
+
+/**
+ * Check if the payload is a valid authentication token payload, 
+ * it checks if the payload is a string and if the userId is a string and if the role is a valid role.
+ * @param payload - The payload to check.
+ * @returns True if the payload is a valid authentication token payload, false otherwise.
+ */
 const isAuthTokenPayload = (payload: string | JwtPayload): payload is AuthTokenPayload => {
     return typeof payload !== "string" 
     && typeof payload.userId === "string" 

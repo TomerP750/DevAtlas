@@ -1,8 +1,5 @@
-import type { SectionStatus } from "../section-status.js";
+import type { updateSectionRequestSchema } from "../section-validator.js";
+import type { z } from "zod";
 
 
-export interface UpdateSectionDto {
-    name: string;
-    description: string;
-    status: SectionStatus;
-}
+export type UpdateSectionDto = z.infer<typeof updateSectionRequestSchema>;

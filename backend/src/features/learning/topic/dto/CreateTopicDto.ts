@@ -1,8 +1,4 @@
-import type { TopicStatus } from "../topic-status.js";
+import type { createTopicRequestSchema } from "../topic-validator.js";
+import type { z } from "zod";
 
-
-export interface CreateTopicDto {
-    name: string;
-    explanation: string;
-    status: TopicStatus;
-}
+export type CreateTopicDto = z.infer<typeof createTopicRequestSchema>;

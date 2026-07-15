@@ -1,6 +1,4 @@
+import type { loginRequestSchema } from "../auth-validator.js";
+import type { z } from "zod";
 
-
-export interface LoginRequestDto {
-    email: string;
-    password: string;
-}
+export type LoginRequestDto = z.infer<typeof loginRequestSchema>;
