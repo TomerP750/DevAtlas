@@ -3,8 +3,9 @@ import type { Difficulty } from "../learningPath/enums/Difficulty";
 
 
 export interface UpdateLearningPathDto {
-    title: string;
-    difficulty: Difficulty;
-    category: Category;
+    name: string;
     description: string;
+    category: Category;
+    difficulty: Difficulty;
+    ImageUrl?: string;
 }

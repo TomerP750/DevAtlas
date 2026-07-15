@@ -9,11 +9,11 @@ const router = Router();
 
 router.get("/:learningPathId", isAuthenticated, learningPathController.oneLearningPath);
 
-router.post("/", isAuthenticated, validate(createLearningPathRequestSchema), learningPathController.createLearningPath);
+router.post("/create", isAuthenticated, validate(createLearningPathRequestSchema), learningPathController.createLearningPath);
 
-router.put("/:learningPathId", isAuthenticated, validate(updateLearningPathRequestSchema), learningPathController.updateLearningPath);
+router.put("/update/:learningPathId", isAuthenticated, validate(updateLearningPathRequestSchema), learningPathController.updateLearningPath);
 
-router.delete("/:learningPathId", isAuthenticated, learningPathController.deleteLearningPath);
+router.delete("/delete/:learningPathId", isAuthenticated, learningPathController.deleteLearningPath);
 
 
 export default router;

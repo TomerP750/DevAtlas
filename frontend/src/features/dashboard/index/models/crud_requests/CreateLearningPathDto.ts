@@ -1,5 +1,6 @@
-import type { Difficulty } from "./enums/Difficulty";
-import type { Category } from "./enums/Category";
+import type { Category } from "../learningPath/enums/Category";
+import type { Difficulty } from "../learningPath/enums/Difficulty";
+
 
 
 export interface CreateLearningPathDto {
@@ -7,4 +8,5 @@ export interface CreateLearningPathDto {
     description: string;
     difficulty: Difficulty;
     category: Category;
+    ImageUrl?: string;
 }

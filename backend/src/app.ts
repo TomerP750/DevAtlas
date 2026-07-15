@@ -18,10 +18,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/auth", authRoutes);
-app.use("/api/users", userRoutes);
-app.use("/api/topics", topicRoutes);
-app.use("/api/sections", sectionRoutes);
-app.use("/api/learning-paths", learningPathRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/topic", topicRoutes);
+app.use("/api/section", sectionRoutes);
+app.use("/api/learning-path", learningPathRoutes);
 
 app.use(globalExceptionHandler);
 

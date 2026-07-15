@@ -8,9 +8,9 @@ const router = Router();
 
 router.get("/me", isAuthenticated, userController.me);
 
-router.delete("/", isAuthenticated, userController.deleteUser);
+router.delete("/delete", isAuthenticated, userController.deleteUser);
 
-router.put("/", isAuthenticated, validate(updateUserDtoSchema), userController.updateUser);
+router.put("/update", isAuthenticated, validate(updateUserDtoSchema), userController.updateUser);
 
 router.patch("/change-password", isAuthenticated, validate(changePasswordRequestSchema), userController.changePassword);
 
