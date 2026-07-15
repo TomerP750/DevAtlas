@@ -6,6 +6,7 @@ import authRoutes from "./features/authentication/auth-routes.js";
 import userRoutes from "./features/user/user-routes.js";
 import topicRoutes from "./features/learning/topic/topic-routes.js";
 import sectionRoutes from "./features/learning/section/section-routes.js";
+import learningPathRoutes from "./features/learning/learning-path/learningPath-routes.js";
 
 import { globalExceptionHandler } from "./shared/exceptions/GlobalExceptionHandler.js";
 
@@ -20,6 +21,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/topics", topicRoutes);
 app.use("/api/sections", sectionRoutes);
+app.use("/api/learning-paths", learningPathRoutes);
 
 app.use(globalExceptionHandler);
 
