@@ -10,3 +10,19 @@ export const toDto = (learningPath: ILearningPath) => {
         userId: learningPath.userId.toString(),
     };
 }
+
+
+export const toDashboardCardDto = (
+    learningPath: ILearningPath,
+    topicsLength: number,
+    completedTopicsCount: number
+) => {
+    return {
+        id: learningPath._id.toString(),
+        title: learningPath.name,
+        description: learningPath.description,
+        completedTopicsCount,
+        topicsLength,
+        createdAt: learningPath.createdAt,
+    };
+};

@@ -16,7 +16,7 @@ export const updateById = async (id: string, learningPath: UpdateLearningPathDto
     await LearningPath.findByIdAndUpdate(id, learningPath, { returnDocument: "after" });
 }
 
-export const create = async (learningPath: Omit<ILearningPath, "_id">) => {
+export const create = async (learningPath: Omit<ILearningPath, "_id" | "createdAt" | "updatedAt">) => {
     await LearningPath.create(learningPath);
 }
 

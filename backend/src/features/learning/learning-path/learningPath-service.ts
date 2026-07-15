@@ -14,11 +14,13 @@ export const oneLearningPath = async (userId: string, learningPathId: string) =>
 
 export const createLearningPath = async (userId: string, createLearningPathDto: CreateLearningPathDto) => {
 
-    const newLearningPath: Omit<ILearningPath, "_id"> = {
+    const newLearningPath: Omit<ILearningPath, "_id" | "createdAt" | "updatedAt"> = {
         name: createLearningPathDto.name,
         description: createLearningPathDto.description,
-        ImageUrl: createLearningPathDto.ImageUrl,
+        ImageUrl: createLearningPathDto.ImageUrl ?? "",
         userId: new Types.ObjectId(userId),
+        category: createLearningPathDto.category,
+        difficulty: createLearningPathDto.difficulty,
     }
 
     await learningPathRepository.create(newLearningPath);

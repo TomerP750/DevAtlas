@@ -10,6 +10,8 @@ export interface ILearningPath {
     difficulty: Difficulty;
     ImageUrl: string;
     userId: Types.ObjectId;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 const learningPathSchema = new Schema<ILearningPath>({
@@ -40,7 +42,7 @@ const learningPathSchema = new Schema<ILearningPath>({
         ref: "User",
         required: true
     },
-});
+}, { timestamps: true });
 
 const LearningPath = model("LearningPath", learningPathSchema);
 export default LearningPath;

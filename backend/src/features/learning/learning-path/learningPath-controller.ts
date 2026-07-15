@@ -17,9 +17,9 @@ export const oneLearningPath = async (req: Request<{ learningPathId: string }>, 
 export const createLearningPath = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const userId = req.user.id;
-        const { name, description, ImageUrl } = req.body as CreateLearningPathDto;
+        const { name, description, ImageUrl, category, difficulty } = req.body as CreateLearningPathDto;
 
-        const learningPath = await learningPathService.createLearningPath(userId, { name, description, ImageUrl });
+        const learningPath = await learningPathService.createLearningPath(userId, { name, description, ImageUrl, category, difficulty });
         res.status(201).json(learningPath);
     } catch (error) {
         next(error);
@@ -30,8 +30,8 @@ export const updateLearningPath = async (req: Request<{ learningPathId: string }
     try {
         const userId = req.user.id;
         const { learningPathId } = req.params;
-        const { name, description, ImageUrl } = req.body as UpdateLearningPathDto;
-        const learningPath = await learningPathService.updateLearningPath(userId, learningPathId, { name, description, ImageUrl });
+        const { name, description, ImageUrl, category, difficulty } = req.body as UpdateLearningPathDto;
+        const learningPath = await learningPathService.updateLearningPath(userId, learningPathId, { name, description, ImageUrl, category, difficulty });
         res.status(200).json(learningPath);
     } catch (error) {
         next(error);
