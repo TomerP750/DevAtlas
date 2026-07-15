@@ -7,6 +7,9 @@ import { type CreateLearningPathDto } from "../../models/crud_requests/CreateLea
 import { Difficulty } from "../../models/learningPath/enums/Difficulty";
 import { TextArea } from "../../../../../shared/ui/TextArea";
 import { Category } from "../../models/learningPath/enums/Category";
+import learningPathService from "../../api/learningPathService";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 
 interface CreateModalProps {
     isOpen: boolean;
@@ -27,13 +30,24 @@ export function CreateModal({ isOpen, onClose }: CreateModalProps) {
 
     const { register, handleSubmit, formState: { errors } } = useForm<CreateLearningPathDto>();
 
-    const onSubmit = (data: CreateLearningPathDto) => {
-        console.log(data);
+    const { mutate: createLearningPath, isPending  } = useMutation({
+        mutationFn: (data: CreateLearningPathDto) => learningPathService.createLearningPath(data),
+        onSuccess: () => {
+            onClose();
+            toast.success("Learning path created successfully");
+        },
+        onError: (error) => {
+            toast.error("Failed to create learning path");
+        },
+    });
+
+    const handleCreateLearningPath = (data: CreateLearningPathDto) => {
+        createLearningPath(data);
     }
 
     return (
         <Modal title={"Create a new learning path"} isOpen={isOpen} onClose={onClose}>
-            <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
+            <form className="flex flex-col gap-4" onSubmit={handleSubmit(handleCreateLearningPath)}>
                 <Input
                     label="Title"
                     required
@@ -75,7 +89,7 @@ export function CreateModal({ isOpen, onClose }: CreateModalProps) {
                 />
 
                 <div className="flex justify-end gap-2">
-                    <Button type="submit">Create</Button>
+                    <Button type="submit" loading={isPending}>Create</Button>
                     <Button type="button" variant="secondary" onClick={onClose}>Cancel</Button>
                 </div>
             </form>

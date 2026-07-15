@@ -17,6 +17,10 @@ class LearningPathService {
         return (await axios.delete(`${baseApiUrl}/api/learning-path/delete/${learningPathId}`)).data;
     }
 
+    async oneLearningPath(learningPathId: string) {
+        return (await axios.get(`${baseApiUrl}/api/learning-path/${learningPathId}`)).data;
+    }
+
 
 }
 

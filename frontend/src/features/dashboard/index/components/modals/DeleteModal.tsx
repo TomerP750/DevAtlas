@@ -1,5 +1,8 @@
 import { Button } from "../../../../../shared/ui/Button";
 import { Modal } from "../../../../../shared/ui/Modal";
+import learningPathService from "../../api/learningPathService";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 
 interface DeleteModalProps {
     learningPathId: string;
@@ -9,10 +12,21 @@ interface DeleteModalProps {
 }
 export function DeleteModal({ learningPathId, learningPathTitle, isOpen, onClose }: DeleteModalProps) {
     
-    const handleDelete = () => {
-        onClose();
-    }
+    const { mutate: deleteLearningPath, isPending } = useMutation({
+        mutationFn: (learningPathId: string) => learningPathService.deleteLearningPath(learningPathId),
+        onSuccess: () => {
+            onClose();
+            toast.success("Learning path deleted successfully");
+        },
+        onError: (error) => {
+            toast.error("Failed to delete learning path");
+        },
+    });
     
+    const handleDeleteLearningPath = () => {
+        deleteLearningPath(learningPathId);
+    }
+
     if (!isOpen) return null;
 
     return (
@@ -23,7 +37,7 @@ export function DeleteModal({ learningPathId, learningPathTitle, isOpen, onClose
                 </p>
                 <div className="flex justify-end">
                     <Button variant="secondary" onClick={onClose}>Cancel</Button>
-                    <Button variant="danger" onClick={handleDelete}>Delete</Button>
+                    <Button variant="danger" onClick={handleDeleteLearningPath} disabled={isPending}>Delete</Button>
                 </div>
             </div>
         </Modal>

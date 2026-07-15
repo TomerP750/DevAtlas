@@ -6,6 +6,11 @@ import { TextArea } from "../../../../../shared/ui/TextArea";
 import { Category } from "../../models/learningPath/enums/Category";
 import { Difficulty } from "../../models/learningPath/enums/Difficulty";
 import type { UpdateLearningPathDto } from "../../models/crud_requests/UpdateLearningPathDto";
+import learningPathService from "../../api/learningPathService";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+import { Button } from "../../../../../shared/ui/Button";
+
 
 interface EditModalProps {
     learningPathId: string;
@@ -18,8 +23,19 @@ export function EditModal({ learningPathId, learningPathTitle, isOpen, onClose }
 
     const { register, handleSubmit, formState: { errors } } = useForm<UpdateLearningPathDto>();
 
-    const onSubmit = (data: UpdateLearningPathDto) => {
-        console.log(data);
+    const { mutate: updateLearningPath, isPending } = useMutation({
+        mutationFn: (data: UpdateLearningPathDto) => learningPathService.updateLearningPath(learningPathId, data),
+        onSuccess: () => {
+            onClose();
+            toast.success("Learning path updated successfully");
+        },
+        onError: (error) => {
+            toast.error("Failed to update learning path");
+        },
+    });
+
+    const handleUpdateLearningPath = (data: UpdateLearningPathDto) => {
+        updateLearningPath(data);
     }
 
     const difficultyOptions = Object.values(Difficulty).map((difficulty) => ({
@@ -34,7 +50,8 @@ export function EditModal({ learningPathId, learningPathTitle, isOpen, onClose }
 
     return (
         <Modal title={`Editing ${learningPathTitle}`} isOpen={isOpen} onClose={onClose}>
-            <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
+            <form className="flex flex-col gap-4"
+                onSubmit={handleSubmit(handleUpdateLearningPath)}>
                 <Input
                     label="Title"
                     required
@@ -71,6 +88,22 @@ export function EditModal({ learningPathId, learningPathTitle, isOpen, onClose }
                     error={errors.description?.message}
                     {...register("description")}
                 />
+
+                <div className="flex justify-end">
+                    <Button
+                        type="button"
+                        variant="secondary"
+                        onClick={onClose}>
+                        Cancel
+                    </Button>
+                    <Button
+                        type="submit"
+                        loading={isPending}
+                        variant="primary"
+                        disabled={isPending}>
+                        Update
+                    </Button>
+                </div>
             </form>
         </Modal>
     )
