@@ -1,14 +1,30 @@
 import { useForm } from "react-hook-form";
-import type { UpdatePasswordDto } from "../models/ChangePasswordDto";
+import type { ChangePasswordDto } from "../models/ChangePasswordDto";
 import { Button } from "../../../../shared/ui/Button";
 import { Input } from "../../../../shared/ui/Input";
 import { LockIcon } from "lucide-react";
+import userService from "../api/UserService";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 
 
 export function UpdatePasswordForm() {
 
-    const { register, handleSubmit, formState: { errors }, } = useForm<UpdatePasswordDto>();
+    const { register, handleSubmit, formState: { errors }, } = useForm<ChangePasswordDto>();
 
+    const { mutate: changePassword, isPending } = useMutation({
+        mutationFn: (data: ChangePasswordDto) => userService.changePassword(data),
+        onSuccess: () => {
+            toast.success("Password changed successfully");
+        },
+        onError: (error) => {
+            toast.error("Failed to change password");
+        },
+    });
+
+    const handleChangePassword = (data: ChangePasswordDto) => {
+        changePassword(data);
+    }
 
     return (
         <section className="rounded-2xl border border-black/10 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-zinc-900 sm:p-6">
@@ -22,7 +38,8 @@ export function UpdatePasswordForm() {
                 </p>
             </div>
 
-            <form className="flex flex-col gap-5">
+            <form className="flex flex-col gap-5"
+                onSubmit={handleSubmit(handleChangePassword)}>
                 <Input
                     label="Current Password"
                     type="password"
@@ -64,7 +81,8 @@ export function UpdatePasswordForm() {
                 <div className="flex justify-end pt-2">
                     <Button
                         type="submit"
-                        // loading={isPending}
+                        loading={isPending}
+                        disabled={isPending}
                         className="min-w-32"
                     >
                         Update Password

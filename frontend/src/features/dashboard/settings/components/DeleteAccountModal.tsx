@@ -1,6 +1,9 @@
 import { Trash2Icon } from "lucide-react";
 import { Button } from "../../../../shared/ui/Button";
 import { Modal } from "../../../../shared/ui/Modal";
+import userService from "../api/UserService";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 
 interface DeleteAccountModalProps {
     isOpen: boolean;
@@ -8,6 +11,22 @@ interface DeleteAccountModalProps {
 }
 
 export function DeleteAccountModal({ isOpen, onClose }: DeleteAccountModalProps) {
+
+    const { mutate: deleteAccount, isPending } = useMutation({
+        mutationFn: () => userService.deleteUser(),
+        onSuccess: () => {
+            onClose();
+            toast.success("Account deleted successfully");
+        },
+        onError: (error) => {
+            toast.error("Failed to delete account");
+        },
+    });
+
+    const handleDeleteAccount = () => {
+        deleteAccount();
+    }
+
     return (
         <Modal
             isOpen={isOpen}
@@ -40,8 +59,9 @@ export function DeleteAccountModal({ isOpen, onClose }: DeleteAccountModalProps)
                         Cancel
                     </Button>
                     <Button
-                        // onClick={handleAccountDeletion}
-                        // disabled={isPending}
+                        loading={isPending}
+                        onClick={handleDeleteAccount}
+                        disabled={isPending}
                         leftIcon={<Trash2Icon size={17} />}
                         className="w-full bg-rose-600 text-white shadow-lg shadow-rose-600/20 hover:bg-rose-700 focus:ring-rose-500/40 dark:bg-rose-500 dark:hover:bg-rose-400"
                     >

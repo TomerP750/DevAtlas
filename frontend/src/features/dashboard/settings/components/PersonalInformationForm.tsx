@@ -4,11 +4,28 @@ import { UserIcon } from "lucide-react";
 import { Badge } from "../../../../shared/ui/Badge";
 import { Button } from "../../../../shared/ui/Button";
 import { Input } from "../../../../shared/ui/Input";
-
+import userService from "../api/UserService";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 
 export function PersonalInformationSettings() {
 
     const { register, handleSubmit, formState: { errors } } = useForm<UpdateUserDto>();
+
+
+    const { mutate: updateUser, isPending } = useMutation({
+        mutationFn: (data: UpdateUserDto) => userService.updateUser(data),
+        onSuccess: () => {
+            toast.success("User updated successfully");
+        },
+        onError: (error) => {
+            toast.error("Failed to update user");
+        },
+    });
+
+    const handleUpdateUser = (data: UpdateUserDto) => {
+        updateUser(data);
+    }
 
     return (
 
@@ -26,7 +43,8 @@ export function PersonalInformationSettings() {
                 </p>
             </header>
 
-            <form className="flex flex-col gap-5">
+            <form className="flex flex-col gap-5"
+                onSubmit={handleSubmit(handleUpdateUser)}>
 
                 <div className="flex items-center gap-2">
                     {/* Avatar url input */}
@@ -105,8 +123,9 @@ export function PersonalInformationSettings() {
                 <div className="flex justify-end pt-2">
                     <Button
                         type="submit"
-                        // loading={isPending}
+                        loading={isPending}
                         className="rounded-lg bg-brand-primary px-4 py-2 text-sm font-medium text-white transition hover:bg-brand-primary/90 focus:outline-none focus:ring-2 focus:ring-brand-primary/40"
+                        disabled={isPending}
                     >
                         Save Details
                     </Button>
