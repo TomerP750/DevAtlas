@@ -1,5 +1,4 @@
 import type { Request, Response, NextFunction } from "express";
-import { isTokenValid } from "../jwt-service.js";
 import jwt from "jsonwebtoken";
 import type { JwtPayload } from "jsonwebtoken";
 import { Role } from "../../user/Role.js";
@@ -16,21 +15,19 @@ const isAuthTokenPayload = (payload: string | JwtPayload): payload is AuthTokenP
     && Object.values(Role).includes(payload.role);
 }
 
-export const isAuthenticated = async (req: Request, res: Response, next: NextFunction) => {
+export const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
 
     try {
 
         const authHeader = req.get("Authorization");
         const [scheme, token] = authHeader?.split(" ") ?? [];
-        if (scheme !== "Bearer" || !token) {
+        if (scheme?.toLowerCase() !== "bearer" || !token) {
             throw new HttpError(401, "Unauthorized");
         }
 
-        if (!isTokenValid(token)) {
-            throw new HttpError(401, "Unauthorized");
-        }
-
-        const decodedToken = jwt.verify(token, process.env.JWT_SECRET!);
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET!, {
+            issuer: "devatlas"
+        });
         if (!isAuthTokenPayload(decodedToken)) {
             throw new HttpError(401, "Unauthorized");
         }
