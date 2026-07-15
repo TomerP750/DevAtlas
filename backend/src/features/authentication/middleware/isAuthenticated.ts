@@ -1,7 +1,20 @@
 import type { Request, Response, NextFunction } from "express";
 import { isTokenValid } from "../jwt-service.js";
 import jwt from "jsonwebtoken";
+import type { JwtPayload } from "jsonwebtoken";
+import { Role } from "../../user/Role.js";
 import { HttpError } from "../../../shared/exceptions/HttpError.js";
+
+type AuthTokenPayload = JwtPayload & {
+    userId: string;
+    role: Role;
+};
+
+const isAuthTokenPayload = (payload: string | JwtPayload): payload is AuthTokenPayload => {
+    return typeof payload !== "string" 
+    && typeof payload.userId === "string" 
+    && Object.values(Role).includes(payload.role);
+}
 
 export const isAuthenticated = async (req: Request, res: Response, next: NextFunction) => {
 
@@ -18,11 +31,14 @@ export const isAuthenticated = async (req: Request, res: Response, next: NextFun
         }
 
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET!);
-        if (!decodedToken) {
+        if (!isAuthTokenPayload(decodedToken)) {
             throw new HttpError(401, "Unauthorized");
         }
 
-        req.userId = decodedToken.userId;
+        req.user = {
+            id: decodedToken.userId,
+            role: decodedToken.role,
+        };
         next();
 
     } catch (error) {

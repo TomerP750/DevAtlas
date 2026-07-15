@@ -20,11 +20,12 @@ export const createTopic = async (
     res: Response,
     next: NextFunction) => {
     try {
+        const userId = req.user.id;
         const { sectionId } = req.params;
 
         const { name, explanation, status } = req.body;
         const topic = await topicService.createTopic(
-            sectionId, { name, explanation, status }
+            userId, sectionId, { name, explanation, status }
         );
         res.status(201).json(topic);
     } catch (error) {
@@ -38,13 +39,14 @@ export const updateTopic = async (
     next: NextFunction) => {
 
     try {
+        const userId = req.user.id;
         const { topicId } = req.params;
         
         const { name, explanation, status } = req.body;
         if (!topicId) {
             throw new HttpError(400, "Topic ID is required");
         }
-        const topic = await topicService.updateTopic(topicId, { name, explanation, status });
+        const topic = await topicService.updateTopic(userId, topicId, { name, explanation, status });
         res.status(200).json(topic);
     } catch (error) {
         next(error);
@@ -57,11 +59,12 @@ export const deleteTopic = async (
     next: NextFunction) => {
 
     try {
+        const userId = req.user.id;
         const { topicId } = req.params;
         if (!topicId) {
             throw new HttpError(400, "Topic ID is required");
         }
-        const topic = await topicService.deleteTopic(topicId);
+        const topic = await topicService.deleteTopic(userId, topicId);
         res.status(200).json(topic);
     } catch (error) {
         next(error);

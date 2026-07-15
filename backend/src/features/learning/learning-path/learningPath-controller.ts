@@ -13,3 +13,38 @@ export const oneLearningPath = async (req: Request<{ learningPathId: string }>, 
         next(error);
     }
 }
+
+export const createLearningPath = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const userId = req.user.id;
+        const { name, description, ImageUrl } = req.body as CreateLearningPathDto;
+
+        const learningPath = await learningPathService.createLearningPath(userId, { name, description, ImageUrl });
+        res.status(201).json(learningPath);
+    } catch (error) {
+        next(error);
+    }
+}
+
+export const updateLearningPath = async (req: Request<{ learningPathId: string }>, res: Response, next: NextFunction) => {
+    try {
+        const userId = req.user.id;
+        const { learningPathId } = req.params;
+        const { name, description, ImageUrl } = req.body as UpdateLearningPathDto;
+        const learningPath = await learningPathService.updateLearningPath(userId, learningPathId, { name, description, ImageUrl });
+        res.status(200).json(learningPath);
+    } catch (error) {
+        next(error);
+    }
+}
+
+export const deleteLearningPath = async (req: Request<{ learningPathId: string }>, res: Response, next: NextFunction) => {
+    try {
+        const userId = req.user.id;
+        const { learningPathId } = req.params;
+        const learningPath = await learningPathService.deleteLearningPath(userId, learningPathId);
+        res.status(200).json(learningPath);
+    } catch (error) {
+        next(error);
+    }
+}

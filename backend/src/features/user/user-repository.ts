@@ -5,6 +5,10 @@ export const findById = async (id: string) => {
     return await User.findById(id);
 };
 
+export const findAll = async (skip: number, pageSize: number) => {
+    return await User.find().skip(skip).limit(pageSize).sort({ createdAt: -1 });
+};
+
 export const findByEmail = async (email: string) => {
     return await User.findOne({ email });
 };
