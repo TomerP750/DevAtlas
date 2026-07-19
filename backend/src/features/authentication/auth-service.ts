@@ -35,46 +35,42 @@ export const login = async (loginRequestDto: LoginRequestDto): Promise<AuthRespo
 
 export const signUp = async (dto: SignUpRequestDto): Promise<AuthResponseDto> => {
 
-    try {
-
-        if (dto.password !== dto.confirmPassword) {
-            throw new HttpError(400, "Password and confirm password do not match");
-        }
-
-        const existingUser = await findByEmail(dto.email);
-        if (existingUser) {
-            throw new HttpError(400, "User already exists");
-        }
-
-        const hashedPassword = await bcrypt.hash(dto.password, 12);
-
-        const newUser: Omit<IUser, "_id"> = {
-            firstName: dto.firstName,
-            lastName: dto.lastName,
-            email: dto.email,
-            password: hashedPassword,
-            role: Role.USER,
-            avatarUrl: "",
-        };
-
-        const createdUser = await createUser(newUser);
-
-        if (!createdUser) {
-            throw new HttpError(500, "Failed to create user");
-        }
-
-        const userDto = toUserDto(createdUser);
-
-        const token =
-            await generateToken(createdUser._id.toString(), createdUser.role);
-
-        return {
-            token,
-            user: userDto,
-        };
-
-    } catch (error) {
-        throw new HttpError(500, "Failed to sign up");
+    if (dto.password !== dto.confirmPassword) {
+        throw new HttpError(400, "Password and confirm password do not match");
     }
+
+    const existingUser = await findByEmail(dto.email);
+    if (existingUser) {
+        throw new HttpError(400, "User already exists");
+    }
+
+    const hashedPassword = await bcrypt.hash(dto.password, 12);
+
+    const newUser: Omit<IUser, "_id"> = {
+        firstName: dto.firstName,
+        lastName: dto.lastName,
+        email: dto.email,
+        password: hashedPassword,
+        role: Role.USER,
+        avatarUrl: "",
+    };
+
+    const createdUser = await createUser(newUser);
+
+    if (!createdUser) {
+        throw new HttpError(500, "Failed to create user");
+    }
+
+    const userDto = toUserDto(createdUser);
+
+    const token =
+        await generateToken(createdUser._id.toString(), createdUser.role);
+
+    return {
+        token,
+        user: userDto,
+    };
+
+
 
 }

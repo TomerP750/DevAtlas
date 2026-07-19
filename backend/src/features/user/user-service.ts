@@ -62,13 +62,11 @@ export const changePassword = async (userId: string, changePasswordDto: ChangePa
 };
 
 const fetchUserEntity = async (userId: string): Promise<IUser> => {
-    try {
-        const user = await userRepository.findById(userId);
-        if (!user) {
-            throw new HttpError(404, "User not found");
-        }
-        return user;
-    } catch (error) {
-        throw new HttpError(500, "Failed to fetch user");
+
+    const user = await userRepository.findById(userId);
+    if (!user) {
+        throw new HttpError(404, "User not found");
     }
+    return user;
+
 };

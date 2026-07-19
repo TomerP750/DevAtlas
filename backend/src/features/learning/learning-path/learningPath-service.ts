@@ -8,6 +8,10 @@ import type { UpdateLearningPathDto } from "./dto/UpdateLearningPathDto.js";
 
 
 export const oneLearningPath = async (userId: string, learningPathId: string) => {
+    const isOwner = await assertOwnerOfLearningPath(userId, learningPathId);
+    if (!isOwner) {
+        throw new HttpError(403, "You are not the owner of this learning path");
+    }
     const learningPath = await fetchLearningPathEntity(learningPathId);
     return toDto(learningPath);
 }

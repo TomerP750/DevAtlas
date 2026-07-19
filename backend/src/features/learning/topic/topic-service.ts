@@ -23,7 +23,7 @@ export const createTopic = async (userId: string, sectionId: string, createTopic
 
     const newTopic: Omit<ITopic, "_id"> = {
         name: createTopicDto.name,
-        explanation: createTopicDto.explanation,
+        explanation: createTopicDto.description || "",
         status: createTopicDto.status,
         sectionId: new Types.ObjectId(sectionId),
     };

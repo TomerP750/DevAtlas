@@ -22,7 +22,7 @@ export const createSection = async (userId: string, learningPathId: string, crea
 
     const newSection: Omit<ISection, "_id" | "order"> = {
         name: createSectionDto.name,
-        description: createSectionDto.description,
+        description: createSectionDto.description || "",
         status: createSectionDto.status,
         learningPathId: new Types.ObjectId(learningPathId),
     };
@@ -33,8 +33,8 @@ export const createSection = async (userId: string, learningPathId: string, crea
 
 export const updateSection = async (userId: string, sectionId: string, learningPathId: string, updateSectionDto: UpdateSectionDto) => {
 
-    const isOwner = await assertOwnerOfLearningPath(userId, learningPathId);
-    if (!isOwner) {
+    const isOwnerOfLearningPath = await assertOwnerOfLearningPath(userId, learningPathId);
+    if (!isOwnerOfLearningPath) {
         throw new HttpError(403, "You are not the owner of this learning path");
     }
 

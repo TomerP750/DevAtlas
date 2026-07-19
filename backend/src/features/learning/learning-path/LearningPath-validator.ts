@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { Category } from "./Category.js";
-import { Difficulty } from "./Difficulty.js";
+import { Category } from "./category.js";
+import { Difficulty } from "./difficulty.js";
 
 export const createLearningPathRequestSchema = z.object({
     name: z.string().min(1),

@@ -2,6 +2,7 @@ import { Schema, Types, model } from "mongoose";
 import { Category } from "./Category.js";
 import { Difficulty } from "./Difficulty.js";
 
+
 export interface ILearningPath {
     _id: Types.ObjectId;
     name: string;
