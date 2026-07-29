@@ -2,6 +2,7 @@ import axios from "axios";
 import { baseApiUrl } from "../../../../shared/utils/baseApi";
 import type { CreateLearningPathDto } from "../models/crud_requests/CreateLearningPathDto";
 import type { UpdateLearningPathDto } from "../models/crud_requests/UpdateLearningPathDto";
+import type { Pagination } from "../../../../shared/models/Pagination";
 
 class LearningPathService {
 
@@ -19,6 +20,14 @@ class LearningPathService {
 
     async oneLearningPath(learningPathId: string) {
         return (await axios.get(`${baseApiUrl}/api/learning-path/${learningPathId}`)).data;
+    }
+
+    async allLearningPaths(pagination: Pagination) {
+        return (await axios.get(`${baseApiUrl}/api/learning-path/all`,
+            {
+                params: pagination
+            }
+        )).data;
     }
 
 

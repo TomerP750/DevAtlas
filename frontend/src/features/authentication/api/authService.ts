@@ -1,7 +1,8 @@
 import axios from "axios";
 import { baseApiUrl } from "../../../shared/utils/baseApi";
 import type { LoginRequestDto } from "../models/LoginRequestDto";
-import type { SignUpRequestDto } from "../models/SignUpRequestDto";
+import type { SignUpRequestDto } from "../models/SignupRequestDto";
+
 
 class AuthService {
 

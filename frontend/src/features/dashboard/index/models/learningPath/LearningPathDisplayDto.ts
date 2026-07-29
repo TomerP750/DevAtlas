@@ -1,4 +1,4 @@
-export interface LearningPathDto {
+export interface LearningPathDispalyDto {
     id: string;
     title: string;
     description: string;
