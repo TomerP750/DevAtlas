@@ -31,7 +31,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     const inputClasses = [
         "w-full rounded-lg border px-3 py-2 text-sm transition-colors",
         "bg-white text-zinc-900 placeholder:text-zinc-400",
-        "dark:bg-stone-950 dark:text-zinc-100 dark:placeholder:text-zinc-500",
+        "dark:bg-zinc-800 dark:text-zinc-100 dark:placeholder:text-zinc-500",
         "focus:outline-none focus:ring-1 focus:ring-brand-primary/10 focus:border-brand-primary/70",
         error
             ? "border-red-500 dark:border-red-500"

@@ -29,6 +29,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(function 
             aria-invalid={error ? true : undefined}
             aria-describedby={describedBy}
             className={`p-2 border border-black/10 dark:border-white/10 
+            dark:bg-zinc-800 dark:text-zinc-100 focus:outline-none focus:ring-1 focus:ring-brand-primary/10 focus:border-brand-primary/70
             rounded-none! w-full resize-none ${props.className}`} {...props}
         />
     )

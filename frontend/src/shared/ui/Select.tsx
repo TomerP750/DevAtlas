@@ -42,7 +42,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
     const selectClasses = [
         "w-full rounded-lg border px-3 py-2 text-sm transition-colors",
         "bg-white text-zinc-900",
-        "dark:bg-stone-950 dark:text-zinc-100",
+        "dark:bg-zinc-800 dark:text-zinc-100",
         "focus:outline-none focus:ring-1 focus:ring-brand-primary/10 focus:border-brand-primary/70",
         error
             ? "border-red-500 dark:border-red-500"
