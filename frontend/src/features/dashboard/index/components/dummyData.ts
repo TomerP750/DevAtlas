@@ -1,6 +1,6 @@
-import type { LearningPath } from "../models/learningPath/LearningPathDisplayDto";
+import type { LearningPathDispalyDto } from "../models/learningPath/LearningPathDisplayDto";
 
-export const dummyData: LearningPath[] = [
+export const dummyData: LearningPathDispalyDto[] = [
     {
         id: "1",
         title: "React Development",

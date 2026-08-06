@@ -5,6 +5,7 @@ import { LearningPathCard } from "../components/LearningPathCard";
 import { useQuery } from "@tanstack/react-query";
 import learningPathService from "../api/learningPathService";
 import type { LearningPathDispalyDto } from "../models/learningPath/LearningPathDisplayDto";
+import { dummyData } from "../components/dummyData";
 
 export type GridLayout = "grid" | "row";
 
@@ -32,7 +33,7 @@ export function DashboardIndex() {
 
                 <div className={`grid ${gridLayout === "grid" ? "grid-cols-1 md:grid-cols-2" : "grid-cols-1"} gap-4 mt-8`}>
 
-                    {learningPaths?.map((learningPath) => (
+                    {dummyData?.map((learningPath) => (
                         <LearningPathCard key={learningPath.id} learningPath={learningPath} />
                     ))}
 
