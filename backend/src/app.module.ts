@@ -10,6 +10,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { APP_PIPE } from '@nestjs/core';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { LearningPathModule } from './learning-path/learning-path.module';
+import { TopicModule } from './topic/topic.module';
 
 @Module({
   imports: [
@@ -30,7 +31,7 @@ import { LearningPathModule } from './learning-path/learning-path.module';
         synchronize: true,
       }),
     }),
-    UserModule, AuthenticationModule, LearningPathModule
+    UserModule, AuthenticationModule, LearningPathModule, TopicModule
   ],
   providers: [AppService, {
     provide: APP_PIPE,
