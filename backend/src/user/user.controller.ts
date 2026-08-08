@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Put, UseGuards } from '@nestjs/common';
-import { Serialize } from 'src/interceptors/serialize.interceptor';
+import { Serialize } from 'src/shared/interceptors/serialize.interceptor';
 import { UpdateUserDto } from './dtos/update-user-dto';
 import { UserDto } from './dtos/user.dto';
 import { UserService } from './user.service';

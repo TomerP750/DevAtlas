@@ -3,7 +3,7 @@ import { AuthenticationService } from './authentication.service';
 import { SignUpDto } from './dtos/signup.dto';
 import { SignInDto } from './dtos/signin.dto';
 import { AuthResponseDto } from './dtos/auth.response.dto';
-import { Serialize } from 'src/interceptors/serialize.interceptor';
+import { Serialize } from 'src/shared/interceptors/serialize.interceptor';
 import { UserDto } from 'src/user/dtos/user.dto';
 
 @Controller('auth')
