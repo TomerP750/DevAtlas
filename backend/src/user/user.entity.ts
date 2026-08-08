@@ -1,15 +1,16 @@
 import { IsEmail, IsString } from "class-validator";
+import { Role } from "src/authentication/role";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 
 @Entity()
 export class User {
     @PrimaryGeneratedColumn()
-    id: string; 
+    id: string;
 
     @Column()
     @IsString()
-    firstName: string 
+    firstName: string
 
     @Column()
     @IsString()
@@ -17,15 +18,22 @@ export class User {
 
     @Column()
     @IsEmail()
-    email: string; 
+    email: string;
+
+    @Column({
+        type: 'enum',
+        enum: Role,
+        default: Role.USER,
+    })
+    role: Role;
 
     @Column()
     @IsString()
-    password: string; 
+    password: string;
 
     @Column()
     @IsString()
-    avatarUrl: string 
+    avatarUrl: string
 
-  
+
 }
