@@ -4,8 +4,11 @@ import { CreateLearningPathDto } from './dtos/create-learning-path-dto';
 import { CurrentUser } from 'src/user/decorators/current-user.decorator';
 import { User } from 'src/user/user.entity';
 import { UpdateLearningPathDto } from './dtos/update-learning-path-dto';
+import { Serialize } from 'src/interceptors/serialize.interceptor';
+import { LearningPathDto } from './dtos/learning-path.dto';
 
 @Controller('learning-path')
+@Serialize(LearningPathDto)
 export class LearningPathController {
 
     constructor(private learningPathService: LearningPathService) {}
