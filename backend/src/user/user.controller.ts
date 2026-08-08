@@ -5,7 +5,7 @@ import { UserDto } from './dtos/user.dto';
 import { UserService } from './user.service';
 import { CurrentUser } from './decorators/current-user.decorator';
 import { User } from './user.entity';
-import { AuthGuard } from 'src/guards/auth.guard';
+// import { AuthGuard } from 'src/guards/auth.guard';
 
 @Controller('user')
 @Serialize(UserDto)
@@ -16,19 +16,19 @@ export class UserController {
     ) {}
 
     @Put("/update")
-    @UseGuards(AuthGuard)
+    // @UseGuards(AuthGuard)
     updateUser(@CurrentUser() user: User, @Body() dto: UpdateUserDto) {
         this.userService.update(user.id, dto)
     }
 
     @Get("/:id")
-    @UseGuards(AuthGuard)
+    // @UseGuards(AuthGuard)
     findUser(@Param("id") id: string) {
         return this.userService.findOne(id);
     }
 
     @Delete("/:id")
-    @UseGuards(AuthGuard)
+    // @UseGuards(AuthGuard)
     deleteUser(@CurrentUser() user: User) {
         this.userService.remove(user.id);
     }
