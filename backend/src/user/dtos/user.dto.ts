@@ -1,14 +1,17 @@
 import { Expose } from "class-transformer"
+import { Role } from "src/authentication/role"
 
 export class UserDto {
     @Expose()
-    id: string 
+    id!: string;
     @Expose()
-    firstName: string 
+    firstName!: string;
     @Expose()
-    lastName: string 
+    lastName!: string;
     @Expose()
-    email: string 
+    email!: string;
     @Expose()
-    avatarUrl: string 
+    avatarUrl!: string;
+    @Expose()
+    role!: Role;
 }

@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { UserService } from '../user/user.service'
 import { SignInDto } from './dtos/signin.dto';
 import { SignUpDto } from './dtos/signup.dto';
-import { randomBytes, scrypt as _scrypt} from 'crypto';
+import { scrypt as _scrypt} from 'crypto';
 import { promisify } from 'util';
 
 const scrypt = promisify(_scrypt);
@@ -14,7 +14,7 @@ export class AuthenticationService {
 
     async signUp(dto: SignUpDto) {
 
-        const existingUser = await this.userService.findByEmail("");
+        const existingUser = await this.userService.findByEmail(dto.email);
         if (existingUser) {
             throw new BadRequestException("Email is in use");
         }
@@ -22,10 +22,6 @@ export class AuthenticationService {
         if (dto.password !== dto.confirmPassword) {
             throw new BadRequestException("Passwords do not match");
         }
-
-        const salt = randomBytes(8).toString('hex');
-        const hash = (await scrypt(dto.password, salt, 32)) as Buffer;
-        const result = salt + '.' + hash.toString('hex');
 
         const user = await this.userService.create(dto);
         return user;

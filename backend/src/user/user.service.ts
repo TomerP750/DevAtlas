@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -6,6 +6,10 @@ import { UpdateUserDto } from './dtos/update-user-dto';
 import { NotFoundException } from '@nestjs/common';
 import { SignUpDto } from 'src/authentication/dtos/signup.dto';
 import { Role } from 'src/authentication/role';
+import { randomBytes, scrypt as _scrypt} from 'crypto';
+import { promisify } from 'util';
+
+const scrypt = promisify(_scrypt);
 
 @Injectable()
 export class UserService {
@@ -14,13 +18,18 @@ export class UserService {
 
     }
 
+
     async create(signUpDto: SignUpDto) {
+
+        const salt = randomBytes(8).toString('hex');
+        const hash = (await scrypt(signUpDto.password, salt, 32)) as Buffer;
+        const result = salt + '.' + hash.toString('hex');
 
         const user = this.userRepository.create({
             firstName: signUpDto.firstName,
             lastName: signUpDto.lastName,
             email: signUpDto.email,
-            password: signUpDto.password,
+            password: result,
             role: Role.USER,
         });
 
@@ -30,9 +39,9 @@ export class UserService {
     async update(userId: string, updateUserDto: UpdateUserDto) {
 
         const user = await this.findOne(userId);
-        
-        if (userId !== user.id) {
-            throw new BadRequestException("User not found");
+
+        if (!user) {
+            throw new NotFoundException("User not found");
         }
 
         Object.assign(user, updateUserDto);
@@ -40,27 +49,23 @@ export class UserService {
         return this.userRepository.save(user);
     }
 
-    async findOne(id: string) {
-        const user = await this.userRepository.findOneBy({ id });
-        if (!user) {
-            throw new NotFoundException("User not found");
-        }
-        return user;
+    async findOne(id: string): Promise<User | null> {
+        return this.userRepository.findOneBy({ id });
     }
 
-    async findByEmail(email: string) {
-        const user = await this.userRepository.findOneBy({ email });
-        if (!user) {
-            throw new NotFoundException("User not found");
-        }
-        return user;
+    async findByEmail(email: string): Promise<User | null> {
+        return this.userRepository.findOneBy({ email });
     }
 
     async remove(id: string) {
 
         const user = await this.findOne(id);
 
-        this.userRepository.remove(user);
+        if (!user) {
+            throw new NotFoundException("User not found");
+        }
+
+        return this.userRepository.remove(user);
 
     }
 

@@ -9,6 +9,7 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { ValidationPipe } from '@nestjs/common';
 import { APP_PIPE } from '@nestjs/core';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { LearningPathModule } from './learning-path/learning-path.module';
 
 @Module({
   imports: [
@@ -29,7 +30,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         synchronize: true,
       }),
     }),
-    UserModule, AuthenticationModule
+    UserModule, AuthenticationModule, LearningPathModule
   ],
   providers: [AppService, {
     provide: APP_PIPE,
