@@ -1,38 +1,53 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 import { SignUpDto } from './dtos/signup.dto';
+import { Serialize } from '../shared/interceptors/serialize.interceptor';
 import { SignInDto } from './dtos/signin.dto';
 import { AuthResponseDto } from './dtos/auth.response.dto';
-import { Serialize } from 'src/shared/interceptors/serialize.interceptor';
-import { UserDto } from 'src/user/dtos/user.dto';
+import { Public } from './decorators/public.decorator';
+
 
 @Controller('auth')
-@Serialize(UserDto)
 export class AuthenticationController {
 
     constructor(private authenticationService: AuthenticationService) {
     }
 
     @Post("/signup")
-    signUp(@Body() dto: SignUpDto) {
-        return this.authenticationService.signUp(dto);
+    @Public()
+    @Serialize(AuthResponseDto)
+    async signUp(@Body() dto: SignUpDto): Promise<AuthResponseDto> {
+        const { accessToken, refreshToken, user } =
+            await this.authenticationService.signUp(dto);
+
+        // response.cookie('refresh_token', refreshToken, {
+        //     httpOnly: true,
+        //     secure: false,
+        //     sameSite: 'lax',
+        //     maxAge: 7 * 24 * 60 * 60 * 1000,
+        //     path: '/auth',
+        // });
+
+        return new AuthResponseDto(accessToken, user);
     }
 
-    // @Post("/signin")
-    // async signIn(
-    //     @Body() dto: SignInDto): Promise<AuthResponseDto> {
-    //     const { access_token, refresh_token, user } =
-    //         await this.authenticationService.signIn(dto);
+    @Post("/signin")
+    @Public()
+    @Serialize(AuthResponseDto)
+    async signIn(@Body() dto: SignInDto): Promise<AuthResponseDto> {
 
-    //     response.cookie('refresh_token', refresh_token, {
-    //         httpOnly: true,
-    //         secure: process.env.NODE_ENV === 'production',
-    //         sameSite: 'lax',
-    //         maxAge: 7 * 24 * 60 * 60 * 1000,
-    //         path: '/auth',
-    //     });
+        const { accessToken, refreshToken, user } =
+            await this.authenticationService.signIn(dto);
 
-    //     return new AuthResponseDto(access_token, user);
-    // }
+        // response.cookie('refresh_token', refreshToken, {
+        //     httpOnly: true,
+        //     secure: false,
+        //     sameSite: 'lax',
+        //     maxAge: 7 * 24 * 60 * 60 * 1000,
+        //     path: '/auth',
+        // });
+
+        return new AuthResponseDto(accessToken, user);
+    }
 
 }

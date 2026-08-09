@@ -3,8 +3,6 @@ import { AuthenticationController } from './authentication.controller';
 import { beforeEach, describe, expect, it } from '@jest/globals';
 import { AuthenticationService } from './authentication.service';
 import { UserService } from '../user/user.service';
-import { User } from 'src/user/user.entity';
-import { UpdateUserDto } from 'src/user/dtos/update-user-dto';
 import { SignUpDto } from './dtos/signup.dto';
 import { SignInDto } from './dtos/signin.dto';
 import { NotFoundException } from '@nestjs/common';
