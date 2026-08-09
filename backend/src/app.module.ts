@@ -18,20 +18,11 @@ import { TopicModule } from './topic/topic.module';
       isGlobal: true,
       envFilePath: `.env.${process.env.NODE_ENV}`,
     }),
-    TypeOrmModule.forRootAsync({
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        type: 'mysql',
-        host: 'localhost',
-        port: 3306,
-        username: 'root',
-        database: configService.get('DB_NAME'),
-        password: configService.get('DB_PASSWORD'),
-        entities: [User],
-        synchronize: true,
-      }),
-    }),
-    UserModule, AuthenticationModule, LearningPathModule, TopicModule
+    TypeOrmModule.forRoot(),
+    UserModule, 
+    AuthenticationModule, 
+    LearningPathModule, 
+    TopicModule
   ],
   providers: [AppService, {
     provide: APP_PIPE,
