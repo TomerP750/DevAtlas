@@ -1,6 +1,7 @@
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from "@nestjs/common";
 import { Request } from "express";
 import { JwtService } from "@nestjs/jwt";
+import { Reflector } from "@nestjs/core";
 import { UserService } from "../../user/user.service";
 import { Role } from "../role";
 
@@ -11,22 +12,39 @@ export class AdminGuard implements CanActivate {
     constructor(
         private readonly jwtService: JwtService,
         private readonly userService: UserService,
+        private readonly reflector: Reflector,
     ) {}
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
 
-        //get the jwt token from the request
-        //decode it 
-        //get the user role 
-        // if role == admin, return true
-        // if role == user, return false
-        const request: Request = context.switchToHttp().getRequest();
-        const token = this.extractTokenFromHeader(request);
-        if (!token) {
-            throw new UnauthorizedException('Unauthorized');
+        const isAdminOnly = this.reflector.getAllAndOverride<boolean>('isAdmin', [
+            context.getHandler(),
+            context.getClass(),
+        ]);
+
+        // Only routes marked with @IsAdmin() are restricted
+        if (!isAdminOnly) {
+            return true;
         }
-        const decoded = this.jwtService.verify(token);
-        const user = await this.userService.findOne(decoded.sub);
+
+        const request: Request = context.switchToHttp().getRequest();
+
+        // The AuthGuard already put the payload on the request when it ran first
+        let payload = request.user;
+        if (!payload) {
+            const token = this.extractTokenFromHeader(request);
+            if (!token) {
+                throw new UnauthorizedException('Unauthorized');
+            }
+            try {
+                payload = await this.jwtService.verifyAsync(token);
+                request.user = payload;
+            } catch (error) {
+                throw new UnauthorizedException('Unauthorized');
+            }
+        }
+
+        const user = await this.userService.findOne(payload!.sub);
         if (!user) {
             return false;
         }

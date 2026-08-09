@@ -9,6 +9,7 @@ import { ConfigService } from '@nestjs/config';
 import { AuthResponseDto } from './dtos/auth.response.dto';
 import { User } from '../user/user.entity';
 import { InternalAuthResponseDto } from './dtos/internal-auth-response.dto';
+import type { StringValue } from 'ms';
 
 const scrypt = promisify(_scrypt);
 
@@ -72,11 +73,7 @@ export class AuthenticationService {
             sub: user.id,
             email: user.email,
             role: user.role
-        },
-            {
-                expiresIn: this.configService.getOrThrow<string>('JWT_ACCESS_TOKEN_EXPIRATION'),
-                secret: this.configService.getOrThrow<string>('JWT_ACCESS_TOKEN_SECRET')
-            }
+        }
         );
     }
 
@@ -86,7 +83,7 @@ export class AuthenticationService {
             email: user.email,
             role: user.role
         }, {
-            expiresIn: this.configService.getOrThrow<string>('JWT_REFRESH_TOKEN_EXPIRATION'),
+            expiresIn: this.configService.getOrThrow<StringValue>('JWT_REFRESH_TOKEN_EXPIRATION'),
             secret: this.configService.getOrThrow<string>('JWT_REFRESH_TOKEN_SECRET')
         });
 
