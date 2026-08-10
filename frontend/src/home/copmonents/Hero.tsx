@@ -69,11 +69,11 @@ export function Hero() {
                 </div>
             </div>
 
-            <figure className="mx-auto mt-14 flex w-full max-w-6xl justify-center px-6 sm:px-10">
+            <figure className="shadow-2xl shadow-indigo-500/50 mx-auto mt-14 flex w-full max-w-6xl justify-center px-6 sm:px-10">
                 <img
                     src={previewImage}
                     alt="DevAtlas dashboard preview"
-                    className="block w-full rounded-t-2xl border border-b-0 border-white/10 object-contain object-bottom shadow-2xl shadow-black/40"
+                    className="block h-64 w-full rounded-t-2xl border border-b-0 border-white/10 object-cover object-top shadow-2xl shadow-black/40 sm:h-80"
                 />
             </figure>
 

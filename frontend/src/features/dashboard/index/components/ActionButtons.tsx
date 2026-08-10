@@ -4,7 +4,7 @@ import { SearchInput } from "../../../../shared/ui/SearchInput";
 import { useState } from "react";
 import type { GridLayout } from "../pages/DashboardIndex";
 import { CreateModal } from "./modals/CreateModal";
-
+import { FiltersMenu } from "./FiltersMenu";
 
 interface ActionButtonsProps {
     onLayoutChange: (layout: GridLayout) => void;
@@ -31,9 +31,9 @@ export function ActionButtons({ onLayoutChange, gridLayout }: ActionButtonsProps
                 className="h-10 max-w-xl rounded-none!"
             />
 
-            <div className="flex gap-1">
+            <div className="relative flex gap-1">
 
-                <Button onClick={() => setFilterModalOpen(true)} variant="secondary" className="shrink-0 rounded-none!">
+                <Button onClick={() => setFilterModalOpen(prev => !prev)} variant="secondary" className="shrink-0 rounded-none!">
                     <FilterIcon className="w-4 h-4" />
                     Filters
                 </Button>
@@ -55,9 +55,12 @@ export function ActionButtons({ onLayoutChange, gridLayout }: ActionButtonsProps
                     <ListIcon className="w-4 h-4" />
                 </Button>
 
+                <FiltersMenu isOpen={filterModalOpen} />
+
             </div>
 
             <CreateModal isOpen={createModalOpen} onClose={() => setCreateModalOpen(false)} />
+           
         </div>
     )
 }
