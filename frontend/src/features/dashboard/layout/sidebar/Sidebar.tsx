@@ -6,14 +6,14 @@ import { Badge } from "../../../../shared/ui/Badge";
 
 export function Sidebar() {
     return (
-        <aside className="h-screen hidden md:flex flex-col w-64 border border-black/10 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-900 p-4">
+        <aside className="h-screen hidden md:flex flex-col w-64 border border-black/10 dark:border-zinc-700 bg-gray-100 dark:bg-zinc-900 px-4 py-6">
 
-            <h2 className="mb-8 inline-flex items-center gap-1 text-xl font-semibold tracking-tight text-zinc-900 dark:text-white">
+            <h2 className="pb-4 border-b border-black dark:border-white/10 inline-flex items-center gap-1 text-xl font-semibold tracking-tight text-zinc-900 dark:text-white">
                 <BookCheck size={30} strokeWidth={1.2} />
                 <span>DevAtlas</span>
             </h2>
 
-            <nav className="flex flex-col gap-1 flex-1">
+            <nav className="mt-4 flex flex-col gap-1 flex-1">
                 {navItems.map((item) => {
                     const Icon = item.icon;
 

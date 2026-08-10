@@ -8,12 +8,14 @@ interface DashboardHeaderProps {
 
 export function DashboardHeader({ title, description, Icon }: DashboardHeaderProps) {
     return (
-        <header className="p-5 min-h-25 bg-brand-primary text-white dark:bg-zinc-900">
-            <div className="flex items-center gap-2">
-                {Icon && <Icon className="h-5 w-5" />}
-                <h1 className="text-2xl font-bold">{title}</h1>
+        <header className="flex flex-col justify-center h-20 border-b border-black/10 dark:border-white/10 bg-brand-primary p-5 text-white dark:bg-dark-surface dark:text-dark-text">
+            <div className="flex items-center gap-3">
+                {Icon && <Icon className="h-10 w-10 shrink-0 text-white dark:text-violet-400" strokeWidth={1.5} />}
+                <div className="flex flex-col">
+                    <h1 className="text-base font-semibold uppercase tracking-wide text-white dark:text-violet-400">{title}</h1>
+                    <p className="text-sm text-violet-100 dark:text-dark-text-muted">{description}</p>
+                </div>
             </div>
-            <p className="text-sm text-white dark:text-zinc-400">{description}</p>
         </header>
     )
 }

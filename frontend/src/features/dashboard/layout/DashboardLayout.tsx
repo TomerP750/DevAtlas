@@ -4,7 +4,7 @@ import { Sidebar } from "./sidebar/Sidebar";
 
 export function DashboardLayout() {
     return (
-        <div className="flex min-h-screen dark:bg-dark-background">
+        <div className="flex min-h-screen bg-gray-200 dark:bg-dark-background">
             <Sidebar />
 
             {/* Main content */}

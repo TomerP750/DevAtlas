@@ -18,16 +18,17 @@ export function ActionButtons({ onLayoutChange, gridLayout }: ActionButtonsProps
     const [filterModalOpen, setFilterModalOpen] = useState<boolean>(false);
 
     return (
-        <div className="flex flex-wrap md:flex-nowrap gap-2">
-            <Button onClick={() => setCreateModalOpen(true)} variant="primary" className="shrink-0 rounded-none!">
+        <div className="z-10 bg-transparent flex flex-wrap md:flex-nowrap gap-2">
+            <Button onClick={() => setCreateModalOpen(true)}
+                variant="primary"
+                className="h-10 shrink-0 rounded-none!">
                 <PlusIcon className="w-4 h-4" />
                 Add New Path
             </Button>
 
             <SearchInput
                 placeholder="Search Learning Path"
-                className="max-w-xl"
-
+                className="h-10 max-w-xl rounded-none!"
             />
 
             <div className="flex gap-1">

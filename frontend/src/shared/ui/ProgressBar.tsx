@@ -13,17 +13,17 @@ export function ProgressBar({ completedTopics, topicsLength, className = "" }: P
         <div className={`flex flex-col gap-2 ${className}`}>
             <div className="flex items-center justify-between mb-1 text-sm">
                 <div className="flex items-center gap-2">
-                    <span className="text-neutral-500">
+                    <span className="text-neutral-500 dark:text-dark-text-muted">
                         Progress
                     </span>
                 </div>
 
-                <span className="font-medium text-neutral-700">
+                <span className="font-medium text-neutral-700 dark:text-dark-text">
                     {progress}%
                 </span>
             </div>
 
-            <div className="h-2 w-full overflow-hidden rounded-full bg-neutral-200">
+            <div className="h-2 w-full overflow-hidden rounded-full bg-neutral-200 dark:bg-dark-input-hover">
                 <div
                     className="h-full rounded-full bg-brand-primary transition-all duration-300"
                     style={{ width: `${progress}%` }}
