@@ -1,10 +1,10 @@
 import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindOptionsOrder, FindOptionsWhere, Like, Repository } from 'typeorm';
 import { LearningPath } from './learning-path.entity';
-import { UserService } from 'src/user/user.service';
 import { CreateLearningPathDto } from './dtos/create-learning-path-dto';
 import { UpdateLearningPathDto } from './dtos/update-learning-path-dto';
+import { LearningPathQueryDto } from './dtos/learning-path-query.dto';
 
 @Injectable()
 export class LearningPathService {
@@ -19,7 +19,10 @@ export class LearningPathService {
     }
 
     async findOne(id: string, userId: string) {
-        const learningPath = await this.learningPathRepository.findOne({ where: { id } });
+        const learningPath = await this.learningPathRepository.findOne({
+            where: { id },
+            relations: { user: true },
+        });
         if (!learningPath) {
             throw new NotFoundException('Learning path not found');
         }
@@ -29,9 +32,28 @@ export class LearningPathService {
         return learningPath;
     }
 
-    // TODO: Add pagination
-    async findAll() {
-        return this.learningPathRepository.find();
+    async findAll(userId: string, query: LearningPathQueryDto) {
+        const { page, size, search, sortBy, sortOrder } = query;
+        const ownedByUser: FindOptionsWhere<LearningPath> = { user: { id: userId } };
+
+        let where: FindOptionsWhere<LearningPath> | FindOptionsWhere<LearningPath>[] = ownedByUser;
+        if (search) {
+            // Escape the LIKE wildcards so a search for "100%" does not match everything.
+            const term = `%${search.replace(/[%_\\]/g, '\\$&')}%`;
+            where = [
+                { ...ownedByUser, name: Like(term) },
+                { ...ownedByUser, description: Like(term) },
+            ];
+        }
+
+        const [items, total] = await this.learningPathRepository.findAndCount({
+            where,
+            order: { [sortBy]: sortOrder } as FindOptionsOrder<LearningPath>,
+            skip: (page - 1) * size,
+            take: size,
+        });
+
+        return { items, total, page, size, totalPages: Math.ceil(total / size) };
     }
 
     async update(id: string, userId: string, updateLearningPathDto: UpdateLearningPathDto) {
