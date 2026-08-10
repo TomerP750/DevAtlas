@@ -43,6 +43,7 @@ import { Topic } from './topic/topic.entity';
     provide: APP_PIPE,
     useValue: new ValidationPipe({
       whitelist: true,
+      transform: true,
     }),
   }],
   controllers: [AppController],
