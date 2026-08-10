@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
-import { UserService } from './user/user.service';
 import { User } from './user/user.entity';
 import { UserModule } from './user/user.module';
 import { AuthenticationModule } from './authentication/authentication.module';
@@ -12,14 +11,29 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { LearningPathModule } from './learning-path/learning-path.module';
 import { TopicModule } from './topic/topic.module';
 import { SectionModule } from './section/section.module';
+import { LearningPath } from './learning-path/learning-path.entity';
+import { Section } from './section/section.entity';
+import { Topic } from './topic/topic.entity';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: `.env.${process.env.NODE_ENV}`,
+      envFilePath: '.env',
     }),
-    TypeOrmModule.forRoot(),
+    TypeOrmModule.forRootAsync({
+      useFactory: (configService: ConfigService) => ({
+        type: 'mysql',
+        host: configService.get('DB_HOST'),
+        port: configService.get('DB_PORT'),
+        username: configService.get('DB_USER'),
+        password: configService.get('DB_PASSWORD'),
+        database: configService.get('DB_NAME'),
+        entities: [User, LearningPath, Topic, Section],
+        synchronize: true,
+      }),
+      inject: [ConfigService],
+    }),
     UserModule, 
     AuthenticationModule, 
     LearningPathModule, 
