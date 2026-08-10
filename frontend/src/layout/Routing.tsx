@@ -6,6 +6,7 @@ import { SignupPage } from "../features/authentication/pages/SignupPage";
 import { DashboardLayout } from "../features/dashboard/layout/DashboardLayout";
 import { lazy, Suspense } from "react";
 import { DashboardIndex } from "../features/dashboard/index/pages/DashboardIndex";
+import { ProtectedRoute } from "../features/authentication/components/ProtectedRoute";
 
 const SettingsPage = lazy(() => import("../features/dashboard/settings/pages/SettingsPage"));
 
@@ -19,21 +20,23 @@ export function Routing() {
                 <Route path="signup" element={<SignupPage />} />
             </Route>
 
-            <Route path="/dashboard" element={<DashboardLayout />}>
+            {/* <Route element={<ProtectedRoute />}> */}
+                <Route path="/dashboard" element={<DashboardLayout />}>
 
-                <Route index element={
-                    <SuspenseWrapper>
-                        <DashboardIndex />
-                    </SuspenseWrapper>}
-                />
+                    <Route index element={
+                        <SuspenseWrapper>
+                            <DashboardIndex />
+                        </SuspenseWrapper>}
+                    />
 
-                <Route path="settings" element={
-                    <SuspenseWrapper>
-                        <SettingsPage />
-                    </SuspenseWrapper>}
-                />
+                    <Route path="settings" element={
+                        <SuspenseWrapper>
+                            <SettingsPage />
+                        </SuspenseWrapper>}
+                    />
 
-            </Route>
+                </Route>
+            {/* </Route> */}
         </Routes>
     )
 }

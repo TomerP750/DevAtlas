@@ -6,8 +6,19 @@ import { ThemeProvider } from './shared/contexts/ThemeContext'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ToastConfig } from './shared/utils/ToastConfig'
 import { AuthProvider } from './features/authentication/contexts/AuthContext'
+import axios from 'axios'
+import { accessTokenStore } from './features/authentication/contexts/accessTokenStore'
 
 const queryClient = new QueryClient();
+
+axios.defaults.withCredentials = true;
+axios.interceptors.request.use(config => {
+    const accessToken = accessTokenStore.get();
+    if (accessToken) {
+        config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+    return config;
+});
 
 createRoot(document.getElementById('root')!).render(
   <QueryClientProvider client={queryClient}>
