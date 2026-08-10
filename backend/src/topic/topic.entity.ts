@@ -1,5 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
-import { LearningPath } from "src/learning-path/learning-path.entity";
+import { LearningPath } from "../learning-path/learning-path.entity";
+import { IsOptional } from "class-validator";
 
 @Entity()
 export class Topic {
@@ -9,6 +10,9 @@ export class Topic {
     name!: string;
     @Column()
     description!: string;
+    @Column()
+    @IsOptional()
+    codeSnippet?: string;
     @ManyToOne(() => LearningPath)
     learningPath!: LearningPath;
 }   
