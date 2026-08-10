@@ -18,7 +18,7 @@ export function ActionButtons({ onLayoutChange, gridLayout }: ActionButtonsProps
     const [filterModalOpen, setFilterModalOpen] = useState<boolean>(false);
 
     return (
-        <div className="z-10 bg-transparent flex flex-wrap md:flex-nowrap gap-2">
+        <div className="z-10 pr-5 bg-transparent flex flex-wrap md:flex-nowrap gap-2">
             <Button onClick={() => setCreateModalOpen(true)}
                 variant="primary"
                 className="h-10 shrink-0 rounded-none!">

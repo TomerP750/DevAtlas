@@ -1,17 +1,25 @@
 import { BookCheck, LogOut } from "lucide-react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { navItems } from "./navItems";
 import { Badge } from "../../../../shared/ui/Badge";
 
 
 export function Sidebar() {
+
+
+    const navigate = useNavigate();
+
     return (
         <aside className="h-screen hidden md:flex flex-col w-64 border border-black/10 dark:border-zinc-700 bg-gray-100 dark:bg-zinc-900 px-4 py-6">
 
-            <h2 className="pb-4 border-b border-black dark:border-white/10 inline-flex items-center gap-1 text-xl font-semibold tracking-tight text-zinc-900 dark:text-white">
-                <BookCheck size={30} strokeWidth={1.2} />
-                <span>DevAtlas</span>
-            </h2>
+            <div className="flex items-center gap-3 border-b border-black/10 pb-5 dark:border-white/10">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-brand-primary to-brand-primary-active text-white shadow-sm shadow-violet-500/25">
+                    <BookCheck size={24} strokeWidth={1.7} />
+                </div>
+                <h1 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white">
+                    Dev<span className="text-brand-primary dark:text-violet-400">Atlas</span>
+                </h1>
+            </div>
 
             <nav className="mt-4 flex flex-col gap-1 flex-1">
                 {navItems.map((item) => {
@@ -59,6 +67,7 @@ export function Sidebar() {
                         className="cursor-pointer rounded-md p-2 text-zinc-500 transition hover:bg-zinc-100 hover:text-zinc-950 dark:text-white/60 dark:hover:bg-white/5 dark:hover:text-white"
                         aria-label="Logout"
                     // onClick={handleLogout}
+                    onClick={() => navigate("/")}
                     >
                         <LogOut size={18} />
                     </button>

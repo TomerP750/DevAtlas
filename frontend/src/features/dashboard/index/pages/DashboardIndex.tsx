@@ -35,7 +35,7 @@ export function DashboardIndex() {
 
                 <div className={`mt-5 grid grid-cols-1 gap-4 overflow-y-auto pr-2 ${gridLayout === "grid"
                     ? "md:max-h-[532px] md:auto-rows-[260px] md:grid-cols-2"
-                    : "max-h-[550px]"
+                    : "max-h-[500px]"
                     }`}>
 
                     {dummyData?.map((learningPath) => (
