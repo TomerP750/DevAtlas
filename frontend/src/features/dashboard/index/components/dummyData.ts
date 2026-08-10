@@ -1,12 +1,13 @@
-import type { LearningPathDispalyDto } from "../models/learningPath/LearningPathDisplayDto";
+import type { LearningPathDto } from "../models/learningPath/LearningPathDto";
 
-export const dummyData: LearningPathDispalyDto[] = [
+export const dummyData: LearningPathDto[] = [
     {
         id: "1",
         title: "React Development",
         description: "Master React fundamentals, hooks, state management, performance optimization, and modern frontend architecture.",
         completedTopicsCount: 18,
-        topicsLength: 25,
+        totalSectionsCount: 25,
+        totalTopicsCount: 100,
         createdAt: new Date(),
     },
     {
@@ -14,7 +15,8 @@ export const dummyData: LearningPathDispalyDto[] = [
         title: "JavaScript Fundamentals",
         description: "Learn JavaScript core concepts including ES6+, asynchronous programming, DOM manipulation, and advanced patterns.",
         completedTopicsCount: 32,
-        topicsLength: 40,
+        totalSectionsCount: 40,
+        totalTopicsCount: 150,
         createdAt: new Date(),
     },
     {
@@ -22,7 +24,8 @@ export const dummyData: LearningPathDispalyDto[] = [
         title: "Spring Boot Backend",
         description: "Build production-ready backend applications with Spring Boot, REST APIs, security, JPA, and microservices.",
         completedTopicsCount: 15,
-        topicsLength: 35,
+        totalSectionsCount: 35,
+        totalTopicsCount: 200,
         createdAt: new Date(),
     },
     {
@@ -30,7 +33,8 @@ export const dummyData: LearningPathDispalyDto[] = [
         title: "Node.js Backend",
         description: "Develop scalable backend applications using Node.js, Express, authentication, databases, and API design.",
         completedTopicsCount: 22,
-        topicsLength: 30,
+        totalSectionsCount: 30,
+        totalTopicsCount: 120,
         createdAt: new Date(),
     },
     {
@@ -38,7 +42,8 @@ export const dummyData: LearningPathDispalyDto[] = [
         title: "Docker & DevOps",
         description: "Understand containerization, Docker images, containers, networking, and deployment workflows.",
         completedTopicsCount: 8,
-        topicsLength: 20,
+        totalSectionsCount: 20,
+        totalTopicsCount: 80,
         createdAt: new Date(),
     },
 ];

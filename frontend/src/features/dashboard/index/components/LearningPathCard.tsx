@@ -1,19 +1,20 @@
-import { Map, MoreVertical } from "lucide-react";
+import { BookOpen, CircleCheck, Layers, Map, MoreVertical } from "lucide-react";
 import { useState } from "react";
 import { Button } from "../../../../shared/ui/Button";
 import { ProgressBar } from "../../../../shared/ui/ProgressBar";
-import type { LearningPathDispalyDto } from "../models/learningPath/LearningPathDisplayDto";
+import type { LearningPathDto } from "../models/learningPath/LearningPathDto";
 import { CrudMenu } from "./CrudMenu";
+import { NavLink } from "react-router-dom";
 
 interface LearningPathCardProps {
-    learningPath: LearningPathDispalyDto;
+    learningPath: LearningPathDto;
 }
 
 export function LearningPathCard({ learningPath }: LearningPathCardProps) {
 
     const [crudMenuOpen, setCrudMenuOpen] = useState<boolean>(false);
 
-    const { id, title, description, createdAt, topicsLength, completedTopicsCount } = learningPath;
+    const { id, title, description, createdAt, totalSectionsCount, totalTopicsCount, completedTopicsCount } = learningPath;
 
     return (
         <article className="group rounded-xl border border-neutral-200 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-md dark:border-dark-border dark:bg-dark-card dark:shadow-black/20 dark:hover:border-dark-border-hover dark:hover:bg-dark-card-hover">
@@ -62,19 +63,29 @@ export function LearningPathCard({ learningPath }: LearningPathCardProps) {
 
                 {/* Progress */}
 
-                <ProgressBar completedTopics={completedTopicsCount} topicsLength={topicsLength} />
+                <ProgressBar completedTopicsCount={completedTopicsCount} totalTopicsCount={totalTopicsCount} />
 
 
                 {/* Footer */}
                 <div className="flex items-center justify-between border-t border-neutral-100 pt-4 dark:border-dark-border">
-                    <div className="flex gap-4 text-sm text-neutral-500 dark:text-dark-text-muted">
-                        <span>{topicsLength} Topics</span>
-                        <span>4 Sections</span>
+                    <div className="flex flex-wrap gap-4 text-sm text-neutral-500 dark:text-dark-text-muted">
+                        <span className="flex items-center gap-1.5">
+                            <Layers className="text-violet-500 dark:text-violet-300" size={16} aria-hidden="true" />
+                            {totalSectionsCount} Sections
+                        </span>
+                        <span className="flex items-center gap-1.5">
+                            <BookOpen className="text-blue-500 dark:text-blue-300" size={16} aria-hidden="true" />
+                            {totalTopicsCount} Topics
+                        </span>
+                        <span className="flex items-center gap-1.5">
+                            <CircleCheck className="text-emerald-500 dark:text-emerald-300" size={16} aria-hidden="true" />
+                            {completedTopicsCount} Completed
+                        </span>
                     </div>
 
-                    <button className="text-sm font-medium text-brand-primary hover:underline dark:text-violet-300 dark:hover:text-violet-200">
-                        Continue →
-                    </button>
+                    <NavLink className="text-sm font-medium text-brand-primary hover:underline dark:text-white dark:hover:text-violet-200" to={`/dashboard/learning-paths/${id}`}>
+                        Continue
+                    </NavLink>
                 </div>
             </div>
         </article>

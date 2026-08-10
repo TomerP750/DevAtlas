@@ -4,7 +4,7 @@ import { ActionButtons } from "../components/ActionButtons";
 import { LearningPathCard } from "../components/LearningPathCard";
 import { useQuery } from "@tanstack/react-query";
 import learningPathService from "../api/learningPathService";
-import type { LearningPathDispalyDto } from "../models/learningPath/LearningPathDisplayDto";
+import type { LearningPathDispalyDto } from "../models/learningPath/LearningPathDto";
 import { dummyData } from "../components/dummyData";
 import { LayoutDashboardIcon } from "lucide-react";
 

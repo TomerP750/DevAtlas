@@ -1,13 +1,19 @@
 
 
 interface ProgressBarProps {
-    completedTopics: number;
-    topicsLength: number;
+    completedTopicsCount: number;
+    totalTopicsCount: number;
     className?: string;
 }
 
-export function ProgressBar({ completedTopics, topicsLength, className = "" }: ProgressBarProps) {
-    const progress = Math.round((completedTopics / topicsLength) * 100);
+export function ProgressBar({ completedTopicsCount, totalTopicsCount, className = "" }: ProgressBarProps) {
+    
+
+    const progress = Math.round((completedTopicsCount / totalTopicsCount) * 100);
+
+    if (totalTopicsCount === 0) {
+        return 0;
+    }
 
     return (
         <div className={`flex flex-col gap-2 ${className}`}>

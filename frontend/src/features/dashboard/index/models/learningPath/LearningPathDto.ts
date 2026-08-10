@@ -1,8 +1,10 @@
-export interface LearningPathDispalyDto {
+export interface LearningPathDto {
     id: string;
     title: string;
     description: string;
+    totalSectionsCount: number;
+    totalTopicsCount: number;
     completedTopicsCount: number;
-    topicsLength: number;
     createdAt: Date;
 }
+
