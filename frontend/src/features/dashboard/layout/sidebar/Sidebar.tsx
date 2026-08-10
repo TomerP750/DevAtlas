@@ -58,6 +58,7 @@ export function Sidebar() {
                         <div className="min-w-0">
                             <p className="truncate text-sm font-medium text-zinc-900 dark:text-white">
                                 {/* {user ? `${user?.firstName}` : "Guest"} */}
+                                User One
                             </p>
                         </div>
                     </div>
@@ -66,6 +67,7 @@ export function Sidebar() {
                     <button
                         className="cursor-pointer rounded-md p-2 text-zinc-500 transition hover:bg-zinc-100 hover:text-zinc-950 dark:text-white/60 dark:hover:bg-white/5 dark:hover:text-white"
                         aria-label="Logout"
+                        title="Logout"
                     // onClick={handleLogout}
                     onClick={() => navigate("/")}
                     >

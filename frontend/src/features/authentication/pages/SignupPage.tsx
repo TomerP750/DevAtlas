@@ -1,11 +1,11 @@
 import { useForm } from "react-hook-form";
-import { type SignUpRequestDto } from "../models/SignUpRequestDto";
 import { Input } from "../../../shared/ui/Input";
 import { Button } from "../../../shared/ui/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
+import type { SignUpRequestDto } from "../models/SignupRequestDto";
 
 
 export function SignupPage() {
@@ -21,7 +21,7 @@ export function SignupPage() {
             navigate("/dashboard");
             toast.success("Signup successful");
         },
-        onError: (err) => {
+        onError: () => {
             toast.error("Signup failed. Please try again.");
         },
     });
@@ -30,20 +30,36 @@ export function SignupPage() {
         signUpUser(dto);
     }
 
-    return (
-        <section className="flex flex-col items-center justify-center h-screen">
-            <h1 className="mb-3 text-center text-2xl font-semibold tracking-tight dark:text-white sm:text-3xl">
-                Create an account
-            </h1>
-            <form
-                className="w-md max-w-3xl space-y-5 rounded-2xl border border-white/10 p-6 shadow-2xl backdrop-blur-sm sm:p-10"
-                onSubmit={handleSubmit(handleSignUp)}>
+    const inputClassName = "h-11 rounded-xl !border-zinc-300 !bg-white/50 px-4 text-zinc-950 shadow-sm placeholder:text-zinc-400 hover:!border-zinc-400 focus:!border-brand-primary focus:!bg-white/75 focus:ring-4 focus:ring-brand-primary/10 dark:!border-violet-300/30 dark:!bg-indigo-950/25 dark:text-white dark:placeholder:text-indigo-200/40 dark:hover:!border-violet-300/50 dark:focus:!border-violet-400 dark:focus:!bg-indigo-950/40 dark:focus:ring-violet-400/10";
 
-                <div className="grid grid-cols-2 gap-4">
+    return (
+        <section className="w-full max-w-lg" aria-labelledby="signup-heading">
+            <form
+                className="rounded-3xl border border-zinc-200/80 p-6 shadow-xl shadow-zinc-950/5 sm:p-8 dark:border-white/10 dark:shadow-black/25"
+                onSubmit={handleSubmit(handleSignUp)}
+            >
+                <header className="mb-8">
+                    <p className="mb-2 text-sm font-semibold text-brand-primary dark:text-violet-400">
+                        Start building your atlas
+                    </p>
+                    <h1
+                        id="signup-heading"
+                        className="text-2xl font-semibold tracking-tight text-zinc-950 sm:text-3xl dark:text-white"
+                    >
+                        Create your account
+                    </h1>
+                    <p className="mt-2 text-sm leading-6 text-zinc-500 dark:text-zinc-400">
+                        Keep your learning paths, notes, and resources together.
+                    </p>
+                </header>
+
+                <div className="space-y-5">
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                     <Input
                         required
                         label="First Name"
-                        placeholder="First Name"
+                        placeholder="Your First Name"
+                        className={inputClassName}
                         {...register("firstName", {
                             required: "First name is required",
                             pattern: {
@@ -57,7 +73,8 @@ export function SignupPage() {
                     <Input
                         required
                         label="Last Name"
-                        placeholder="Last Name"
+                        placeholder="Your Last Name"
+                        className={inputClassName}
                         {...register("lastName", {
                             required: "Last name is required",
                             pattern: {
@@ -72,7 +89,8 @@ export function SignupPage() {
                 <Input
                     required
                     label="Email"
-                    placeholder="Email"
+                    placeholder="you@example.com"
+                    className={inputClassName}
                     {...register("email", {
                         required: "Email is required",
                         pattern: {
@@ -86,7 +104,8 @@ export function SignupPage() {
                 <Input
                     required
                     label="Password"
-                    placeholder="Password"
+                    placeholder="At least 8 characters"
+                    className={inputClassName}
                     {...register("password", {
                         required: "Password is required",
                         minLength: {
@@ -101,7 +120,8 @@ export function SignupPage() {
                 <Input
                     required
                     label="Confirm Password"
-                    placeholder="Confirm Password"
+                    placeholder="Repeat your password"
+                    className={inputClassName}
                     {...register("confirmPassword", {
                         required: "Confirm password is required",
                         validate: (value, formValues) => {
@@ -118,14 +138,15 @@ export function SignupPage() {
                     type="submit"
                     disabled={isPending}
                     variant="primary"
-                    className="w-full">
-                    Create Account
+                    className="mt-2 h-11 w-full rounded-xl shadow-lg shadow-brand-primary/20">
+                    {isPending ? "Creating account..." : "Create account"}
                 </Button>
+                </div>
 
-                <p className="text-center text-sm text-gray-500">
+                <p className="mt-6 border-t border-zinc-200 pt-6 text-center text-sm text-zinc-500 dark:border-white/10 dark:text-zinc-400">
                     Already have an account? {" "}
                     <Link to="/auth/login"
-                        className="text-brand-primary hover:underline font-bold">
+                        className="font-semibold text-brand-primary hover:text-brand-primary-hover dark:text-violet-400 dark:hover:text-violet-300">
                         Sign in
                     </Link>
                 </p>

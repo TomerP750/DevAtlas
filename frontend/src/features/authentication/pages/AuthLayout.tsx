@@ -11,10 +11,11 @@ export function AuthLayout() {
 
             {/* Logo */}
             <div className="relative z-10">
-                <Link to="/">
-                    <h1 className="text-2xl font-bold tracking-tight text-brand-primary">
-                        DevAtlas
-                    </h1>
+                <Link
+                    to="/"
+                    className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white"
+                >
+                    Dev<span className="text-brand-primary dark:text-violet-400">Atlas</span>
                 </Link>
             </div>
 

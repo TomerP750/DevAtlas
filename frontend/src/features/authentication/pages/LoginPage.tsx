@@ -4,9 +4,7 @@ import { Input } from "../../../shared/ui/Input";
 import { Button } from "../../../shared/ui/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
-import type { AxiosError } from "axios";
 import { useAuth } from "../contexts/AuthContext";
-import { useState } from "react";
 import { toast } from "react-toastify";
 
 export function LoginPage() {
@@ -22,7 +20,7 @@ export function LoginPage() {
             navigate("/dashboard");
             toast.success("Login successful.");
         },
-        onError: (err) => {
+        onError: () => {
             toast.error("Login failed. Please try again.");
         },
     });
@@ -32,17 +30,34 @@ export function LoginPage() {
     };
 
 
+    const inputClassName = "h-11 rounded-xl !border-zinc-300 !bg-white/50 px-4 text-zinc-950 shadow-sm placeholder:text-zinc-400 hover:!border-zinc-400 focus:!border-brand-primary focus:!bg-white/75 focus:ring-4 focus:ring-brand-primary/10 dark:!border-violet-300/30 dark:!bg-indigo-950/25 dark:text-white dark:placeholder:text-indigo-200/40 dark:hover:!border-violet-300/50 dark:focus:!border-violet-400 dark:focus:!bg-indigo-950/40 dark:focus:ring-violet-400/10";
+
     return (
-        <section className="flex flex-col items-center justify-center h-screen">
-            <h1 className="mb-3 text-center text-2xl font-semibold tracking-tight dark:text-white sm:text-3xl">
-                Sign in to your account
-            </h1>
+        <section className="w-full max-w-md" aria-labelledby="login-heading">
             <form
-                className="w-md max-w-2xl space-y-5 rounded-2xl border border-white/10 p-6 shadow-2xl backdrop-blur-sm sm:p-10"
-                onSubmit={handleSubmit(handleLogin)}>
+                className="rounded-3xl border border-zinc-200/80 p-6 shadow-xl shadow-zinc-950/5 sm:p-9 dark:border-white/10 dark:shadow-black/25"
+                onSubmit={handleSubmit(handleLogin)}
+            >
+                <header className="mb-8">
+                    <p className="mb-2 text-sm font-semibold text-brand-primary dark:text-violet-400">
+                        Welcome back
+                    </p>
+                    <h1
+                        id="login-heading"
+                        className="text-2xl font-semibold tracking-tight text-zinc-950 sm:text-3xl dark:text-white"
+                    >
+                        Sign in to DevAtlas
+                    </h1>
+                    <p className="mt-2 text-sm leading-6 text-zinc-500 dark:text-zinc-400">
+                        Continue where you left off.
+                    </p>
+                </header>
+
+                <div className="space-y-5">
                 <Input
                     label="Email"
-                    placeholder="Email"
+                    placeholder="you@example.com"
+                    className={inputClassName}
                     {...register("email", {
                         required: "Email is required",
                         pattern: {
@@ -54,7 +69,8 @@ export function LoginPage() {
                 />
                 <Input
                     label="Password"
-                    placeholder="Password"
+                    placeholder="Enter your password"
+                    className={inputClassName}
                     {...register("password", {
                         required: "Password is required",
                         minLength: {
@@ -67,13 +83,21 @@ export function LoginPage() {
                 />
                 <Button
                     type="submit"
+                    disabled={isPending}
                     variant="primary"
-                    className="w-full mt-2">
-                    Login
+                    className="mt-2 h-11 w-full rounded-xl shadow-lg shadow-brand-primary/20">
+                    {isPending ? "Signing in..." : "Sign in"}
                 </Button>
+                </div>
 
-                <p className="text-center text-sm text-gray-500">
-                    Don't have an account? <Link to="/auth/signup" className="text-brand-primary hover:underline font-bold">Sign up</Link>
+                <p className="mt-6 border-t border-zinc-200 pt-6 text-center text-sm text-zinc-500 dark:border-white/10 dark:text-zinc-400">
+                    Don&apos;t have an account?{" "}
+                    <Link
+                        to="/auth/signup"
+                        className="font-semibold text-brand-primary hover:text-brand-primary-hover dark:text-violet-400 dark:hover:text-violet-300"
+                    >
+                        Sign up
+                    </Link>
                 </p>
             </form>
 

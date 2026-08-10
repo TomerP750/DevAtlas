@@ -1,66 +1,83 @@
+import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import previewImage from "../../assets/list_dark.jpg";
 
 export function Hero() {
-    
     return (
-        <header className="relative min-h-screen bg-neutral-100">
+        <header className="relative isolate flex min-h-screen flex-col overflow-hidden bg-dark-background">
 
-            <div className="absolute -top-32 -left-32 h-96 w-96 rounded-full bg-violet-300/30 blur-3xl" />
-            <div className="absolute top-40 right-0 h-[28rem] w-[28rem] rounded-full bg-indigo-300/25 blur-3xl" />
+            <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 -z-10 [background-image:linear-gradient(to_right,rgba(255,255,255,0.07)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.07)_1px,transparent_1px)] [background-size:56px_56px] [mask-image:radial-gradient(ellipse_65%_55%_at_50%_0%,#000_50%,transparent_100%)]"
+            />
+            <div
+                aria-hidden="true"
+                className="pointer-events-none absolute left-1/2 top-[-18rem] -z-10 h-[36rem] w-[56rem] -translate-x-1/2 rounded-full bg-brand-primary/25 blur-[120px]"
+            />
 
-            <nav className="h-20 flex items-center justify-between px-6 md:px-10">
+            <nav className="mx-auto flex h-20 w-full max-w-6xl items-center justify-between px-6 md:px-10">
                 <Link
                     to="/"
-                    className="text-2xl font-bold tracking-tight text-indigo-600"
+                    className="text-2xl font-bold tracking-tight text-white"
                 >
-                    DevAtlas
+                    Dev<span className="text-violet-400">Atlas</span>
                 </Link>
 
-                <Link
-                    to="/dashboard"
-                    className="rounded-lg border border-neutral-300 px-5 py-2 text-sm font-medium transition hover:bg-neutral-100"
-                >
-                    Dashboard
-                </Link>
-
-                <Link
-                    to="/auth/login"
-                    className="rounded-lg border border-neutral-300 px-5 py-2 text-sm font-medium transition hover:bg-neutral-100"
-                >
-                    Login
-                </Link>
+                <div className="flex items-center gap-2">
+                    <Link
+                        to="/dashboard"
+                        className="rounded-lg px-4 py-2 text-sm font-medium text-zinc-400 transition hover:text-white"
+                    >
+                        Dashboard
+                    </Link>
+                    <Link
+                        to="/auth/login"
+                        className="rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-zinc-200 transition hover:border-white/20 hover:bg-white/10"
+                    >
+                        Log in
+                    </Link>
+                </div>
             </nav>
 
-            <div className="flex min-h-[calc(100vh-5rem)] max-w-7xl flex-col justify-center gap-16 px-6 md:px-10 lg:flex-row lg:items-center lg:justify-between">
-                {/* Left */}
-                <div className="max-w-xl sm:max-w-2xl lg:-translate-y-8">
-                    <span className="inline-flex rounded-full bg-indigo-100 px-4 py-1 text-sm font-medium text-indigo-700">
-                        Developer Learning Platform
-                    </span>
+            <div className="mx-auto flex w-full max-w-3xl flex-col items-center px-6 pt-14 text-center sm:pt-20">
+                <p className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">
+                    <span aria-hidden="true" className="h-px w-8 bg-gradient-to-r from-transparent to-white/25" />
+                    Developer Progress Tracking platform
+                    <span aria-hidden="true" className="h-px w-8 bg-gradient-to-l from-transparent to-white/25" />
+                </p>
 
-                    <h1 className="mt-6 bg-gradient-to-r from-brand-primary to-indigo-500 bg-clip-text text-4xl font-bold leading-tight tracking-tight text-transparent sm:text-5xl lg:text-6xl">
-                        Organize your developer knowledge in one place.
-                    </h1>
+                <h1 className="mt-6 text-balance text-4xl font-bold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-6xl">
+                    Organize your developer knowledge in{" "}
+                    <span className="bg-gradient-to-r from-purple-500 to-indigo-400 bg-clip-text text-transparent">
+                        one place
+                    </span>.
+                </h1>
 
-                    <p className="my-6 text-lg leading-8 text-neutral-600">
-                        Track technologies, learning progress, notes, and
-                        resources with a clean workspace built for developers.
-                    </p>
+                <p className="mt-6 max-w-xl text-pretty text-lg leading-8 text-zinc-400">
+                    Track technologies, learning progress, notes, and resources
+                    with a clean workspace built for developers.
+                </p>
 
+                <div className="mt-9 flex flex-col items-center gap-3 sm:flex-row">
                     <Link
                         to="/auth/signup"
-                        className="rounded-xl bg-indigo-600 px-6 py-3 font-semibold 
-                        text-white transition hover:bg-indigo-700">
-                        Get Started
+                        className="group inline-flex items-center gap-2 rounded-xl bg-brand-primary px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-brand-primary/25 transition hover:bg-brand-primary-hover"
+                    >
+                        Get started
+                        <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
                     </Link>
-
-                </div>
-
-                {/* Right (placeholder) */}
-                <div className="hidden h-[500px] w-full max-w-xl lg:block">
-                    {/* Dashboard preview goes here */}
                 </div>
             </div>
+
+            <figure className="mx-auto mt-14 flex w-full max-w-6xl justify-center px-6 sm:px-10">
+                <img
+                    src={previewImage}
+                    alt="DevAtlas dashboard preview"
+                    className="block w-full rounded-t-2xl border border-b-0 border-white/10 object-contain object-bottom shadow-2xl shadow-black/40"
+                />
+            </figure>
+
         </header>
     );
 }
+
