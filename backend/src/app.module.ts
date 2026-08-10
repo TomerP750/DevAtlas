@@ -11,6 +11,7 @@ import { APP_PIPE } from '@nestjs/core';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { LearningPathModule } from './learning-path/learning-path.module';
 import { TopicModule } from './topic/topic.module';
+import { SectionModule } from './section/section.module';
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import { TopicModule } from './topic/topic.module';
     UserModule, 
     AuthenticationModule, 
     LearningPathModule, 
-    TopicModule
+    TopicModule, SectionModule
   ],
   providers: [AppService, {
     provide: APP_PIPE,
