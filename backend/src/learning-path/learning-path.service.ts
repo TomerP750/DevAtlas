@@ -57,12 +57,13 @@ export class LearningPathService {
 
     async update(id: string, userId: string, updateLearningPathDto: UpdateLearningPathDto) {
         const learningPath = await this.findOne(id, userId);
-        this.learningPathRepository.update(id, updateLearningPathDto);
+        await this.learningPathRepository.merge(learningPath, updateLearningPathDto);
+        await this.learningPathRepository.save(learningPath);
     }
 
     async delete(id: string, userId: string) {
         const learningPath = await this.findOne(id, userId);
-        this.learningPathRepository.delete(id);
+        await this.learningPathRepository.delete(id);
     }
 
     async updateLearningPathSectionCompletion(userId: string, id: string, completed: boolean) {
@@ -73,6 +74,14 @@ export class LearningPathService {
                 ? learningPath.completedSectionsCount++
                 : learningPath.completedSectionsCount--;
                 
+        await this.learningPathRepository.save(learningPath);
+    }
+
+    async updateTotalSections(userId: string, id: string, increment: boolean) {
+        const learningPath = await this.findOne(id, userId);
+        learningPath.totalSectionsCount = increment
+            ? learningPath.totalSectionsCount++
+            : learningPath.totalSectionsCount--;
         await this.learningPathRepository.save(learningPath);
     }
 }

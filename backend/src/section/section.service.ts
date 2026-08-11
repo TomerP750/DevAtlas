@@ -23,11 +23,6 @@ export class SectionService {
                 id,
                 ...sectionOwnedBy(userId),
             },
-            relations: {
-                topic: {
-                    learningPath: true,
-                },
-            },
         });
 
         if (!section) {
@@ -54,11 +49,19 @@ export class SectionService {
 
     }
 
-    async createSection(userId: string, topicId: string, createSectionDto: CreateSectionDto): Promise<Section> {
+    async createSection(userId: string, learningPathId: string, topicId: string, createSectionDto: CreateSectionDto) {
         const { name, description } = createSectionDto;
         const topic = await this.topicService.findOne(topicId, userId);
         const section = this.sectionRepository.create({ name, description, topic });
-        return this.sectionRepository.save(section);
+        await this.sectionRepository.save(section);
+
+        await this.learningPathService.updateTotalSections(
+            userId,
+            learningPathId,
+            true
+        );
+
+
     }
 
     async updateSection(userId: string, id: string, updateSectionDto: UpdateSectionDto): Promise<Section> {
@@ -70,6 +73,11 @@ export class SectionService {
     async deleteSection(userId: string, id: string): Promise<void> {
         const section = await this.findOne(id, userId);
         await this.sectionRepository.delete(section.id);
+        await this.learningPathService.updateTotalSections(
+            userId,
+            section.topic.learningPath.id,
+            false
+        );
     }
 
 }
