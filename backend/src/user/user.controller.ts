@@ -1,9 +1,10 @@
-import { Body, Controller, Delete, Get, Param, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Patch, Put } from '@nestjs/common';
 import { UpdateUserDto } from './dtos/update-user-dto';
 import { UserDto } from './dtos/user.dto';
 import { UserService } from './user.service';
 import { CurrentUserId } from '../authentication/decorators/current-user.decorator';
 import { Serialize } from '../shared/interceptors/serialize.interceptor';
+import { UpdatePasswordDto } from './dtos/update-password.dto';
 
 
 @Controller('user')
@@ -27,6 +28,11 @@ export class UserController {
     @Delete("/:id")
     deleteUser(@CurrentUserId() userId: string) {
         this.userService.remove(userId);
+    }
+
+    @Patch("/update-password")
+    updatePassword(@CurrentUserId() userId: string, @Body() dto: UpdatePasswordDto) {
+        this.userService.updatePassword(userId, dto);
     }
 
 }

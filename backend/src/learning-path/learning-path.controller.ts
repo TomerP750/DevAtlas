@@ -14,8 +14,11 @@ export class LearningPathController {
 
     @Post()
     @Serialize(LearningPathDto)
-    create(@Body() createLearningPathDto: CreateLearningPathDto) {
-        return this.learningPathService.create(createLearningPathDto);
+    create(
+        @CurrentUserId() userId: string,
+        @Body() createLearningPathDto: CreateLearningPathDto,
+    ) {
+        return this.learningPathService.create(userId, createLearningPathDto);
     }
 
     @Get("/all")

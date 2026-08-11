@@ -12,9 +12,12 @@ export class TopicController {
 
     constructor(private readonly topicService: TopicService) {}
 
-    @Get()
-    async findAll(@CurrentUserId() userId: string) {
-        return this.topicService.findAll(userId);
+    @Get('/learning-path/:learningPathId')
+    async findAll(
+        @CurrentUserId() userId: string,
+        @Param('learningPathId') learningPathId: string,
+    ) {
+        return this.topicService.findAll(userId, learningPathId);
     }
 
     @Get('/:id')

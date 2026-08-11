@@ -3,7 +3,7 @@ import { Section } from './section.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { LearningPathService } from '../learning-path/learning-path.service';
-import { CreateSectionDto } from './dtos/section.dto';
+import { CreateSectionDto } from './dtos/create-section.dto';
 import { TopicService } from '../topic/topic.service';
 import { UpdateSectionDto } from './dtos/update-section.dto';
 import { sectionOwnedBy } from '../shared/utils/ownership.util';
@@ -70,7 +70,7 @@ export class SectionService {
 
     }
 
-    async createSection(userId: string, topicId: string, createSectionDto: CreateSectionDto) {
+    async create(userId: string, topicId: string, createSectionDto: CreateSectionDto) {
         const { name, description } = createSectionDto;
         const topic = await this.topicService.findOne(topicId, userId);
         const section = this.sectionRepository.create({ name, description, topic });
@@ -85,13 +85,13 @@ export class SectionService {
 
     }
 
-    async updateSection(userId: string, id: string, updateSectionDto: UpdateSectionDto): Promise<Section> {
+    async update(userId: string, id: string, updateSectionDto: UpdateSectionDto): Promise<Section> {
         const section = await this.findOne(id, userId);
         this.sectionRepository.merge(section, updateSectionDto);
         return this.sectionRepository.save(section);
     }
 
-    async deleteSection(userId: string, id: string): Promise<void> {
+    async delete(userId: string, id: string): Promise<void> {
         const section = await this.findOne(id, userId);
         await this.sectionRepository.delete(section.id);
         await this.learningPathService.updateTotalSections(

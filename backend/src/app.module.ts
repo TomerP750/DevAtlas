@@ -19,7 +19,7 @@ import { Topic } from './topic/topic.entity';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: '.env',
+      envFilePath: '.env.development', //TODO add development and cross env to scripts 
     }),
     TypeOrmModule.forRootAsync({
       useFactory: (configService: ConfigService) => ({

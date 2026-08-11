@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -9,6 +9,7 @@ import { randomBytes, scrypt as _scrypt} from 'crypto';
 import { promisify } from 'util';
 import { SignUpDto } from '../authentication/dtos/signup.dto';
 import { Role } from '../authentication/role';
+import { UpdatePasswordDto } from './dtos/update-password.dto';
 
 const scrypt = promisify(_scrypt);
 
@@ -69,6 +70,28 @@ export class UserService {
         return this.userRepository.remove(user);
 
     }
+
+    // TODO: make a hash utility function
+    async updatePassword(userId: string, dto: UpdatePasswordDto) {
+        const user = await this.findOne(userId);
+
+        if (!user) {
+            throw new NotFoundException("User not found");
+        }
+
+        if (dto.newPassword !== dto.confirmNewPassword) {
+            throw new BadRequestException("New passwords do not match");
+        }
+
+        const salt = randomBytes(8).toString('hex');
+        const hash = (await scrypt(dto.newPassword, salt, 32)) as Buffer;
+        const result = salt + '.' + hash.toString('hex');
+        
+        await this.userRepository.update(userId, { password: result });
+
+    }
+
+    
 
 
 
