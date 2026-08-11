@@ -6,6 +6,7 @@ import { Topic } from './topic.entity';
 import { LearningPathService } from '../learning-path/learning-path.service';
 import { NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
+import { Section } from '../section/section.entity';
 
 
 describe('TopicService', () => {
@@ -33,6 +34,15 @@ describe('TopicService', () => {
           provide: LearningPathService,
           useValue: {
             findOne: jest.fn(),
+            updateTotalTopics: jest.fn(),
+            updateTotalSections: jest.fn(),
+            updateLearningPathSectionCompletion: jest.fn(),
+          },
+        },
+        {
+          provide: getRepositoryToken(Section),
+          useValue: {
+            count: jest.fn(),
           },
         },
       ],
@@ -70,6 +80,9 @@ describe('TopicService', () => {
               id: 'user-1',
             },
           },
+        },
+        relations: {
+          learningPath: true,
         },
       });
     });

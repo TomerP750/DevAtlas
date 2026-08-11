@@ -7,17 +7,31 @@ import { UpdateLearningPathDto } from './dtos/update-learning-path-dto';
 import { LearningPathQueryDto } from './dtos/learning-path-query.dto';
 import { Page } from '../shared/types/Page';
 import { learningPathOwnedBy } from '../shared/utils/ownership.util';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class LearningPathService {
 
     constructor(
-        @InjectRepository(LearningPath) private learningPathRepository: Repository<LearningPath>,
+        @InjectRepository(LearningPath)
+        private learningPathRepository: Repository<LearningPath>,
+        private readonly userService: UserService
     ) { }
 
-    async create(createLearningPathDto: CreateLearningPathDto) {
-        const learningPath = this.learningPathRepository.create(createLearningPathDto);
-        return this.learningPathRepository.save(learningPath);
+    async create(userId: string, createLearningPathDto: CreateLearningPathDto) {
+        const user = await this.userService.findOne(userId);
+        if (!user) {
+            throw new NotFoundException('User not found');
+        }
+
+        const learningPath = this.learningPathRepository.create(
+            {
+                ...createLearningPathDto,
+                user
+            });
+        await this.learningPathRepository.save(learningPath);
+
+        return learningPath;
     }
 
     async findOne(id: string, userId: string) {
@@ -39,6 +53,8 @@ export class LearningPathService {
         if (search) {
             // Escape the LIKE wildcards so a search for "100%" does not match everything.
             const term = `%${search.replace(/[%_\\]/g, '\\$&')}%`;
+            // Added ownedby
+            // This is to prevent users from searching other users' learning paths
             where = [
                 { ...ownedByUser, name: Like(term) },
                 { ...ownedByUser, description: Like(term) },
@@ -66,22 +82,42 @@ export class LearningPathService {
         await this.learningPathRepository.delete(id);
     }
 
-    async updateLearningPathSectionCompletion(userId: string, id: string, completed: boolean) {
+    async updateLearningPathSectionCompletion(userId: string, id: string, amount: number) {
+        if (amount === 0) {
+            return;
+        }
+
         const learningPath = await this.findOne(id, userId);
-        
-        learningPath.completedSectionsCount =
-            completed
-                ? learningPath.completedSectionsCount++
-                : learningPath.completedSectionsCount--;
-                
-        await this.learningPathRepository.save(learningPath);
+        await this.learningPathRepository.increment(
+            { id: learningPath.id },
+            'completedSectionsCount',
+            amount,
+        );
     }
 
-    async updateTotalSections(userId: string, id: string, increment: boolean) {
+    async updateTotalSections(userId: string, id: string, amount: number) {
+        if (amount === 0) {
+            return;
+        }
+
         const learningPath = await this.findOne(id, userId);
-        learningPath.totalSectionsCount = increment
-            ? learningPath.totalSectionsCount++
-            : learningPath.totalSectionsCount--;
-        await this.learningPathRepository.save(learningPath);
+        await this.learningPathRepository.increment(
+            { id: learningPath.id },
+            'totalSectionsCount',
+            amount,
+        );
+    }
+
+    async updateTotalTopics(userId: string, id: string, amount: number) {
+        if (amount === 0) {
+            return;
+        }
+
+        const learningPath = await this.findOne(id, userId);
+        await this.learningPathRepository.increment(
+            { id: learningPath.id },
+            'totalTopicsCount',
+            amount,
+        );
     }
 }

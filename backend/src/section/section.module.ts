@@ -9,6 +9,7 @@ import { LearningPathModule } from '../learning-path/learning-path.module';
 @Module({
   imports: [TypeOrmModule.forFeature([Section]), TopicModule, LearningPathModule],
   providers: [SectionService],
-  controllers: [SectionController]
+  controllers: [SectionController],
+  exports: [SectionService]
 })
 export class SectionModule {}

@@ -23,6 +23,11 @@ export class SectionService {
                 id,
                 ...sectionOwnedBy(userId),
             },
+            relations: {
+                topic: {
+                    learningPath: true,
+                },
+            },
         });
 
         if (!section) {
@@ -30,6 +35,22 @@ export class SectionService {
         }
 
         return section;
+    }
+
+    async findAll(userId: string, topicId: string): Promise<Section[]> {
+        const sections = await this.sectionRepository.find({
+            where: {
+                topic: {
+                    id: topicId,
+                    learningPath: {
+                        user: {
+                            id: userId,
+                        },
+                    },
+                },
+            },
+        });
+        return sections;
     }
 
     async toggleSectionCompletion(userId: string, id: string): Promise<boolean> {
@@ -41,7 +62,7 @@ export class SectionService {
             .updateLearningPathSectionCompletion(
                 userId,
                 section.topic.learningPath.id,
-                section.completed
+                section.completed ? 1 : -1
             );
 
         await this.sectionRepository.save(section);
@@ -49,7 +70,7 @@ export class SectionService {
 
     }
 
-    async createSection(userId: string, learningPathId: string, topicId: string, createSectionDto: CreateSectionDto) {
+    async createSection(userId: string, topicId: string, createSectionDto: CreateSectionDto) {
         const { name, description } = createSectionDto;
         const topic = await this.topicService.findOne(topicId, userId);
         const section = this.sectionRepository.create({ name, description, topic });
@@ -57,8 +78,8 @@ export class SectionService {
 
         await this.learningPathService.updateTotalSections(
             userId,
-            learningPathId,
-            true
+            topic.learningPath.id,
+            1
         );
 
 
@@ -76,8 +97,15 @@ export class SectionService {
         await this.learningPathService.updateTotalSections(
             userId,
             section.topic.learningPath.id,
-            false
+            -1
         );
+        if (section.completed) {
+            await this.learningPathService.updateLearningPathSectionCompletion(
+                userId,
+                section.topic.learningPath.id,
+                -1
+            );
+        }
     }
 
 }

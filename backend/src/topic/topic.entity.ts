@@ -15,7 +15,9 @@ export class Topic {
     @IsOptional()
     codeSnippet?: string;
 
-    @ManyToOne(() => LearningPath)
+    @ManyToOne(() => LearningPath, {
+        onDelete: 'CASCADE',
+    })
     learningPath!: LearningPath;
 
 }

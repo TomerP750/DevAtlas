@@ -13,7 +13,9 @@ export class Section {
     @Column()
     description!: string;
 
-    @ManyToOne(() => Topic)
+    @ManyToOne(() => Topic, {
+        onDelete: 'CASCADE',
+    })
     topic!: Topic;
 
     @Column({ default: false })

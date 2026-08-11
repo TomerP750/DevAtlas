@@ -6,17 +6,22 @@ import { LearningPathService } from '../learning-path/learning-path.service';
 import { CreateTopicDto } from './dtos/create-topic.dto';
 import { UpdateTopicDto } from './dtos/update-topic.dto';
 import { topicOwnedBy } from '../shared/utils/ownership.util';
+import { Section } from '../section/section.entity';
 
 @Injectable()
 export class TopicService {
     constructor(
         @InjectRepository(Topic) private topicRepository: Repository<Topic>,
+        @InjectRepository(Section) private sectionRepository: Repository<Section>,
         private readonly learningPathService: LearningPathService
     ) { }
 
     async findOne(id: string, userId: string): Promise<Topic> {
         const topic = await this.topicRepository.findOne({
             where: { id, ...topicOwnedBy(userId) },
+            relations: {
+                learningPath: true,
+            },
         });
         if (!topic) {
             throw new NotFoundException('Topic not found');
@@ -24,16 +29,28 @@ export class TopicService {
         return topic;
     }
 
-    // async findAll(userId: string, learningPathId: string): Promise<Topic[]> {
-    //     return null;
-    // }
+    async findAll(userId: string, learningPathId: string): Promise<Topic[]> {
+        const topics = await this.topicRepository.find({
+            where: {
+                learningPath: {
+                    id: learningPathId,
+                    user: {
+                        id: userId,
+                    },
+                },
+            },
+        });
+        return topics;
+    }
 
     async createTopic(userId: string, learningPathId: string, createTopicDto: CreateTopicDto): Promise<Topic> {
         const { name, description, codeSnippet } = createTopicDto;
         const learningPath = await this.learningPathService
             .findOne(learningPathId, userId);
         const topic = this.topicRepository.create({ name, description, codeSnippet, learningPath });
-        return this.topicRepository.save(topic);
+        const savedTopic = await this.topicRepository.save(topic);
+        await this.learningPathService.updateTotalTopics(userId, learningPathId, 1);
+        return savedTopic;
     }
 
     async updateTopic(userId: string, id: string, updateTopicDto: UpdateTopicDto): Promise<Topic> {
@@ -44,7 +61,37 @@ export class TopicService {
 
     async deleteTopic(userId: string, id: string): Promise<Topic> {
         const topic = await this.findOne(id, userId);
-        return this.topicRepository.remove(topic);
+        const [totalSections, completedSections] = await Promise.all([
+            this.sectionRepository.count({
+                where: {
+                    topic: { id: topic.id },
+                },
+            }),
+            this.sectionRepository.count({
+                where: {
+                    topic: { id: topic.id },
+                    completed: true,
+                },
+            }),
+        ]);
+        const learningPathId = topic.learningPath.id;
+        const removedTopic = await this.topicRepository.remove(topic);
+        await this.learningPathService.updateTotalTopics(
+            userId,
+            learningPathId,
+            -1
+        );
+        await this.learningPathService.updateTotalSections(
+            userId,
+            learningPathId,
+            -totalSections
+        );
+        await this.learningPathService.updateLearningPathSectionCompletion(
+            userId,
+            learningPathId,
+            -completedSections
+        );
+        return removedTopic;
     }
 
     
