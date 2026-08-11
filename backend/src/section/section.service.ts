@@ -71,9 +71,9 @@ export class SectionService {
     }
 
     async create(userId: string, topicId: string, createSectionDto: CreateSectionDto) {
-        const { name, description } = createSectionDto;
+        const { name, description, codeSnippet, confidenceLevel } = createSectionDto;
         const topic = await this.topicService.findOne(topicId, userId);
-        const section = this.sectionRepository.create({ name, description, topic });
+        const section = this.sectionRepository.create({ name, description, codeSnippet, confidenceLevel, topic });
         await this.sectionRepository.save(section);
 
         await this.learningPathService.updateTotalSections(

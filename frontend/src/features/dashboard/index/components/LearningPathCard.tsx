@@ -83,7 +83,8 @@ export function LearningPathCard({ learningPath }: LearningPathCardProps) {
                         </span>
                     </div>
 
-                    <NavLink className="text-sm font-medium text-brand-primary hover:underline dark:text-white dark:hover:text-violet-200" to={`/dashboard/learning-paths/${id}`}>
+                    <NavLink className="text-sm font-medium text-brand-primary hover:underline dark:text-white dark:hover:text-violet-200"
+                        to={`/dashboard/learning-path/${id}`}>
                         Continue
                     </NavLink>
                 </div>

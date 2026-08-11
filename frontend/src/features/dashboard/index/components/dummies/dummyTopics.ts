@@ -1,0 +1,86 @@
+// generate 10 dummy topics for a learning path
+import { ConfidenceLevel } from "../../models/learningPath/enums/ConfidenceLevel";
+import type { TopicDto } from "../../models/learningPath/TopicDto";
+
+export const dummyTopics: TopicDto[] = [
+    {
+        id: "1",
+        name: "Topic 1",
+        description: "Description 1",
+        order: 1,
+        confidenceLevel: ConfidenceLevel.HIGH,
+        learningPathId: "1",
+    },
+    {
+        id: "2",
+        name: "Topic 2",
+        description: "Description 2",
+        order: 2,
+        confidenceLevel: ConfidenceLevel.HIGH,
+        learningPathId: "1",
+    },
+    {
+        id: "3",
+        name: "Topic 3",
+        description: "Description 3",
+        order: 3,
+        confidenceLevel: ConfidenceLevel.MEDIUM,
+        learningPathId: "1",
+    },
+    {
+        id: "4",
+        name: "Topic 4",
+        description: "Description 4",
+        order: 4,
+        confidenceLevel: ConfidenceLevel.MEDIUM,
+        learningPathId: "1",
+    },
+    {
+        id: "5",
+        name: "Topic 5",
+        description: "Description 5",
+        order: 5,
+        confidenceLevel: ConfidenceLevel.MEDIUM,
+        learningPathId: "1",
+    },
+    {
+        id: "6",
+        name: "Topic 6",
+        description: "Description 6",
+        order: 6,
+        confidenceLevel: ConfidenceLevel.LOW,
+        learningPathId: "1",
+    },
+    {
+        id: "7",
+        name: "Topic 7",
+        description: "Description 7",
+        order: 7,
+        confidenceLevel: ConfidenceLevel.LOW,
+        learningPathId: "1",
+    },
+    {
+        id: "8",
+        name: "Topic 8",
+        description: "Description 8",
+        order: 8,
+        confidenceLevel: ConfidenceLevel.LOW,
+        learningPathId: "1",
+    },
+    {
+        id: "9",
+        name: "Topic 9",
+        description: "Description 9",
+        order: 9,
+        confidenceLevel: ConfidenceLevel.LOW,
+        learningPathId: "1",
+    },
+    {
+        id: "10",
+        name: "Topic 10",
+        description: "Description 10",
+        order: 10,
+        confidenceLevel: ConfidenceLevel.LOW,
+        learningPathId: "1",
+    },
+];

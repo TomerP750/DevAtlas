@@ -1,7 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
 import { LearningPath } from "../learning-path/learning-path.entity";
-import { IsOptional } from "class-validator";
-import { Section } from "../section/section.entity";
+import { ConfidenceLevel } from "../shared/enums/confidence-level";
 
 @Entity()
 export class Topic {
@@ -11,9 +10,16 @@ export class Topic {
     name!: string;
     @Column()
     description!: string;
-    @Column()
-    @IsOptional()
-    codeSnippet?: string;
+
+    @Column({ type: 'int' })
+    order!: number;
+
+    @Column({
+        type: 'enum',
+        enum: ConfidenceLevel,
+        default: ConfidenceLevel.LOW,
+    })
+    confidenceLevel!: ConfidenceLevel;
 
     @ManyToOne(() => LearningPath, {
         onDelete: 'CASCADE',

@@ -46,10 +46,10 @@ export class TopicService {
     }
 
     async createTopic(userId: string, learningPathId: string, createTopicDto: CreateTopicDto): Promise<Topic> {
-        const { name, description, codeSnippet } = createTopicDto;
+        const { name, description, order, confidenceLevel } = createTopicDto;
         const learningPath = await this.learningPathService
             .findOne(learningPathId, userId);
-        const topic = this.topicRepository.create({ name, description, codeSnippet, learningPath });
+        const topic = this.topicRepository.create({ name, description, order, confidenceLevel, learningPath });
         const savedTopic = await this.topicRepository.save(topic);
         await this.learningPathService.updateTotalTopics(userId, learningPathId, 1);
         return savedTopic;

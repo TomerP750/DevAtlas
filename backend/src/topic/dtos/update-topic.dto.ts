@@ -1,4 +1,5 @@
-import { IsOptional, IsString } from 'class-validator';
+import { IsEnum, IsInt, IsOptional, IsString, Min } from 'class-validator';
+import { ConfidenceLevel } from '../../shared/enums/confidence-level';
 
 export class UpdateTopicDto {
     @IsOptional()
@@ -8,7 +9,11 @@ export class UpdateTopicDto {
     @IsString()
     description?: string;
     @IsOptional()
-    @IsString()
-    codeSnippet?: string;
+    @IsInt()
+    @Min(1)
+    order?: number;
+    @IsOptional()
+    @IsEnum(ConfidenceLevel)
+    confidenceLevel?: ConfidenceLevel;
 }
 

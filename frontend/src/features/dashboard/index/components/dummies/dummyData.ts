@@ -1,4 +1,6 @@
-import type { LearningPathDto } from "../models/learningPath/LearningPathDto";
+import { Category } from "../../models/learningPath/enums/Category";
+import { Difficulty } from "../../models/learningPath/enums/Difficulty";
+import type { LearningPathDto } from "../../models/learningPath/LearningPathDto";
 
 export const dummyData: LearningPathDto[] = [
     {
@@ -9,6 +11,8 @@ export const dummyData: LearningPathDto[] = [
         totalSectionsCount: 25,
         totalTopicsCount: 100,
         createdAt: new Date(),
+        category: Category.FRONTEND,
+        difficulty: Difficulty.INTERMEDIATE,
     },
     {
         id: "2",
@@ -18,6 +22,8 @@ export const dummyData: LearningPathDto[] = [
         totalSectionsCount: 40,
         totalTopicsCount: 150,
         createdAt: new Date(),
+        category: Category.FRONTEND,
+        difficulty: Difficulty.BEGINNER,
     },
     {
         id: "3",
@@ -27,6 +33,8 @@ export const dummyData: LearningPathDto[] = [
         totalSectionsCount: 35,
         totalTopicsCount: 200,
         createdAt: new Date(),
+        category: Category.BACKEND,
+        difficulty: Difficulty.ADVANCED,
     },
     {
         id: "4",
@@ -36,6 +44,8 @@ export const dummyData: LearningPathDto[] = [
         totalSectionsCount: 30,
         totalTopicsCount: 120,
         createdAt: new Date(),
+        category: Category.BACKEND,
+        difficulty: Difficulty.INTERMEDIATE,
     },
     {
         id: "5",
@@ -45,5 +55,7 @@ export const dummyData: LearningPathDto[] = [
         totalSectionsCount: 20,
         totalTopicsCount: 80,
         createdAt: new Date(),
+        category: Category.DEVOPS,
+        difficulty: Difficulty.BEGINNER,
     },
 ];

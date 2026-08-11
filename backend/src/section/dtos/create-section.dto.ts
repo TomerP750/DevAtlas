@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsEnum, IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { ConfidenceLevel } from "../../shared/enums/confidence-level";
 
 export class CreateSectionDto {
     @IsNotEmpty()
@@ -7,4 +8,11 @@ export class CreateSectionDto {
     @IsNotEmpty()
     @IsString()
     description!: string;
+
+    @IsOptional()
+    @IsString()
+    codeSnippet?: string;
+
+    @IsEnum(ConfidenceLevel)
+    confidenceLevel!: ConfidenceLevel;
 }

@@ -1,4 +1,6 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import { Category } from '../category';
+import { Difficulty } from '../difficulty';
 
 export class CreateLearningPathDto {
 
@@ -9,6 +11,14 @@ export class CreateLearningPathDto {
     @IsNotEmpty()
     @IsString()
     description!: string;
+
+    @IsNotEmpty()
+    @IsEnum(Category)
+    category!: Category;
+
+    @IsNotEmpty()
+    @IsEnum(Difficulty)
+    difficulty!: Difficulty;
 
     @IsNotEmpty()
     @IsString()

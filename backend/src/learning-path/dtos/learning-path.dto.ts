@@ -1,4 +1,6 @@
 import { Expose, Type } from "class-transformer";
+import { Category } from "../category";
+import { Difficulty } from "../difficulty";
 
 export class LearningPathDto {
     @Expose()
@@ -7,6 +9,10 @@ export class LearningPathDto {
     name!: string;
     @Expose()
     description!: string;
+    @Expose()
+    category!: Category;
+    @Expose()
+    difficulty!: Difficulty;
     @Expose()
     avatarUrl!: string;
     @Expose()

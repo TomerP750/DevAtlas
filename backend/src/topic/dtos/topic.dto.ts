@@ -1,4 +1,5 @@
 import { Expose } from 'class-transformer';
+import { ConfidenceLevel } from '../../shared/enums/confidence-level';
 
 export class TopicDto {
     @Expose()
@@ -8,7 +9,9 @@ export class TopicDto {
     @Expose()
     description!: string;
     @Expose()
-    codeSnippet?: string;
+    order!: number;
+    @Expose()
+    confidenceLevel!: ConfidenceLevel;
     @Expose()
     learningPathId!: string;
 }
