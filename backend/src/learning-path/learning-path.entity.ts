@@ -31,7 +31,7 @@ export class LearningPath {
 
   @Column({ default: 0 })
   @IsNumber()
-  completedTopicsCount!: number;
+  completedSectionsCount!: number;
 
   @ManyToOne(() => User, { nullable: false })
   user!: User;

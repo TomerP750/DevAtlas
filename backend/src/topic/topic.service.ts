@@ -1,10 +1,11 @@
-import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Topic } from './topic.entity';
 import { Repository } from 'typeorm';
 import { LearningPathService } from '../learning-path/learning-path.service';
 import { CreateTopicDto } from './dtos/create-topic.dto';
 import { UpdateTopicDto } from './dtos/update-topic.dto';
+import { topicOwnedBy } from '../shared/utils/ownership.util';
 
 @Injectable()
 export class TopicService {
@@ -15,26 +16,17 @@ export class TopicService {
 
     async findOne(id: string, userId: string): Promise<Topic> {
         const topic = await this.topicRepository.findOne({
-            where: { id },
-            relations: {
-                learningPath: {
-                    user: true,
-                },
-            },
+            where: { id, ...topicOwnedBy(userId) },
         });
         if (!topic) {
             throw new NotFoundException('Topic not found');
         }
-        if (topic.learningPath.user.id !== userId) {
-            throw new ForbiddenException('You are not allowed to access this topic');
-        }
         return topic;
     }
 
-    async findAll(userId: string): Promise<Topic[]> {
-        const topics = await this.topicRepository.find({ where: { learningPath: { user: { id: userId } } } });
-        return topics;
-    }
+    // async findAll(userId: string, learningPathId: string): Promise<Topic[]> {
+    //     return null;
+    // }
 
     async createTopic(userId: string, learningPathId: string, createTopicDto: CreateTopicDto): Promise<Topic> {
         const { name, description, codeSnippet } = createTopicDto;
@@ -55,21 +47,6 @@ export class TopicService {
         return this.topicRepository.remove(topic);
     }
 
-    async toggleTopicCompletion(userId: string, id: string): Promise<boolean> {
-
-        const topic = await this.findOne(id, userId);
-        topic.completed = !topic.completed;
-
-        await this.learningPathService
-            .updateLearningPathTopicCompletion(
-                userId,
-                topic.learningPath.id,
-                topic.completed
-            );
-
-        await this.topicRepository.save(topic);
-        return topic.completed;
-
-    }
+    
 
 }

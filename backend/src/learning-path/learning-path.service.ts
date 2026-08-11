@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindOptionsOrder, FindOptionsWhere, Like, Repository } from 'typeorm';
 import { LearningPath } from './learning-path.entity';
@@ -6,13 +6,14 @@ import { CreateLearningPathDto } from './dtos/create-learning-path-dto';
 import { UpdateLearningPathDto } from './dtos/update-learning-path-dto';
 import { LearningPathQueryDto } from './dtos/learning-path-query.dto';
 import { Page } from '../shared/types/Page';
+import { learningPathOwnedBy } from '../shared/utils/ownership.util';
 
 @Injectable()
 export class LearningPathService {
 
     constructor(
         @InjectRepository(LearningPath) private learningPathRepository: Repository<LearningPath>,
-    ) {}
+    ) { }
 
     async create(createLearningPathDto: CreateLearningPathDto) {
         const learningPath = this.learningPathRepository.create(createLearningPathDto);
@@ -21,14 +22,10 @@ export class LearningPathService {
 
     async findOne(id: string, userId: string) {
         const learningPath = await this.learningPathRepository.findOne({
-            where: { id },
-            relations: { user: true },
+            where: { id, ...learningPathOwnedBy(userId) },
         });
         if (!learningPath) {
             throw new NotFoundException('Learning path not found');
-        }
-        if (learningPath.user.id !== userId) {
-            throw new UnauthorizedException('You are not allowed to access this learning path');
         }
         return learningPath;
     }
@@ -36,7 +33,7 @@ export class LearningPathService {
     async findAll(userId: string, query: LearningPathQueryDto) {
 
         const { page, size, search, sortBy, sortOrder } = query;
-        const ownedByUser: FindOptionsWhere<LearningPath> = { user: { id: userId } };
+        const ownedByUser = learningPathOwnedBy(userId);
 
         let where: FindOptionsWhere<LearningPath> | FindOptionsWhere<LearningPath>[] = ownedByUser;
         if (search) {
@@ -54,7 +51,7 @@ export class LearningPathService {
             skip: (page - 1) * size,
             take: size,
         });
-     
+
         return { items, total, page, size, totalPages: Math.ceil(total / size) };
     }
 
@@ -68,13 +65,14 @@ export class LearningPathService {
         this.learningPathRepository.delete(id);
     }
 
-    async updateLearningPathTopicCompletion(userId: string, id: string, completed: boolean) {
+    async updateLearningPathSectionCompletion(userId: string, id: string, completed: boolean) {
         const learningPath = await this.findOne(id, userId);
-        if (completed) {
-            learningPath.completedTopicsCount++;
-        } else {
-            learningPath.completedTopicsCount--;
-        }
-        return await this.learningPathRepository.save(learningPath);
+        
+        learningPath.completedSectionsCount =
+            completed
+                ? learningPath.completedSectionsCount++
+                : learningPath.completedSectionsCount--;
+                
+        await this.learningPathRepository.save(learningPath);
     }
 }

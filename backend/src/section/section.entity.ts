@@ -16,6 +16,9 @@ export class Section {
     @ManyToOne(() => Topic)
     topic!: Topic;
 
+    @Column({ default: false })
+    completed!: boolean;
+
     @CreateDateColumn()
     createdAt!: Date;
 

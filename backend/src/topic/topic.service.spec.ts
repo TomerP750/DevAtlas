@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Topic } from './topic.entity';
 import { LearningPathService } from '../learning-path/learning-path.service';
-import { ForbiddenException, NotFoundException } from '@nestjs/common';
+import { NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 
 
@@ -63,10 +63,12 @@ describe('TopicService', () => {
 
       await expect(service.findOne('topic-1', 'user-1')).resolves.toBe(topic);
       expect(mockTopicRepository.findOne).toHaveBeenCalledWith({
-        where: { id: 'topic-1' },
-        relations: {
+        where: {
+          id: 'topic-1',
           learningPath: {
-            user: true,
+            user: {
+              id: 'user-1',
+            },
           },
         },
       });
@@ -80,22 +82,6 @@ describe('TopicService', () => {
       ).rejects.toThrow(NotFoundException);
     });
 
-    it('throws ForbiddenException when the topic belongs to another user', async () => {
-      const topic = {
-        id: 'topic-1',
-        learningPath: {
-          user: {
-            id: 'another-user',
-          },
-        },
-      } as Topic;
-
-      mockTopicRepository.findOne.mockResolvedValue(topic);
-
-      await expect(service.findOne('topic-1', 'user-1')).rejects.toThrow(
-        ForbiddenException,
-      );
-    });
   });
 
 

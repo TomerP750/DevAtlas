@@ -1,6 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
 import { LearningPath } from "../learning-path/learning-path.entity";
 import { IsOptional } from "class-validator";
+import { Section } from "../section/section.entity";
 
 @Entity()
 export class Topic {
@@ -13,9 +14,8 @@ export class Topic {
     @Column()
     @IsOptional()
     codeSnippet?: string;
+
     @ManyToOne(() => LearningPath)
     learningPath!: LearningPath;
 
-    @Column({ default: false })
-    completed!: boolean;
-}   
+}
