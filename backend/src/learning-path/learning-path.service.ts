@@ -5,6 +5,7 @@ import { LearningPath } from './learning-path.entity';
 import { CreateLearningPathDto } from './dtos/create-learning-path-dto';
 import { UpdateLearningPathDto } from './dtos/update-learning-path-dto';
 import { LearningPathQueryDto } from './dtos/learning-path-query.dto';
+import { Page } from '../shared/types/Page';
 
 @Injectable()
 export class LearningPathService {
@@ -33,6 +34,7 @@ export class LearningPathService {
     }
 
     async findAll(userId: string, query: LearningPathQueryDto) {
+
         const { page, size, search, sortBy, sortOrder } = query;
         const ownedByUser: FindOptionsWhere<LearningPath> = { user: { id: userId } };
 
@@ -52,7 +54,7 @@ export class LearningPathService {
             skip: (page - 1) * size,
             take: size,
         });
-
+     
         return { items, total, page, size, totalPages: Math.ceil(total / size) };
     }
 
@@ -64,5 +66,15 @@ export class LearningPathService {
     async delete(id: string, userId: string) {
         const learningPath = await this.findOne(id, userId);
         this.learningPathRepository.delete(id);
+    }
+
+    async updateLearningPathTopicCompletion(userId: string, id: string, completed: boolean) {
+        const learningPath = await this.findOne(id, userId);
+        if (completed) {
+            learningPath.completedTopicsCount++;
+        } else {
+            learningPath.completedTopicsCount--;
+        }
+        return await this.learningPathRepository.save(learningPath);
     }
 }

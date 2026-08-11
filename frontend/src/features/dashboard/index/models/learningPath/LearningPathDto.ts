@@ -6,5 +6,6 @@ export interface LearningPathDto {
     totalTopicsCount: number;
     completedTopicsCount: number;
     createdAt: Date;
+    avatarUrl?: string;
 }
 

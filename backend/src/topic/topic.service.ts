@@ -59,6 +59,14 @@ export class TopicService {
 
         const topic = await this.findOne(id, userId);
         topic.completed = !topic.completed;
+
+        await this.learningPathService
+            .updateLearningPathTopicCompletion(
+                userId,
+                topic.learningPath.id,
+                topic.completed
+            );
+
         await this.topicRepository.save(topic);
         return topic.completed;
 

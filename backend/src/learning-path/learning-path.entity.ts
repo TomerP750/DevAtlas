@@ -1,3 +1,4 @@
+import { IsNumber } from 'class-validator';
 import { User } from '../user/user.entity';
 import {
   Column,
@@ -10,6 +11,7 @@ import {
 
 @Entity()
 export class LearningPath {
+  
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
@@ -18,6 +20,18 @@ export class LearningPath {
 
   @Column()
   description!: string;
+
+  @Column({ default: 0 })
+  @IsNumber()
+  totalSectionsCount!: number;
+
+  @Column({ default: 0 })
+  @IsNumber()
+  totalTopicsCount!: number;
+
+  @Column({ default: 0 })
+  @IsNumber()
+  completedTopicsCount!: number;
 
   @ManyToOne(() => User, { nullable: false })
   user!: User;
