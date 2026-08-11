@@ -15,4 +15,7 @@ export class Topic {
     codeSnippet?: string;
     @ManyToOne(() => LearningPath)
     learningPath!: LearningPath;
+
+    @Column({ default: false })
+    completed!: boolean;
 }   

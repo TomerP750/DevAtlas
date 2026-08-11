@@ -55,4 +55,13 @@ export class TopicService {
         return this.topicRepository.remove(topic);
     }
 
+    async toggleTopicCompletion(userId: string, id: string): Promise<boolean> {
+
+        const topic = await this.findOne(id, userId);
+        topic.completed = !topic.completed;
+        await this.topicRepository.save(topic);
+        return topic.completed;
+
+    }
+
 }
