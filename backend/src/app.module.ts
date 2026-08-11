@@ -14,6 +14,7 @@ import { SectionModule } from './section/section.module';
 import { LearningPath } from './learning-path/learning-path.entity';
 import { Section } from './section/section.entity';
 import { Topic } from './topic/topic.entity';
+import { RefreshTokenService } from './authentication/refresh-token/refresh-token.service';
 
 @Module({
   imports: [
@@ -45,7 +46,7 @@ import { Topic } from './topic/topic.entity';
       whitelist: true,
       transform: true,
     }),
-  }],
+  }, RefreshTokenService],
   controllers: [AppController],
 })
 export class AppModule { }
