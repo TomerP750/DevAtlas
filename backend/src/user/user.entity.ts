@@ -1,6 +1,6 @@
 import { IsEmail, IsString } from "class-validator";
-import { Role } from "src/authentication/role";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, VersionColumn } from "typeorm";
+import { Role } from "../authentication/role";
 
 
 @Entity()
@@ -35,5 +35,6 @@ export class User {
     @IsString()
     avatarUrl!: string
 
-
+    @VersionColumn()
+    version!: number;
 }

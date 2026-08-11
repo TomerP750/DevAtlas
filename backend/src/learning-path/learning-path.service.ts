@@ -73,7 +73,7 @@ export class LearningPathService {
 
     async update(id: string, userId: string, updateLearningPathDto: UpdateLearningPathDto) {
         const learningPath = await this.findOne(id, userId);
-        await this.learningPathRepository.merge(learningPath, updateLearningPathDto);
+        this.learningPathRepository.merge(learningPath, updateLearningPathDto);
         await this.learningPathRepository.save(learningPath);
     }
 

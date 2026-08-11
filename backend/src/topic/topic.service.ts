@@ -7,13 +7,15 @@ import { CreateTopicDto } from './dtos/create-topic.dto';
 import { UpdateTopicDto } from './dtos/update-topic.dto';
 import { topicOwnedBy } from '../shared/utils/ownership.util';
 import { Section } from '../section/section.entity';
+import { DataSource } from 'typeorm';
 
 @Injectable()
 export class TopicService {
     constructor(
         @InjectRepository(Topic) private topicRepository: Repository<Topic>,
         @InjectRepository(Section) private sectionRepository: Repository<Section>,
-        private readonly learningPathService: LearningPathService
+        private readonly learningPathService: LearningPathService,
+        private readonly dataSource: DataSource //TODO add transaction 
     ) { }
 
     async findOne(id: string, userId: string): Promise<Topic> {
@@ -59,7 +61,8 @@ export class TopicService {
         return this.topicRepository.save(topic);
     }
 
-    async deleteTopic(userId: string, id: string): Promise<Topic> {
+    async deleteTopic(userId: string, id: string) {
+
         const topic = await this.findOne(id, userId);
         const [totalSections, completedSections] = await Promise.all([
             this.sectionRepository.count({
@@ -75,7 +78,7 @@ export class TopicService {
             }),
         ]);
         const learningPathId = topic.learningPath.id;
-        const removedTopic = await this.topicRepository.remove(topic);
+        await this.topicRepository.remove(topic);
         await this.learningPathService.updateTotalTopics(
             userId,
             learningPathId,
@@ -91,7 +94,7 @@ export class TopicService {
             learningPathId,
             -completedSections
         );
-        return removedTopic;
+
     }
 
     

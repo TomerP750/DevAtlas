@@ -4,10 +4,11 @@ import { User } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UpdateUserDto } from './dtos/update-user-dto';
 import { NotFoundException } from '@nestjs/common';
-import { SignUpDto } from 'src/authentication/dtos/signup.dto';
-import { Role } from 'src/authentication/role';
+
 import { randomBytes, scrypt as _scrypt} from 'crypto';
 import { promisify } from 'util';
+import { SignUpDto } from '../authentication/dtos/signup.dto';
+import { Role } from '../authentication/role';
 
 const scrypt = promisify(_scrypt);
 
@@ -44,7 +45,7 @@ export class UserService {
             throw new NotFoundException("User not found");
         }
 
-        Object.assign(user, updateUserDto);
+        this.userRepository.merge(user, updateUserDto);
 
         return this.userRepository.save(user);
     }
