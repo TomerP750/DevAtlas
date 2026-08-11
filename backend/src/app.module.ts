@@ -14,7 +14,7 @@ import { SectionModule } from './section/section.module';
 import { LearningPath } from './learning-path/learning-path.entity';
 import { Section } from './section/section.entity';
 import { Topic } from './topic/topic.entity';
-import { RefreshTokenService } from './authentication/refresh-token/refresh-token.service';
+import { RefreshToken } from './authentication/refresh-token/refresh-token.entity';
 
 @Module({
   imports: [
@@ -30,7 +30,7 @@ import { RefreshTokenService } from './authentication/refresh-token/refresh-toke
         username: configService.get('DB_USER'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
-        entities: [User, LearningPath, Topic, Section],
+        entities: [User, LearningPath, Topic, Section, RefreshToken],
         synchronize: true,
       }),
       inject: [ConfigService],
@@ -46,7 +46,7 @@ import { RefreshTokenService } from './authentication/refresh-token/refresh-toke
       whitelist: true,
       transform: true,
     }),
-  }, RefreshTokenService],
+  }],
   controllers: [AppController],
 })
 export class AppModule { }

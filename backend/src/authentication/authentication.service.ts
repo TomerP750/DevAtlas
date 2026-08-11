@@ -1,15 +1,13 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../user/user.service'
 import { SignInDto } from './dtos/signin.dto';
 import { SignUpDto } from './dtos/signup.dto';
 import { scrypt as _scrypt } from 'crypto';
 import { promisify } from 'util';
 import { JwtService } from '@nestjs/jwt';
-import { ConfigService } from '@nestjs/config';
-import { AuthResponseDto } from './dtos/auth.response.dto';
 import { User } from '../user/user.entity';
 import { InternalAuthResponseDto } from './dtos/internal-auth-response.dto';
-import type { StringValue } from 'ms';
+import { RefreshTokenService } from './refresh-token/refresh-token.service';
 
 const scrypt = promisify(_scrypt);
 
@@ -19,7 +17,7 @@ export class AuthenticationService {
     constructor(
         private userService: UserService,
         private jwtService: JwtService,
-        private configService: ConfigService
+        private refreshTokenService: RefreshTokenService
     ) { }
 
     async signUp(dto: SignUpDto): Promise<InternalAuthResponseDto> {
@@ -36,7 +34,7 @@ export class AuthenticationService {
         const user = await this.userService.create(dto);
         return new InternalAuthResponseDto(
             this.generateAccessToken(user),
-            this.generateRefreshToken(user),
+            await this.refreshTokenService.create(user.id),
             user
         );
 
@@ -58,14 +56,31 @@ export class AuthenticationService {
 
         return new InternalAuthResponseDto(
             this.generateAccessToken(user),
-            this.generateRefreshToken(user),
+            await this.refreshTokenService.create(user.id),
             user
         );
 
     }
 
-    async signOut() {
+    async signOut(rawToken: string) {
+        await this.refreshTokenService.revoke(rawToken);
+    }
 
+    async rotateRefreshToken(rawToken: string): Promise<InternalAuthResponseDto> {
+        const storedRefreshToken = await this.refreshTokenService.validate(rawToken);
+        const user = await this.userService.findOne(storedRefreshToken.userId);
+
+        if (!user) {
+            throw new UnauthorizedException('User not found');
+        }
+
+        const refreshToken = await this.refreshTokenService.rotate(rawToken);
+
+        return new InternalAuthResponseDto(
+            this.generateAccessToken(user),
+            refreshToken,
+            user,
+        );
     }
 
     private generateAccessToken(user: User): string {
@@ -77,15 +92,4 @@ export class AuthenticationService {
         );
     }
 
-    private generateRefreshToken(user: User): string {
-        return this.jwtService.sign({
-            sub: user.id,
-            email: user.email,
-            role: user.role
-        }, {
-            expiresIn: this.configService.getOrThrow<StringValue>('JWT_REFRESH_TOKEN_EXPIRATION'),
-            secret: this.configService.getOrThrow<string>('JWT_REFRESH_TOKEN_SECRET')
-        });
-
-    }
 }

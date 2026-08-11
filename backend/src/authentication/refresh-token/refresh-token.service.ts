@@ -141,7 +141,7 @@ export class RefreshTokenService {
         await this.refreshTokenRepository.update({ userId }, { revoked: true });
     }
 
-    private async generateRefreshToken() {
+    async generateRefreshToken() {
         return randomBytes(32).toString('hex');
     }
 
