@@ -5,6 +5,7 @@ type NavItem = {
     label: string;
     icon: LucideIcon;
     to: string;
+    activePathPrefix?: string;
 }
 
 
@@ -13,6 +14,7 @@ export const navItems: NavItem[] = [
         label: "Dashboard",
         icon: HomeIcon,
         to: "/dashboard",
+        activePathPrefix: "/dashboard/learning-path",
     },
     {
         label: "AI Path Creator",

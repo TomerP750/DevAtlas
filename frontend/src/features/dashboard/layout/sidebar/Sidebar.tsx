@@ -1,5 +1,5 @@
 import { BookCheck, LogOut } from "lucide-react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { navItems } from "./navItems";
 import { Badge } from "../../../../shared/ui/Badge";
 
@@ -8,6 +8,7 @@ export function Sidebar() {
 
 
     const navigate = useNavigate();
+    const { pathname } = useLocation();
 
     return (
         <aside className="h-screen hidden md:flex flex-col w-64 border border-black/10 dark:border-zinc-700 bg-gray-100 dark:bg-zinc-900 px-4 py-6">
@@ -30,12 +31,16 @@ export function Sidebar() {
                             key={item.to}
                             to={item.to}
                             end
-                            className={({ isActive }) =>
-                                `group flex items-center gap-3 px-3 py-2 rounded-lg transition text-sm font-medium ${isActive
+                            className={({ isActive }) => {
+                                const matchesPrefix = item.activePathPrefix
+                                    ? pathname.startsWith(item.activePathPrefix)
+                                    : false;
+
+                                return `group flex items-center gap-3 px-3 py-2 rounded-lg transition text-sm font-medium ${isActive || matchesPrefix
                                     ? "bg-brand-primary/90 text-white dark:text-white"
                                     : "text-zinc-600 hover:bg-brand-primary/10 hover:text-zinc-950 dark:text-white/60 dark:hover:text-white"
-                                }`
-                            }
+                                }`;
+                            }}
                         >
                             <Icon size={18} className="shrink-0" />
                             <span className="truncate">{item.label}</span>

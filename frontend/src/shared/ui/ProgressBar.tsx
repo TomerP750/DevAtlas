@@ -4,9 +4,10 @@ interface ProgressBarProps {
     completedTopicsCount: number;
     totalTopicsCount: number;
     className?: string;
+    square?: boolean;
 }
 
-export function ProgressBar({ completedTopicsCount, totalTopicsCount, className = "" }: ProgressBarProps) {
+export function ProgressBar({ completedTopicsCount, totalTopicsCount, className = "", square = false }: ProgressBarProps) {
     
 
     const progress = Math.round((completedTopicsCount / totalTopicsCount) * 100);
@@ -29,9 +30,9 @@ export function ProgressBar({ completedTopicsCount, totalTopicsCount, className 
                 </span>
             </div>
 
-            <div className="h-2 w-full overflow-hidden rounded-full bg-neutral-200 dark:bg-dark-input-hover">
+            <div className={`h-2 w-full overflow-hidden bg-neutral-200 dark:bg-dark-input-hover ${square ? "" : "rounded-full"}`}>
                 <div
-                    className="h-full rounded-full bg-brand-primary transition-all duration-300"
+                    className={`h-full bg-brand-primary transition-all duration-300 ${square ? "" : "rounded-full"}`}
                     style={{ width: `${progress}%` }}
                 />
             </div>

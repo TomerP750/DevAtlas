@@ -1,3 +1,5 @@
+import { Pencil, Trash2 } from "lucide-react";
+import { Button } from "../../../../shared/ui/Button";
 import type { TopicDto } from "../models/learningPath/TopicDto";
 import { ConfidenceLevel } from "../models/learningPath/enums/ConfidenceLevel";
 
@@ -19,7 +21,7 @@ export function TopicRowCard({ topic }: TopicRowCardProps) {
     const { name, description, order, confidenceLevel } = topic;
 
     return (
-        <article className="relative flex min-h-20 overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-sm transition-colors hover:border-neutral-300 hover:bg-neutral-50 dark:border-dark-border dark:bg-dark-card dark:shadow-black/20 dark:hover:border-dark-border-hover dark:hover:bg-dark-card-hover">
+        <article className="group relative flex min-h-22 overflow-hidden rounded-r-lg rounded-l-none border border-neutral-200 bg-white shadow-sm transition-colors hover:border-neutral-300 hover:bg-neutral-50 dark:border-dark-border dark:bg-dark-card dark:shadow-black/20 dark:hover:border-dark-border-hover dark:hover:bg-dark-card-hover">
             <span
                 className={`absolute inset-y-0 left-0 w-1 ${getConfidenceLineClass(confidenceLevel)}`}
                 aria-hidden="true"
@@ -38,6 +40,25 @@ export function TopicRowCard({ topic }: TopicRowCardProps) {
                 <p className="mt-1 line-clamp-2 text-sm leading-5 text-neutral-500 dark:text-dark-text-muted">
                     {description}
                 </p>
+            </div>
+
+            <div className="flex shrink-0 items-center gap-2 px-3 opacity-100 transition-opacity sm:pointer-events-none sm:opacity-0 sm:group-hover:pointer-events-auto sm:group-hover:opacity-100 sm:group-focus-within:pointer-events-auto sm:group-focus-within:opacity-100">
+                <Button
+                    variant="ghost"
+                    size="sm"
+                    leftIcon={<Pencil size={16} aria-hidden="true" />}
+                    className="h-9 w-9 p-0!"
+                    aria-label={`Update ${name}`}
+                    title="Update topic"
+                />
+                <Button
+                    variant="ghost"
+                    size="sm"
+                    leftIcon={<Trash2 size={16} aria-hidden="true" />}
+                    className="h-9 w-9 p-0! text-red-600 hover:bg-red-50 hover:text-red-700 dark:text-red-400 dark:hover:bg-red-500/10 dark:hover:text-red-300"
+                    aria-label={`Delete ${name}`}
+                    title="Delete topic"
+                />
             </div>
         </article>
     );
