@@ -59,8 +59,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
         queryKey: USER_QUERY_KEY,
         queryFn: async () => {
             try {
-                const { userDto } = await refreshSession();
-                return userDto;
+                const { user } = await refreshSession();
+                return user;
             } catch (error) {
                 if (axios.isAxiosError(error) && error.response?.status === 401) {
                     sessionHint.clear();
@@ -85,10 +85,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
      * Persists the returned JWT and seeds the user cache from an auth response,
      * keeping login and signup in sync.
      */
-    const applyAuthResponse = useCallback(({ accessToken, userDto }: AuthResponseDto) => {
-        accessTokenStore.set(accessToken);
+    const applyAuthResponse = useCallback(({ access_token, user }: AuthResponseDto) => {
+        accessTokenStore.set(access_token);
         sessionHint.set();
-        queryClient.setQueryData(USER_QUERY_KEY, userDto);
+        queryClient.setQueryData(USER_QUERY_KEY, user);
     }, [queryClient]);
 
     /**

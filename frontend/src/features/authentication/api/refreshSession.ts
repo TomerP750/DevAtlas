@@ -22,7 +22,7 @@ export function refreshSession(): Promise<AuthResponseDto> {
             // A logout may have landed while this was in flight; adopting its
             // token would revive the session the user just ended.
             if (refreshInFlight === request) {
-                accessTokenStore.set(response.accessToken);
+                accessTokenStore.set(response.access_token);
             }
             return response;
         })

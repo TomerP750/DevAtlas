@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { RefreshToken } from './refresh-token.entity';
 import { createHash, randomBytes } from 'crypto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { MoreThan, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import ms, { type StringValue } from 'ms';
 import { ConfigService } from '@nestjs/config';
 
@@ -61,7 +61,7 @@ export class RefreshTokenService {
         return refreshToken;
     }
 
-    async rotate(rawToken: string): Promise<string> {
+    async rotate(rawToken: string): Promise<{ refreshToken: string; userId: string }> {
         if (!rawToken) {
             throw new UnauthorizedException('Missing refresh token');
         }
@@ -71,26 +71,30 @@ export class RefreshTokenService {
         const newTokenHash = await this.hashRefreshToken(newRawToken);
         const now = new Date();
 
-        await this.refreshTokenRepository.manager.transaction(async manager => {
-            const result = await manager.update(
-                RefreshToken,
-                {
-                    tokenHash: oldTokenHash,
-                    revoked: false,
-                    expiresAt: MoreThan(now),
-                },
-                { revoked: true },
-            );
+        return this.refreshTokenRepository.manager.transaction(async manager => {
+            const oldRefreshToken = await manager.findOne(RefreshToken, {
+                where: { tokenHash: oldTokenHash },
+                lock: { mode: 'pessimistic_write' },
+            });
 
-            if (result.affected !== 1) {
+            if (!oldRefreshToken) {
                 throw new UnauthorizedException('Invalid refresh token');
             }
 
+            if (oldRefreshToken.revoked) {
+                throw new UnauthorizedException('Revoked refresh token');
+            }
+
+            if (oldRefreshToken.expiresAt < now) {
+                throw new UnauthorizedException('Expired refresh token');
+            }
+
+            oldRefreshToken.revoked = true;
+            await manager.save(oldRefreshToken);
+
             const newRefreshToken = manager.create(RefreshToken, {
                 tokenHash: newTokenHash,
-                userId: await manager.findOneByOrFail(RefreshToken, {
-                    tokenHash: oldTokenHash,
-                }).then(token => token.userId),
+                userId: oldRefreshToken.userId,
                 expiresAt: new Date(
                     Date.now() + ms(
                         this.configService.getOrThrow<StringValue>(
@@ -102,46 +106,30 @@ export class RefreshTokenService {
             });
 
             await manager.save(newRefreshToken);
+            return {
+                refreshToken: newRawToken,
+                userId: oldRefreshToken.userId,
+            };
         });
-
-        return newRawToken;
     }
 
     async revoke(rawToken: string): Promise<void> {
-        if (!rawToken) {
-            throw new UnauthorizedException('Missing refresh token');
-        }
+
+        if (!rawToken) return;
 
         const tokenHash = await this.hashRefreshToken(rawToken);
 
-        await this.refreshTokenRepository.manager.transaction(async manager => {
-            const refreshToken = await manager.findOne(RefreshToken, {
-                where: { tokenHash },
-                lock: { mode: 'pessimistic_write' },
-            });
-
-            if (!refreshToken) {
-                throw new UnauthorizedException('Invalid refresh token');
-            }
-
-            if (refreshToken.revoked) {
-                throw new UnauthorizedException('Revoked refresh token');
-            }
-
-            if (refreshToken.expiresAt < new Date()) {
-                throw new UnauthorizedException('Expired refresh token');
-            }
-
-            refreshToken.revoked = true;
-            await manager.save(refreshToken);
-        });
+        await this.refreshTokenRepository.update(
+            { tokenHash },
+            { revoked: true },
+        );
     }
-
+    
     async revokeAllForUser(userId: string) {
         await this.refreshTokenRepository.update({ userId }, { revoked: true });
     }
 
-    async generateRefreshToken() {
+    private async generateRefreshToken() {
         return randomBytes(32).toString('hex');
     }
 

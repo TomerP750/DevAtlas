@@ -47,8 +47,8 @@ export function registerAuthInterceptor(onSessionExpired: () => void) {
             failedRequest.hasBeenRetried = true;
 
             try {
-                const { accessToken } = await refreshSession();
-                failedRequest.headers.Authorization = `Bearer ${accessToken}`;
+                const { access_token } = await refreshSession();
+                failedRequest.headers.Authorization = `Bearer ${access_token}`;
                 return await axios(failedRequest);
             } catch (refreshError) {
                 const sessionRejected =

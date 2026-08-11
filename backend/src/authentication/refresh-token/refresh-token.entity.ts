@@ -1,7 +1,4 @@
-// mongo document for refresh token
-
-import { Column, CreateDateColumn, Entity, PrimaryColumn } from "typeorm";
-
+import { Column, CreateDateColumn, Entity, Index, PrimaryColumn } from "typeorm";
 
 
 @Entity()
@@ -10,6 +7,7 @@ export class RefreshToken {
     @PrimaryColumn({ type: "char", length: 64 })
     tokenHash!: string;
 
+    @Index()
     @Column()
     userId!: string;
 

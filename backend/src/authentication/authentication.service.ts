@@ -67,14 +67,13 @@ export class AuthenticationService {
     }
 
     async rotateRefreshToken(rawToken: string): Promise<InternalAuthResponseDto> {
-        const storedRefreshToken = await this.refreshTokenService.validate(rawToken);
-        const user = await this.userService.findOne(storedRefreshToken.userId);
+        const { refreshToken, userId } =
+            await this.refreshTokenService.rotate(rawToken);
+        const user = await this.userService.findOne(userId);
 
         if (!user) {
             throw new UnauthorizedException('User not found');
         }
-
-        const refreshToken = await this.refreshTokenService.rotate(rawToken);
 
         return new InternalAuthResponseDto(
             this.generateAccessToken(user),
