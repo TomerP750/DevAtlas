@@ -4,7 +4,7 @@ import { JwtService } from "@nestjs/jwt";
 import { Reflector } from "@nestjs/core";
 import { UserService } from "../../user/user.service";
 import { Role } from "../role";
-
+import type { JwtPayload } from "../jwt-payload";
 
 @Injectable()
 export class AdminGuard implements CanActivate {
@@ -37,7 +37,7 @@ export class AdminGuard implements CanActivate {
                 throw new UnauthorizedException('Unauthorized');
             }
             try {
-                payload = await this.jwtService.verifyAsync(token);
+                payload = await this.jwtService.verifyAsync<JwtPayload>(token);
                 request.user = payload;
             } catch (error) {
                 throw new UnauthorizedException('Unauthorized');

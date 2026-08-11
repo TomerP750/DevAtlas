@@ -31,9 +31,9 @@ export class User {
     @IsString()
     password!: string;
 
-    @Column()
+    @Column({ nullable: true })
     @IsString()
-    avatarUrl!: string
+    avatarUrl?: string
 
     @VersionColumn()
     version!: number;

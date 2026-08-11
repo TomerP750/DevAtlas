@@ -4,25 +4,18 @@ import { IsEmail, IsNotEmpty, IsString } from "class-validator"
 export class SignUpDto {
     @IsString()
     @IsNotEmpty()
-    firstName: string;
+    firstName!: string;
     @IsString()
     @IsNotEmpty()
-    lastName: string;
+    lastName!: string;
     @IsEmail()
     @IsNotEmpty()
-    email: string 
+    email!: string;
     @IsString()
     @IsNotEmpty()
-    password: string 
+    password!: string;
     @IsString()
     @IsNotEmpty()
-    confirmPassword: string 
+    confirmPassword!: string;
 
-    constructor(firstName: string, lastName: string, email: string, password: string, confirmPassword: string) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.confirmPassword = confirmPassword;
-    }
 }

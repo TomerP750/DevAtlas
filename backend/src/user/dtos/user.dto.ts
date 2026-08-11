@@ -1,5 +1,6 @@
 import { Expose } from "class-transformer"
-import { Role } from "src/authentication/role"
+import { Role } from "../../authentication/role";
+
 
 export class UserDto {
     @Expose()
@@ -11,7 +12,7 @@ export class UserDto {
     @Expose()
     email!: string;
     @Expose()
-    avatarUrl!: string;
+    avatarUrl?: string | null;
     @Expose()
     role!: Role;
 }
