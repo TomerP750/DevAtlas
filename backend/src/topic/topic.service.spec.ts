@@ -14,7 +14,7 @@ describe('TopicService', () => {
   let mockTopicRepository: {
     findOne: jest.MockedFunction<Repository<Topic>['findOne']>;
   };
-
+  
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -95,6 +95,36 @@ describe('TopicService', () => {
       ).rejects.toThrow(NotFoundException);
     });
 
+  });
+
+  describe('findAll', () => {
+    it('returns all topics for the user', async () => {
+       
+    });
+
+    
+  });
+
+  describe('createTopic', () => {
+
+    it('creates a new topic for the user', async () => {
+
+    });
+
+  })
+
+  describe('updateTopic', () => {
+    it('should update a topic for the user', async () => {
+      
+    });
+  })
+
+  describe('deleteTopic', () => {
+    it('should delete a topic for the user', async () => {
+
+      mockTopicRepository
+
+    });
   });
 
 
