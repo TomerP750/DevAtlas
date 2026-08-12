@@ -6,7 +6,7 @@ import { UpdateSectionDto } from './dtos/update-section.dto';
 import { Serialize } from '../shared/interceptors/serialize.interceptor';
 import { SectionDto } from './dtos/section.dto';
 
-@Controller('api/sections')
+@Controller('api/section')
 export class SectionController {
 
     constructor(private readonly sectionService: SectionService) {}
@@ -26,13 +26,13 @@ export class SectionController {
         return this.sectionService.delete(userId, id);
     }
 
-    @Get(':id')
+    @Get('one/:id')
     @Serialize(SectionDto)
     findOne(@CurrentUserId() userId: string, @Param('id') id: string) {
         return this.sectionService.findOne(userId, id);
     }
 
-    @Get('topic/:topicId')
+    @Get('all/:topicId')
     @Serialize(SectionDto)
     findAll(@CurrentUserId() userId: string, @Param('topicId') topicId: string) {
         return this.sectionService.findAll(userId, topicId);

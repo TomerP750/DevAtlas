@@ -6,27 +6,33 @@ import { SectionCard } from "../components/topicPage/SectionCard";
 import type { LearningPathDto } from "../models/learningPath/LearningPathDto";
 import type { SectionDto } from "../models/section/SectionDto";
 import type { TopicDto } from "../models/topic/TopicDto";
+import topicService from "../api/topicService";
+import sectionService from "../api/sectionService";
+import learningPathService from "../api/learningPathService";
 
 export default function TopicPage() {
+    
     const { learningPathId, topicId } = useParams();
+    
     const { data: learningPath } = useQuery<LearningPathDto | null>({
         queryKey: ["learningPath", learningPathId],
-        queryFn: () => Promise.resolve(null),
-        // enabled: Boolean(learningPathId),
-        enabled: false
+        queryFn: () => learningPathService.oneLearningPath(learningPathId!),
+        enabled: Boolean(learningPathId),
     });
+
     const { data: topic } = useQuery<TopicDto | null>({
         queryKey: ["topic", topicId],
-        queryFn: () => Promise.resolve(null),
-        // enabled: Boolean(topicId),
-        enabled: false
+        queryFn: () => topicService.oneTopic(topicId!),
+        enabled: Boolean(topicId),
     });
+
     const { data: sections = [] } = useQuery<SectionDto[]>({
         queryKey: ["sections", topicId],
-        queryFn: () => Promise.resolve([]),
-        // enabled: Boolean(topicId),
-        enabled: false
+        queryFn: () => sectionService.allSections(topicId!),
+        enabled: Boolean(topicId),
     });
+
+    if (!topic) return <div className="text-white mx-auto w-full max-w-7xl px-4 pb-4 pt-8 md:pt-10">Topic not found</div>;
 
     return (
         <div className="mx-auto w-full max-w-7xl px-4 pb-4 pt-8 md:pt-10">
@@ -62,13 +68,13 @@ export default function TopicPage() {
                 )}
             </header>
 
-            <ul className="flex flex-col gap-3">
+            {sections.length === 0 ? <div>No sections found</div> : <ul className="flex flex-col gap-3">
                 {sections.map((section) => (
                     <li key={section.id}>
                         <SectionCard section={section} />
                     </li>
                 ))}
-            </ul>
+            </ul>}
         </div>
     );
 }

@@ -4,6 +4,9 @@ import { TopicRowCard } from "../components/learningPathPage/TopicRowCard";
 import { useQuery } from "@tanstack/react-query";
 import type { TopicDto } from "../models/topic/TopicDto";
 import type { LearningPathDto } from "../models/learningPath/LearningPathDto";
+import learningPathService from "../api/learningPathService";
+import topicService from "../api/topicService";
+
 
 export default function LearningPathPage() {
     
@@ -11,14 +14,12 @@ export default function LearningPathPage() {
     
     const { data: learningPath } = useQuery<LearningPathDto>({
         queryKey: ["learningPath", id],
-        // queryFn: () => getLearningPath(id),
-        enabled: false
+        queryFn: () => learningPathService.oneLearningPath(id!),
     });
 
     const { data: topics } = useQuery<TopicDto[]>({
         queryKey: ["topics", id],
-        // queryFn: () => getTopics(id),
-        enabled: false
+        queryFn: () => topicService.allTopics(id!),
     });
 
     return (

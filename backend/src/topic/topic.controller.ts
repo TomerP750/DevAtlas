@@ -6,13 +6,13 @@ import { TopicDto } from './dtos/topic.dto';
 import { CreateTopicDto } from './dtos/create-topic.dto';
 import { UpdateTopicDto } from './dtos/update-topic.dto';
 
-@Controller('api/topics')
+@Controller('api/topic')
 @Serialize(TopicDto)
 export class TopicController {
 
     constructor(private readonly topicService: TopicService) {}
 
-    @Get('/learning-path/:learningPathId')
+    @Get('/all/learning-path/:learningPathId')
     async findAll(
         @CurrentUserId() userId: string,
         @Param('learningPathId') learningPathId: string,
@@ -20,12 +20,12 @@ export class TopicController {
         return this.topicService.findAll(userId, learningPathId);
     }
 
-    @Get('/:id')
+    @Get('/one/:id')
     async findOne(@Param('id') id: string, @CurrentUserId() userId: string) {
         return this.topicService.findOne(id, userId);
     }
 
-    @Post('/:learningPathId')
+    @Post('/create/:learningPathId')
     async create(
         @CurrentUserId() userId: string,
         @Param('learningPathId') learningPathId: string,
@@ -34,7 +34,7 @@ export class TopicController {
         return this.topicService.createTopic(userId, learningPathId, createTopicDto);
     }
 
-    @Put('/:id')
+    @Put('/update/:id')
     async update(
         @CurrentUserId() userId: string,
         @Param('id') id: string,
@@ -43,7 +43,7 @@ export class TopicController {
         return this.topicService.updateTopic(userId, id, updateTopicDto);
     }
 
-    @Delete('/:id')
+    @Delete('/delete/:id')
     async delete(
         @CurrentUserId() userId: string,
         @Param('id') id: string

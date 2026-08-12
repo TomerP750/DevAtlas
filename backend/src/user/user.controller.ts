@@ -7,7 +7,7 @@ import { Serialize } from '../shared/interceptors/serialize.interceptor';
 import { UpdatePasswordDto } from './dtos/update-password.dto';
 
 
-@Controller('user')
+@Controller('/api/user')
 @Serialize(UserDto)
 export class UserController {
 

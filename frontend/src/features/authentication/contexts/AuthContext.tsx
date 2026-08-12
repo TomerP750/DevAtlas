@@ -11,7 +11,6 @@ import sessionHint from "./sessionHint";
 import { registerAuthInterceptor } from "../api/registerAuthInterceptor";
 import { discardRefreshSession, refreshSession } from "../api/refreshSession";
 
-
 const USER_QUERY_KEY = ["auth", "user"] as const;
 
 type AuthState = {
