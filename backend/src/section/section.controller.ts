@@ -29,7 +29,7 @@ export class SectionController {
     @Get('one/:id')
     @Serialize(SectionDto)
     findOne(@CurrentUserId() userId: string, @Param('id') id: string) {
-        return this.sectionService.findOne(userId, id);
+        return this.sectionService.findOne(id, userId);
     }
 
     @Get('all/:topicId')

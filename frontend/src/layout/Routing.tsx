@@ -7,12 +7,13 @@ import { DashboardLayout } from "../features/dashboard/layout/DashboardLayout";
 import { lazy, Suspense } from "react";
 import { ProtectedRoute } from "../features/authentication/components/ProtectedRoute";
 import { LoadingPage } from "../shared/ui/LoadingPage";
-import NotFoundPage from "../shared/pages/NotFoundPage";
 
 const SettingsPage = lazy(() => import("../features/dashboard/settings/pages/SettingsPage"));
 const TopicPage = lazy(() => import("../features/dashboard/index/pages/TopicPage"));
 const LearningPathPage = lazy(() => import("../features/dashboard/index/pages/LearningPathPage"));
 const DashboardIndex = lazy(() => import("../features/dashboard/index/pages/DashboardIndex"));
+const SectionPage = lazy(() => import("../features/dashboard/index/pages/SectionPage"));
+const NotFoundPage = lazy(() => import("../shared/pages/NotFoundPage"));
 
 export function Routing() {
     return (
@@ -24,37 +25,48 @@ export function Routing() {
                 <Route path="signup" element={<SignupPage />} />
             </Route>
 
-            {/* <Route element={<ProtectedRoute />}> */}
-            <Route path="/dashboard" element={<DashboardLayout />}>
+            <Route element={<ProtectedRoute />}>
+                <Route path="/dashboard" element={<DashboardLayout />}>
 
-                <Route index element={
-                    <SuspenseWrapper>
-                        <DashboardIndex />
-                    </SuspenseWrapper>}
-                />
+                    <Route index element={
+                        <SuspenseWrapper>
+                            <DashboardIndex />
+                        </SuspenseWrapper>}
+                    />
 
-                <Route path="learning-path/:learningPathId/topic/:topicId" element={
-                    <SuspenseWrapper>
-                        <TopicPage />
-                    </SuspenseWrapper>}
-                />
+                    <Route path="learning-path/:learningPathId/topic/:topicId/section/:sectionId" element={
+                        <SuspenseWrapper>
+                            <SectionPage />
+                        </SuspenseWrapper>}
+                    />
 
-                <Route path="learning-path/:id" element={
-                    <SuspenseWrapper>
-                        <LearningPathPage />
-                    </SuspenseWrapper>}
-                />
+                    <Route path="learning-path/:learningPathId/topic/:topicId" element={
+                        <SuspenseWrapper>
+                            <TopicPage />
+                        </SuspenseWrapper>}
+                    />
 
-                <Route path="settings" element={
+                    <Route path="learning-path/:id" element={
+                        <SuspenseWrapper>
+                            <LearningPathPage />
+                        </SuspenseWrapper>}
+                    />
+
+                    <Route path="settings" element={
+                        <SuspenseWrapper>
+                            <SettingsPage />
+                        </SuspenseWrapper>}
+                    />
+
+                </Route>
+
+                <Route path="*" element={
                     <SuspenseWrapper>
-                        <SettingsPage />
-                    </SuspenseWrapper>}
-                />
+                        <NotFoundPage />
+                    </SuspenseWrapper>
+                } />
 
             </Route>
-
-            <Route path="*" element={<NotFoundPage />} />
-            {/* </Route> */}
         </Routes>
     )
 }

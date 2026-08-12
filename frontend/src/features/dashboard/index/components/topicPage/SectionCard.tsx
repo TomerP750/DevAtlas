@@ -4,6 +4,7 @@ import type { SectionDto } from "../../models/section/SectionDto";
 import { ConfidenceLevel } from "../../models/shared/ConfidenceLevel";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import sectionService from "../../api/sectionService";
+import { Link } from "react-router-dom";
 
 interface SectionCardProps {
     section: SectionDto;
@@ -67,14 +68,17 @@ export function SectionCard({ section }: SectionCardProps) {
                 />
             </div>
 
-            <div className="min-w-0 flex-1 px-5 py-4">
+            <Link
+                to={`section/${section.id}`}
+                className="min-w-0 flex-1 px-5 py-4 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-brand-primary"
+            >
                 <h2 className="truncate font-semibold text-neutral-950 dark:text-dark-text">
                     {name}
                 </h2>
                 <p className="mt-1 line-clamp-2 text-sm leading-5 text-neutral-500 dark:text-dark-text-muted">
                     {description}
                 </p>
-            </div>
+            </Link>
 
             <div className="flex shrink-0 items-center gap-2 px-3 opacity-100 transition-opacity sm:pointer-events-none sm:opacity-0 sm:group-hover:pointer-events-auto sm:group-hover:opacity-100 sm:group-focus-within:pointer-events-auto sm:group-focus-within:opacity-100">
                 <Button
