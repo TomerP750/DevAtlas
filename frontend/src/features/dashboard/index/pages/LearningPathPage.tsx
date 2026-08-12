@@ -44,7 +44,7 @@ export default function LearningPathPage() {
                         Add Topic
                     </Button>
 
-                    <div className="grid min-h-0 flex-1 grid-cols-1 gap-3 overflow-y-auto pr-2">
+                    <div className="grid min-h-0 flex-1 auto-rows-max content-start grid-cols-1 gap-3 overflow-y-auto pr-2">
                         {topics.length === 0 ? (
                             <div className="flex min-h-40 items-center justify-center rounded-xl border border-dashed border-zinc-300 px-6 text-center text-sm text-zinc-500 dark:border-zinc-700 dark:text-zinc-400">
                                 No topics yet. Add the first topic to start building this path.

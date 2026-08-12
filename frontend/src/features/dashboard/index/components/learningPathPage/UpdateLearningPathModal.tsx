@@ -33,6 +33,7 @@ export function UpdateLearningPathModal({
     onClose,
     learningPathId,
 }: UpdateLearningPathModalProps) {
+    
     const queryClient = useQueryClient();
     const { data: learningPath, isLoading } = useQuery({
         queryKey: ["learningPath", learningPathId],

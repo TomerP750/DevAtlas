@@ -92,21 +92,7 @@ export function CreateTopicModal({
                     })}
                 />
 
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                    <Input
-                        type="number"
-                        min={1}
-                        label="Position"
-                        helperText="Order in the learning path"
-                        required
-                        disabled={isPending}
-                        error={errors.order?.message}
-                        {...register("order", {
-                            required: "Position is required",
-                            valueAsNumber: true,
-                            min: { value: 1, message: "Position must be 1 or greater" },
-                        })}
-                    />
+                <div>
                     <Select
                         label="Confidence"
                         options={confidenceOptions}

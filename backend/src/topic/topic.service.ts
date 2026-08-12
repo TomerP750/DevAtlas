@@ -15,7 +15,6 @@ export class TopicService {
         @InjectRepository(Topic) private topicRepository: Repository<Topic>,
         @InjectRepository(Section) private sectionRepository: Repository<Section>,
         private readonly learningPathService: LearningPathService,
-        private readonly dataSource: DataSource //TODO add transaction 
     ) { }
 
     async findOne(id: string, userId: string): Promise<Topic> {
@@ -41,15 +40,22 @@ export class TopicService {
                     },
                 },
             },
+            order: {
+                order: 'ASC',
+            },
         });
 
         return topics;
     }
 
     async createTopic(userId: string, learningPathId: string, createTopicDto: CreateTopicDto): Promise<Topic> {
-        const { name, description, order, confidenceLevel } = createTopicDto;
+        const { name, description, confidenceLevel } = createTopicDto;
         const learningPath = await this.learningPathService
             .findOne(learningPathId, userId);
+        const lastOrder = await this.topicRepository.maximum('order', {
+            learningPath: { id: learningPathId },
+        });
+        const order = (lastOrder ?? 0) + 1;
         const topic = this.topicRepository.create({ name, description, order, confidenceLevel, learningPath });
         const savedTopic = await this.topicRepository.save(topic);
         await this.learningPathService.updateTotalTopics(userId, learningPathId, 1);
