@@ -4,8 +4,8 @@ import { ActionButtons } from "../components/index/ActionButtons";
 import { LearningPathCard } from "../components/index/LearningPathCard";
 import { useQuery } from "@tanstack/react-query";
 import learningPathService from "../api/learningPathService";
-import { dummyData } from "../components/dummies/dummyData";
 import { LayoutDashboardIcon } from "lucide-react";
+import type { LearningPathDto } from "../models/learningPath/LearningPathDto";
 
 export type GridLayout = "grid" | "row";
 
@@ -13,11 +13,12 @@ export default function DashboardIndex() {
 
     const [gridLayout, setGridLayout] = useState<GridLayout>("grid");
 
-    // const { data: learningPaths, isLoading, error } = useQuery<LearningPathDispalyDto[]>({
-    //     queryKey: ["learningPaths"],
-    //     queryFn: () => learningPathService.allLearningPaths({ page: 1, size: 10 }),
-    //     staleTime: 1000 * 60 * 5,
-    // });
+    const { data: learningPaths, isLoading, error } = useQuery<LearningPathDto[]>({
+        queryKey: ["learningPaths"],
+        queryFn: () => learningPathService.allLearningPaths({ page: 1, size: 10 }),
+        staleTime: 1000 * 60 * 5,
+        enabled: false
+    });
 
     return (
         <section className="">
@@ -37,7 +38,7 @@ export default function DashboardIndex() {
                     : "max-h-[500px]"
                     }`}>
 
-                    {dummyData?.map((learningPath) => (
+                    {learningPaths?.map((learningPath) => (
                         <LearningPathCard key={learningPath.id} learningPath={learningPath} />
                     ))}
 

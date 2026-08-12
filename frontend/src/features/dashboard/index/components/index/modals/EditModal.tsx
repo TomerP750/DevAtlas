@@ -5,7 +5,7 @@ import { Select } from "../../../../../../shared/ui/Select";
 import { TextArea } from "../../../../../../shared/ui/TextArea";
 import { Category } from "../../../models/learningPath/enums/Category";
 import { Difficulty } from "../../../models/learningPath/enums/Difficulty";
-import type { UpdateLearningPathDto } from "../../../models/crud_requests/UpdateLearningPathDto";
+import type { UpdateLearningPathDto } from "../../../models/learningPathPage/UpdateLearningPathDto";
 import learningPathService from "../../../api/learningPathService";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";

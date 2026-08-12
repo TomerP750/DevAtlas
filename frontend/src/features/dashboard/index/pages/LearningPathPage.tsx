@@ -1,18 +1,24 @@
 import { useParams } from "react-router-dom";
-import { dummyData } from "../components/dummies/dummyData";
-import { dummyTopics } from "../components/dummies/dummyTopics";
 import { LearningPathSummaryCard } from "../components/learningPathPage/LearningPathSummaryCard";
 import { TopicRowCard } from "../components/learningPathPage/TopicRowCard";
+import { useQuery } from "@tanstack/react-query";
+import type { TopicDto } from "../models/learningPath/TopicDto";
 
 export default function LearningPathPage() {
+    
     const { id } = useParams();
-    // const { data: learningPath } = useQuery({
-    //     queryKey: ["learningPath", id],
-    //     queryFn: () => getLearningPath(id),
-    // });
+    
+    const { data: learningPath } = useQuery({
+        queryKey: ["learningPath", id],
+        // queryFn: () => getLearningPath(id),
+        enabled: false
+    });
 
-    const topics = dummyTopics.filter((topic) => topic.learningPathId === id);
-    const learningPath = dummyData.find((item) => item.id === id);
+    const { data: topics } = useQuery<TopicDto[]>({
+        queryKey: ["topics", id],
+        // queryFn: () => getTopics(id),
+        enabled: false
+    });
 
     return (
         <div className="mx-auto h-dvh w-full max-w-7xl overflow-hidden p-4">

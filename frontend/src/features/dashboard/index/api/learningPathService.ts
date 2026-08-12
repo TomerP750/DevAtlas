@@ -1,7 +1,7 @@
 import axios from "axios";
 import { baseApiUrl } from "../../../../shared/utils/baseApi";
-import type { CreateLearningPathDto } from "../models/crud_requests/CreateLearningPathDto";
-import type { UpdateLearningPathDto } from "../models/crud_requests/UpdateLearningPathDto";
+import type { CreateLearningPathDto } from "../models/learningPathPage/CreateLearningPathDto";
+import type { UpdateLearningPathDto } from "../models/learningPathPage/UpdateLearningPathDto";
 import type { Pagination } from "../../../../shared/models/Pagination";
 
 class LearningPathService {

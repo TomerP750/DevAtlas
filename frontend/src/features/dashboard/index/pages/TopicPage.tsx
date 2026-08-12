@@ -1,19 +1,35 @@
 import { ArrowLeft } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "react-router-dom";
 import { ProgressBar } from "../../../../shared/ui/ProgressBar";
 import { SectionCard } from "../components/topicPage/SectionCard";
-import { dummyData } from "../components/dummies/dummyData";
-import { dummySections } from "../components/dummies/dummySections";
-import { dummyTopics } from "../components/dummies/dummyTopics";
+import type { LearningPathDto } from "../models/learningPath/LearningPathDto";
+import type { SectionDto } from "../models/learningPath/SectionDto";
+import type { TopicDto } from "../models/learningPath/TopicDto";
 
 export default function TopicPage() {
     const { learningPathId, topicId } = useParams();
-    const learningPath = dummyData.find((item) => item.id === learningPathId);
-    const topic = dummyTopics.find((item) => item.id === topicId);
-    const sections = dummySections.filter((section) => section.topicId === topicId);
+    const { data: learningPath } = useQuery<LearningPathDto | null>({
+        queryKey: ["learningPath", learningPathId],
+        queryFn: () => Promise.resolve(null),
+        // enabled: Boolean(learningPathId),
+        enabled: false
+    });
+    const { data: topic } = useQuery<TopicDto | null>({
+        queryKey: ["topic", topicId],
+        queryFn: () => Promise.resolve(null),
+        // enabled: Boolean(topicId),
+        enabled: false
+    });
+    const { data: sections = [] } = useQuery<SectionDto[]>({
+        queryKey: ["sections", topicId],
+        queryFn: () => Promise.resolve([]),
+        // enabled: Boolean(topicId),
+        enabled: false
+    });
 
     return (
-        <div className="mx-auto w-full max-w-7xl p-4">
+        <div className="mx-auto w-full max-w-7xl px-4 pb-4 pt-8 md:pt-10">
             <header className="mb-6 border-b border-neutral-300 px-1 pb-4 dark:border-dark-border">
                 <Link
                     to={`/dashboard/learning-path/${learningPathId}`}
