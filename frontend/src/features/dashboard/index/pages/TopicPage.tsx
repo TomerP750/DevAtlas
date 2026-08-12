@@ -1,6 +1,7 @@
-import { ArrowLeft, Plus } from "lucide-react";
+import { ArrowLeft, Pencil, Plus, Trash2 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
 import { ProgressBar } from "../../../../shared/ui/ProgressBar";
 import { Button } from "../../../../shared/ui/Button";
 import { SectionCard } from "../components/topicPage/SectionCard";
@@ -10,11 +11,15 @@ import type { TopicDto } from "../models/topic/TopicDto";
 import topicService from "../api/topicService";
 import sectionService from "../api/sectionService";
 import learningPathService from "../api/learningPathService";
+import { UpdateTopicModal } from "../components/learningPathPage/UpdateTopicModal";
+import { DeleteTopicModal } from "../components/learningPathPage/DeleteTopicModal";
 
 export default function TopicPage() {
-    
     const { learningPathId, topicId } = useParams();
-    
+    const navigate = useNavigate();
+    const [isUpdateTopicOpen, setIsUpdateTopicOpen] = useState(false);
+    const [isDeleteTopicOpen, setIsDeleteTopicOpen] = useState(false);
+
     const { data: learningPath } = useQuery<LearningPathDto | null>({
         queryKey: ["learningPath", learningPathId],
         queryFn: () => learningPathService.oneLearningPath(learningPathId!),
@@ -58,6 +63,26 @@ export default function TopicPage() {
                             {learningPath?.name ?? "Learning Path"}
                         </h1>
                     </div>
+                    <div className="flex shrink-0 items-center gap-2">
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            leftIcon={<Pencil size={16} aria-hidden="true" />}
+                            className="border border-neutral-200 bg-white dark:border-dark-border dark:bg-dark-card"
+                            onClick={() => setIsUpdateTopicOpen(true)}
+                        >
+                            <span className="hidden sm:inline">Edit topic</span>
+                        </Button>
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            leftIcon={<Trash2 size={16} aria-hidden="true" />}
+                            className="border border-red-200 bg-white text-red-600 hover:bg-red-50 hover:text-red-700 dark:border-red-900/60 dark:bg-dark-card dark:text-red-400 dark:hover:bg-red-950/40"
+                            onClick={() => setIsDeleteTopicOpen(true)}
+                        >
+                            <span className="hidden sm:inline">Delete topic</span>
+                        </Button>
+                    </div>
                 </div>
                 <p className="mt-2 max-w-2xl text-sm leading-6 text-neutral-500 dark:text-dark-text-muted">
                     Continue through the sections below and track your progress as you learn.
@@ -87,6 +112,20 @@ export default function TopicPage() {
                     </li>
                 ))}
             </ul>}
+
+            <UpdateTopicModal
+                isOpen={isUpdateTopicOpen}
+                onClose={() => setIsUpdateTopicOpen(false)}
+                topic={topic}
+            />
+            <DeleteTopicModal
+                isOpen={isDeleteTopicOpen}
+                onClose={() => setIsDeleteTopicOpen(false)}
+                onDeleted={() => navigate(`/dashboard/learning-path/${learningPathId}`)}
+                topicId={topic.id}
+                topicName={topic.name}
+                learningPathId={topic.learningPathId}
+            />
         </div>
     );
 }

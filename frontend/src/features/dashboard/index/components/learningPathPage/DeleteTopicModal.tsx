@@ -8,6 +8,7 @@ import topicService from "../../api/topicService";
 interface DeleteTopicModalProps {
     isOpen: boolean;
     onClose: () => void;
+    onDeleted?: () => void;
     topicId: string;
     topicName: string;
     learningPathId: string;
@@ -16,6 +17,7 @@ interface DeleteTopicModalProps {
 export function DeleteTopicModal({
     isOpen,
     onClose,
+    onDeleted,
     topicId,
     topicName,
     learningPathId,
@@ -28,6 +30,7 @@ export function DeleteTopicModal({
             queryClient.invalidateQueries({ queryKey: ["topics", learningPathId] });
             queryClient.invalidateQueries({ queryKey: ["learningPath", learningPathId] });
             onClose();
+            onDeleted?.();
             toast.success("Topic deleted");
         },
         onError: () => toast.error("Failed to delete topic"),
