@@ -7,12 +7,12 @@ import { Serialize } from '../shared/interceptors/serialize.interceptor';
 import { LearningPathDto, PaginatedLearningPathDto } from './dtos/learning-path.dto';
 import { LearningPathQueryDto } from './dtos/learning-path-query.dto';
 
-@Controller('learning-path')
+@Controller('api/learning-path')
 export class LearningPathController {
 
     constructor(private learningPathService: LearningPathService) {}
 
-    @Post()
+    @Post('/create')
     @Serialize(LearningPathDto)
     create(
         @CurrentUserId() userId: string,
@@ -33,7 +33,7 @@ export class LearningPathController {
         return this.learningPathService.findOne(id, userId);
     }
 
-    @Put('/:id')
+    @Put('/update/:id')
     @Serialize(LearningPathDto)
     update(@Param('id') id: string,
         @CurrentUserId() userId: string,
@@ -42,7 +42,7 @@ export class LearningPathController {
         return this.learningPathService.update(id, userId, updateLearningPathDto);
     }
 
-    @Delete('/:id')
+    @Delete('/delete/:id')
     @Serialize(LearningPathDto)
     delete(@Param('id') id: string, @CurrentUserId() userId: string) {
         return this.learningPathService.delete(id, userId);

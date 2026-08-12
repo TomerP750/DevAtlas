@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { LearningPathSummaryCard } from "../components/learningPathPage/LearningPathSummaryCard";
 import { TopicRowCard } from "../components/learningPathPage/TopicRowCard";
 import { useQuery } from "@tanstack/react-query";
-import type { TopicDto } from "../models/learningPath/TopicDto";
+import type { TopicDto } from "../models/topic/TopicDto";
 
 export default function LearningPathPage() {
     

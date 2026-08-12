@@ -1,8 +1,8 @@
 import { Check, Circle, MenuIcon, Pencil, ShieldCheck, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { Button } from "../../../../../shared/ui/Button";
-import type { SectionDto } from "../../models/learningPath/SectionDto";
-import { ConfidenceLevel } from "../../models/learningPath/enums/ConfidenceLevel";
+import type { SectionDto } from "../../models/section/SectionDto";
+import { ConfidenceLevel } from "../../models/shared/ConfidenceLevel";
 
 interface SectionCardProps {
     section: SectionDto;

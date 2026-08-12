@@ -1,6 +1,6 @@
 import { ChevronDown, RotateCcw } from "lucide-react";
-import { Category } from "../../models/learningPath/enums/Category";
-import { Difficulty } from "../../models/learningPath/enums/Difficulty";
+import { Category } from "../../models/learningPath/Category";
+import { Difficulty } from "../../models/learningPath/Difficulty";
 
 interface FiltersMenuProps {
     isOpen: boolean;

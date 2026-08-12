@@ -6,7 +6,7 @@ import { TopicDto } from './dtos/topic.dto';
 import { CreateTopicDto } from './dtos/create-topic.dto';
 import { UpdateTopicDto } from './dtos/update-topic.dto';
 
-@Controller('api/topic')
+@Controller('api/topics')
 @Serialize(TopicDto)
 export class TopicController {
 

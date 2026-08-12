@@ -1,7 +1,7 @@
 import { BookOpen, CircleCheck, Layers } from "lucide-react";
 import { ProgressBar } from "../../../../../shared/ui/ProgressBar";
 import type { LearningPathDto } from "../../models/learningPath/LearningPathDto";
-import { Difficulty } from "../../models/learningPath/enums/Difficulty";
+import { Difficulty } from "../../models/learningPath/Difficulty";
 
 interface LearningPathSummaryCardProps {
     learningPath: LearningPathDto;

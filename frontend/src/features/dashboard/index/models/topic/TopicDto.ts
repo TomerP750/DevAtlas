@@ -1,4 +1,4 @@
-import type { ConfidenceLevel } from "./enums/ConfidenceLevel";
+import type { ConfidenceLevel } from "../shared/ConfidenceLevel";
 
 export interface TopicDto {
     id: string;

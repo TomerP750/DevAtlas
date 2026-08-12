@@ -6,22 +6,22 @@ import { UpdateSectionDto } from './dtos/update-section.dto';
 import { Serialize } from '../shared/interceptors/serialize.interceptor';
 import { SectionDto } from './dtos/section.dto';
 
-@Controller('api/section')
+@Controller('api/sections')
 export class SectionController {
 
     constructor(private readonly sectionService: SectionService) {}
 
-    @Post(':topicId')
+    @Post('create/:topicId')
     create(@CurrentUserId() userId: string, @Body() createSectionDto: CreateSectionDto, @Param('topicId') topicId: string) {
         return this.sectionService.create(userId, topicId, createSectionDto);
     }
 
-    @Put(':id')
+    @Put('update/:id')
     update(@CurrentUserId() userId: string, @Body() updateSectionDto: UpdateSectionDto, @Param('id') id: string) {
         return this.sectionService.update(userId, id, updateSectionDto);
     }
 
-    @Delete(':id')
+    @Delete('delete/:id')
     delete(@CurrentUserId() userId: string, @Param('id') id: string) {
         return this.sectionService.delete(userId, id);
     }
@@ -32,7 +32,7 @@ export class SectionController {
         return this.sectionService.findOne(userId, id);
     }
 
-    @Get(':topicId')
+    @Get('topic/:topicId')
     @Serialize(SectionDto)
     findAll(@CurrentUserId() userId: string, @Param('topicId') topicId: string) {
         return this.sectionService.findAll(userId, topicId);

@@ -1,6 +1,8 @@
 import axios from "axios";
 import { baseApiUrl } from "../../../../shared/utils/baseApi";
-import type { TopicDto } from "../models/learningPath/TopicDto";
+import type { CreateTopicDto } from "../models/topic/CreateTopicDto";
+import type { TopicDto } from "../models/topic/TopicDto";
+import type { UpdateTopicDto } from "../models/topic/UpdateTopicDto";
 
 class TopicService {
 
@@ -12,8 +14,8 @@ class TopicService {
         return (await axios.get(`${baseApiUrl}/api/topics/${topicId}`)).data;
     }
 
-    async createTopic(dto: CreateTopicDto): Promise<TopicDto> {
-        return (await axios.post(`${baseApiUrl}/api/topics`, dto)).data;
+    async createTopic(learningPathId: string, dto: CreateTopicDto): Promise<TopicDto> {
+        return (await axios.post(`${baseApiUrl}/api/topics/${learningPathId}`, dto)).data;
     }
 
     async updateTopic(topicId: string, dto: UpdateTopicDto): Promise<TopicDto> {

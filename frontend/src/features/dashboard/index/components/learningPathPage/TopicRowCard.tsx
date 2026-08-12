@@ -1,8 +1,8 @@
 import { MenuIcon, Pencil, Trash2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "../../../../../shared/ui/Button";
-import type { TopicDto } from "../../models/learningPath/TopicDto";
-import { ConfidenceLevel } from "../../models/learningPath/enums/ConfidenceLevel";
+import { ConfidenceLevel } from "../../models/shared/ConfidenceLevel";
+import type { TopicDto } from "../../models/topic/TopicDto";
 
 interface TopicRowCardProps {
     topic: TopicDto;

@@ -4,8 +4,8 @@ import { Link, useParams } from "react-router-dom";
 import { ProgressBar } from "../../../../shared/ui/ProgressBar";
 import { SectionCard } from "../components/topicPage/SectionCard";
 import type { LearningPathDto } from "../models/learningPath/LearningPathDto";
-import type { SectionDto } from "../models/learningPath/SectionDto";
-import type { TopicDto } from "../models/learningPath/TopicDto";
+import type { SectionDto } from "../models/section/SectionDto";
+import type { TopicDto } from "../models/topic/TopicDto";
 
 export default function TopicPage() {
     const { learningPathId, topicId } = useParams();
