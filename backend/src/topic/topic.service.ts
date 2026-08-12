@@ -98,6 +98,29 @@ export class TopicService {
 
     }
 
-    
+    async updateCompletedSectionsCount(userId: string, id: string, amount: number): Promise<void> {
+        if (amount === 0) {
+            return;
+        }
 
+        const topic = await this.findOne(id, userId);
+        await this.topicRepository.increment(
+            { id: topic.id },
+            'completedSectionsCount',
+            amount,
+        );
+    }
+
+    async updateTotalSectionsCount(userId: string, id: string, amount: number): Promise<void> {
+        if (amount === 0) {
+            return;
+        }
+
+        const topic = await this.findOne(id, userId);
+        await this.topicRepository.increment(
+            { id: topic.id },
+            'totalSectionsCount',
+            amount,
+        );
+    }
 }

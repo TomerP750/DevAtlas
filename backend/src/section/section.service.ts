@@ -58,6 +58,12 @@ export class SectionService {
         const section = await this.findOne(id, userId);
         section.completed = !section.completed;
 
+        await this.topicService.updateCompletedSectionsCount(
+            userId,
+            section.topic.id,
+            section.completed ? 1 : -1
+        );
+
         await this.learningPathService
             .updateLearningPathSectionCompletion(
                 userId,
@@ -75,6 +81,12 @@ export class SectionService {
         const topic = await this.topicService.findOne(topicId, userId);
         const section = this.sectionRepository.create({ name, description, codeSnippet, confidenceLevel, topic });
         await this.sectionRepository.save(section);
+
+        await this.topicService.updateTotalSectionsCount(
+            userId,
+            topic.id,
+            1
+        );
 
         await this.learningPathService.updateTotalSections(
             userId,
@@ -94,12 +106,22 @@ export class SectionService {
     async delete(userId: string, id: string): Promise<void> {
         const section = await this.findOne(id, userId);
         await this.sectionRepository.delete(section.id);
+        await this.topicService.updateTotalSectionsCount(
+            userId,
+            section.topic.id,
+            -1
+        );
         await this.learningPathService.updateTotalSections(
             userId,
             section.topic.learningPath.id,
             -1
         );
         if (section.completed) {
+            await this.topicService.updateCompletedSectionsCount(
+                userId,
+                section.topic.id,
+                -1
+            );
             await this.learningPathService.updateLearningPathSectionCompletion(
                 userId,
                 section.topic.learningPath.id,

@@ -1,4 +1,4 @@
-import { BookCheck, LogOut } from "lucide-react";
+import { CompassIcon, LogOut } from "lucide-react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { navItems } from "./navItems";
 import { Badge } from "../../../../shared/ui/Badge";
@@ -13,9 +13,9 @@ export function Sidebar() {
     return (
         <aside className="h-screen hidden md:flex flex-col w-64 border border-black/10 dark:border-zinc-700 bg-gray-100 dark:bg-zinc-900 px-4 py-6">
 
-            <div className="flex items-center gap-3 border-b border-black/10 pb-5 dark:border-white/10">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-brand-primary to-brand-primary-active text-white shadow-sm shadow-violet-500/25">
-                    <BookCheck size={24} strokeWidth={1.7} />
+            <div className="flex items-center border-b border-black/10 pb-5 dark:border-white/10">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl text-white shadow-sm shadow-violet-500/25">
+                    <CompassIcon size={24} strokeWidth={1.5} />
                 </div>
                 <h1 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white">
                     Dev<span className="text-brand-primary dark:text-violet-400">Atlas</span>

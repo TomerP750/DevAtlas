@@ -54,7 +54,7 @@ export function LearningPathCard({ learningPath }: LearningPathCardProps) {
                     {description}
                 </p>
 
-                <ProgressBar completedTopicsCount={completedTopicsCount} totalTopicsCount={totalTopicsCount} />
+                <ProgressBar completedCount={completedTopicsCount} totalCount={totalTopicsCount} />
 
                 <div className="flex items-center justify-between border-t border-neutral-100 pt-4 dark:border-dark-border">
                     <div className="flex flex-wrap gap-4 text-sm text-neutral-500 dark:text-dark-text-muted">

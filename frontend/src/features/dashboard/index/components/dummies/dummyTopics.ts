@@ -9,6 +9,8 @@ export const dummyTopics: TopicDto[] = [
         order: 1,
         confidenceLevel: ConfidenceLevel.HIGH,
         learningPathId: "1",
+        completedSectionsCount: 2,
+        totalSectionsCount: 4,
     },
     {
         id: "2",
@@ -17,6 +19,8 @@ export const dummyTopics: TopicDto[] = [
         order: 2,
         confidenceLevel: ConfidenceLevel.HIGH,
         learningPathId: "1",
+        completedSectionsCount: 1,
+        totalSectionsCount: 2,
     },
     {
         id: "3",
@@ -25,6 +29,8 @@ export const dummyTopics: TopicDto[] = [
         order: 3,
         confidenceLevel: ConfidenceLevel.MEDIUM,
         learningPathId: "1",
+        completedSectionsCount: 0,
+        totalSectionsCount: 1,
     },
     {
         id: "4",
@@ -33,6 +39,8 @@ export const dummyTopics: TopicDto[] = [
         order: 4,
         confidenceLevel: ConfidenceLevel.MEDIUM,
         learningPathId: "1",
+        completedSectionsCount: 3,
+        totalSectionsCount: 5,
     },
     {
         id: "5",
@@ -41,6 +49,8 @@ export const dummyTopics: TopicDto[] = [
         order: 5,
         confidenceLevel: ConfidenceLevel.MEDIUM,
         learningPathId: "1",
+        completedSectionsCount: 2,
+        totalSectionsCount: 4,
     },
     {
         id: "6",
@@ -49,6 +59,8 @@ export const dummyTopics: TopicDto[] = [
         order: 6,
         confidenceLevel: ConfidenceLevel.LOW,
         learningPathId: "1",
+        completedSectionsCount: 1,
+        totalSectionsCount: 5,
     },
     {
         id: "7",
@@ -57,6 +69,8 @@ export const dummyTopics: TopicDto[] = [
         order: 7,
         confidenceLevel: ConfidenceLevel.LOW,
         learningPathId: "1",
+        completedSectionsCount: 0,
+        totalSectionsCount: 3,
     },
     {
         id: "8",
@@ -65,6 +79,8 @@ export const dummyTopics: TopicDto[] = [
         order: 8,
         confidenceLevel: ConfidenceLevel.LOW,
         learningPathId: "1",
+        completedSectionsCount: 0,
+        totalSectionsCount: 4,
     },
     {
         id: "9",
@@ -73,6 +89,8 @@ export const dummyTopics: TopicDto[] = [
         order: 9,
         confidenceLevel: ConfidenceLevel.LOW,
         learningPathId: "1",
+        completedSectionsCount: 1,
+        totalSectionsCount: 6,
     },
     {
         id: "10",
@@ -81,5 +99,7 @@ export const dummyTopics: TopicDto[] = [
         order: 10,
         confidenceLevel: ConfidenceLevel.LOW,
         learningPathId: "1",
+        completedSectionsCount: 0,
+        totalSectionsCount: 4,
     },
 ];

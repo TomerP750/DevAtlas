@@ -1,18 +1,17 @@
 
 
 interface ProgressBarProps {
-    completedTopicsCount: number;
-    totalTopicsCount: number;
+    completedCount: number;
+    totalCount: number;
     className?: string;
     square?: boolean;
+    showCount?: boolean;
 }
 
-export function ProgressBar({ completedTopicsCount, totalTopicsCount, className = "", square = false }: ProgressBarProps) {
-    
+export function ProgressBar({ completedCount, totalCount, className = "", square = false, showCount = false }: ProgressBarProps) {
+    const progress = Math.round((completedCount / totalCount) * 100);
 
-    const progress = Math.round((completedTopicsCount / totalTopicsCount) * 100);
-
-    if (totalTopicsCount === 0) {
+    if (totalCount === 0) {
         return 0;
     }
 
@@ -25,8 +24,15 @@ export function ProgressBar({ completedTopicsCount, totalTopicsCount, className 
                     </span>
                 </div>
 
-                <span className="font-medium text-neutral-700 dark:text-dark-text">
-                    {progress}%
+                <span className="flex items-center gap-2">
+                    {showCount && (
+                        <span className="font-normal tabular-nums text-neutral-500 dark:text-dark-text-muted">
+                            {completedCount}/{totalCount} completed
+                        </span>
+                    )}
+                    <span className="font-medium text-neutral-700 dark:text-dark-text">
+                        {progress}%
+                    </span>
                 </span>
             </div>
 

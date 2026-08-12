@@ -14,4 +14,8 @@ export class TopicDto {
     confidenceLevel!: ConfidenceLevel;
     @Expose()
     learningPathId!: string;
+    @Expose()
+    completedSectionsCount!: number;
+    @Expose()
+    totalSectionsCount!: number;
 }

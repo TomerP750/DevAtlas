@@ -86,8 +86,8 @@ export function LearningPathSummaryCard({ learningPath }: LearningPathSummaryCar
 
                 <div className="mt-5 border border-neutral-200 p-4 dark:border-neutral-700">
                     <ProgressBar
-                        completedTopicsCount={learningPath.completedTopicsCount}
-                        totalTopicsCount={learningPath.totalTopicsCount}
+                        completedCount={learningPath.completedTopicsCount}
+                        totalCount={learningPath.totalTopicsCount}
                         square
                     />
                 </div>

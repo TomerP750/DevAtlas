@@ -7,4 +7,6 @@ export interface TopicDto {
     order: number;
     confidenceLevel: ConfidenceLevel;
     learningPathId: string;
+    completedSectionsCount: number;
+    totalSectionsCount: number;
 }
