@@ -26,7 +26,9 @@ class SectionService {
         await axios.delete(`${baseApiUrl}/api/section/delete/${sectionId}`);
     }
 
-    
+    async toggleCompletion(sectionId: string): Promise<void> {
+        await axios.patch(`${baseApiUrl}/api/section/toggle-completion/${sectionId}`);
+    }
 
 }
 

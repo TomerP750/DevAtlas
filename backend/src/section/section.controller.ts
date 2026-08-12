@@ -38,7 +38,7 @@ export class SectionController {
         return this.sectionService.findAll(userId, topicId);
     }
 
-    @Patch(':id/toggle-completion')
+    @Patch('toggle-completion/:id')
     toggleCompletion(@CurrentUserId() userId: string, @Param('id') id: string) {
         return this.sectionService.toggleSectionCompletion(userId, id);
     }

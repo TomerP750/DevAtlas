@@ -1,8 +1,9 @@
 import { Check, Circle, MenuIcon, Pencil, ShieldCheck, Trash2 } from "lucide-react";
-import { useState } from "react";
 import { Button } from "../../../../../shared/ui/Button";
 import type { SectionDto } from "../../models/section/SectionDto";
 import { ConfidenceLevel } from "../../models/shared/ConfidenceLevel";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import sectionService from "../../api/sectionService";
 
 interface SectionCardProps {
     section: SectionDto;
@@ -19,8 +20,17 @@ function getConfidenceLineClass(confidenceLevel: ConfidenceLevel) {
 }
 
 export function SectionCard({ section }: SectionCardProps) {
-    const { name, description, confidenceLevel } = section;
-    const [isCompleted, setIsCompleted] = useState(section.completed);
+
+    const { name, description, confidenceLevel, completed } = section;
+
+    const queryClient = useQueryClient(); 
+
+    const { mutate: toggleSectionCompletion, isPending } = useMutation({
+        mutationFn: (sectionId: string) => sectionService.toggleCompletion(sectionId),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["sections"] });
+        },
+    });
 
     return (
         <article className="group relative flex min-h-22 overflow-hidden rounded-r-lg rounded-l-none border border-neutral-200 bg-white shadow-sm transition-colors hover:border-neutral-300 hover:bg-neutral-50 dark:border-dark-border dark:bg-dark-card dark:shadow-black/20 dark:hover:border-dark-border-hover dark:hover:bg-dark-card-hover">
@@ -33,9 +43,9 @@ export function SectionCard({ section }: SectionCardProps) {
                 <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => setIsCompleted((previous) => !previous)}
+                    onClick={() => toggleSectionCompletion(section.id)}
                     leftIcon={
-                        isCompleted ? (
+                        completed ? (
                             <Check
                                 size={18}
                                 className="text-emerald-500"
@@ -50,9 +60,10 @@ export function SectionCard({ section }: SectionCardProps) {
                         )
                     }
                     className="h-9 w-9 cursor-pointer border-0! p-0! hover:bg-transparent! focus:ring-0!"
-                    aria-label={isCompleted ? "Mark as not completed" : "Mark as completed"}
-                    aria-pressed={isCompleted}
-                    title={isCompleted ? "Mark as not completed" : "Mark as completed"}
+                    aria-label={completed ? "Mark as not completed" : "Mark as completed"}
+                    aria-pressed={completed}
+                    disabled={isPending}
+                    title={completed ? "Mark as not completed" : "Mark as completed"}
                 />
             </div>
 
