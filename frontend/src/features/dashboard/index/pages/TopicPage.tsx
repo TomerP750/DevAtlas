@@ -1,7 +1,8 @@
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Plus } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "react-router-dom";
 import { ProgressBar } from "../../../../shared/ui/ProgressBar";
+import { Button } from "../../../../shared/ui/Button";
 import { SectionCard } from "../components/topicPage/SectionCard";
 import type { LearningPathDto } from "../models/learningPath/LearningPathDto";
 import type { SectionDto } from "../models/section/SectionDto";
@@ -18,18 +19,21 @@ export default function TopicPage() {
         queryKey: ["learningPath", learningPathId],
         queryFn: () => learningPathService.oneLearningPath(learningPathId!),
         enabled: Boolean(learningPathId),
+        staleTime: 5 * 60 * 1000, 
     });
 
     const { data: topic } = useQuery<TopicDto | null>({
         queryKey: ["topic", topicId],
         queryFn: () => topicService.oneTopic(topicId!),
         enabled: Boolean(topicId),
+        staleTime: 5 * 60 * 1000, 
     });
 
     const { data: sections = [] } = useQuery<SectionDto[]>({
         queryKey: ["sections", topicId],
         queryFn: () => sectionService.allSections(topicId!),
         enabled: Boolean(topicId),
+        staleTime: 5 * 60 * 1000, 
     });
 
     if (!topic) return <div className="text-white mx-auto w-full max-w-7xl px-4 pb-4 pt-8 md:pt-10">Topic not found</div>;
@@ -67,6 +71,14 @@ export default function TopicPage() {
                     />
                 )}
             </header>
+
+            <Button
+                variant="ghost"
+                leftIcon={<Plus size={16} aria-hidden="true" />}
+                className="mb-7 w-full shrink-0 rounded-lg border border-dashed border-neutral-300 text-sm text-neutral-600 hover:border-brand-primary hover:bg-violet-50 hover:text-brand-primary dark:border-dark-border dark:text-dark-text-muted dark:hover:border-violet-400 dark:hover:bg-violet-500/10 dark:hover:text-violet-300"
+            >
+                Add Section
+            </Button>
 
             {sections.length === 0 ? <div>No sections found</div> : <ul className="flex flex-col gap-3">
                 {sections.map((section) => (
