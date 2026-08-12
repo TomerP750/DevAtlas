@@ -53,7 +53,7 @@ export default function SectionPage() {
             <div className="mx-auto flex w-full max-w-7xl flex-col items-start px-4 pb-8 pt-8 md:pt-10">
                 <Link
                     to={`/dashboard/learning-path/${learningPathId}/topic/${topicId}`}
-                    className="mb-6 inline-flex items-center gap-1.5 text-sm font-medium text-neutral-500 transition-colors hover:text-brand-primary dark:text-dark-text-muted dark:hover:text-violet-300"
+                    className="mb-6 inline-flex items-center gap-1.5 text-sm font-medium text-neutral-500 transition-colors hover:text-brand-primary dark:text-dark-text-muted dark:hover:text-brand-primary-dark"
                 >
                     <ArrowLeft size={16} aria-hidden="true" />
                     Back to sections
@@ -73,7 +73,7 @@ export default function SectionPage() {
             <header className="mb-7 border-b border-neutral-300 px-1 pb-5 dark:border-dark-border">
                 <Link
                     to={`/dashboard/learning-path/${learningPathId}/topic/${topicId}`}
-                    className="mb-4 inline-flex items-center gap-1.5 text-sm font-medium text-neutral-500 transition-colors hover:text-brand-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-primary dark:text-dark-text-muted dark:hover:text-violet-300"
+                    className="mb-4 inline-flex items-center gap-1.5 text-sm font-medium text-neutral-500 transition-colors hover:text-brand-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-primary dark:text-dark-text-muted dark:hover:text-brand-primary-dark dark:focus-visible:outline-brand-primary-dark"
                 >
                     <ArrowLeft size={16} aria-hidden="true" />
                     Back to sections
@@ -81,7 +81,7 @@ export default function SectionPage() {
 
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                     <div className="min-w-0">
-                        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-brand-primary dark:text-violet-300">
+                        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-brand-primary dark:text-brand-primary-dark">
                             Section
                         </p>
                         <h1 className="mt-1 text-2xl font-bold tracking-tight text-neutral-950 dark:text-dark-text sm:text-3xl">

@@ -19,10 +19,8 @@ export function LearningPathCard({ learningPath }: LearningPathCardProps) {
             <div className="flex flex-col gap-4">
                 <div className="flex items-start justify-between">
                     <div className="flex items-center gap-3">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-50 text-brand-primary dark:bg-violet-500/10 dark:text-violet-300">
-                            <Map size={30} strokeWidth={1.2} />
-                        </div>
-
+                        
+                        <Map className="text-brand-primary dark:text-brand-primary-dark" size={30} strokeWidth={1.2} />
                         <div>
                             <h3 className="text-lg font-semibold text-neutral-900 dark:text-dark-text">
                                 {name}

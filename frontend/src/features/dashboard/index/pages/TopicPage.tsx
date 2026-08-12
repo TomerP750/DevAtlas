@@ -48,7 +48,7 @@ export default function TopicPage() {
             <header className="mb-6 border-b border-neutral-300 px-1 pb-4 dark:border-dark-border">
                 <Link
                     to={`/dashboard/learning-path/${learningPathId}`}
-                    className="mb-4 inline-flex items-center gap-1.5 text-sm font-medium text-neutral-500 transition-colors hover:text-brand-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-primary dark:text-dark-text-muted dark:hover:text-violet-300"
+                    className="mb-4 inline-flex items-center gap-1.5 text-sm font-medium text-neutral-500 transition-colors hover:text-brand-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-primary dark:text-dark-text-muted dark:hover:text-brand-primary-dark"
                 >
                     <ArrowLeft size={16} aria-hidden="true" />
                     Back to topics
@@ -56,7 +56,7 @@ export default function TopicPage() {
 
                 <div className="flex items-end justify-between gap-6">
                     <div className="min-w-0">
-                        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-brand-primary dark:text-violet-300">
+                        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-brand-primary dark:text-brand-primary-dark">
                             Learning path
                         </p>
                         <h1 className="mt-1 truncate text-2xl font-bold tracking-tight text-neutral-950 dark:text-dark-text">

@@ -64,12 +64,6 @@ export default function DashboardIndex() {
                         </p>
                     )}
 
-                    {isError && (
-                        <p className="text-sm text-red-600">
-                            We could not load your learning paths. Please try again.
-                        </p>
-                    )}
-
                     {!isLoading && !isError && learningPaths.length === 0 && (
                         <p className="text-sm text-neutral-500 dark:text-dark-text-muted">
                             You do not have any learning paths yet. Create your first one to get started.

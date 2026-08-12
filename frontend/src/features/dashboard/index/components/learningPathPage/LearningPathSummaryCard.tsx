@@ -37,7 +37,7 @@ export function LearningPathSummaryCard({
     const difficultyStyles = getDifficultyStyles(learningPath.difficulty);
 
     return (
-        <aside className={`h-fit overflow-hidden border border-t-4 border-neutral-200 bg-white shadow-sm dark:border-dark-border dark:bg-dark-card dark:shadow-black/20 ${difficultyStyles.accent}`}>
+        <aside className={`h-fit overflow-hidden border border-t-4 rounded-b-xl border-neutral-200 bg-white shadow-sm dark:border-dark-border dark:bg-dark-card dark:shadow-black/20 ${difficultyStyles.accent}`}>
             <div className="border-b border-neutral-200 px-6 py-5 dark:border-dark-border">
                 <div className="flex flex-wrap gap-2">
                     <span className="border border-neutral-200 px-2 py-1 text-[11px] font-semibold uppercase tracking-wider text-neutral-600 dark:border-neutral-700 dark:text-neutral-300">

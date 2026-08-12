@@ -27,11 +27,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
 
     const variantClasses: Record<ButtonVariant, string> = {
         primary:
-            "bg-brand-primary text-white hover:bg-brand-primary/90 focus:ring-brand-primary/40",
+            "bg-brand-primary text-white hover:bg-brand-primary-hover focus:ring-brand-primary/40 dark:bg-brand-primary-dark dark:text-cyan-950 dark:hover:bg-brand-primary-dark-hover dark:focus:ring-brand-primary-dark/40",
         secondary:
-            "border border-zinc-200 bg-white text-zinc-800 hover:bg-zinc-50 focus:ring-brand-primary/30 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800",
+            "border border-zinc-200 bg-white text-zinc-800 hover:bg-zinc-50 focus:ring-brand-primary/30 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800 dark:focus:ring-brand-primary-dark/30",
         ghost:
-            "bg-transparent text-zinc-700 hover:bg-zinc-100 focus:ring-brand-primary/30 dark:text-zinc-200 dark:hover:bg-zinc-800",
+            "bg-transparent text-zinc-700 hover:bg-zinc-100 focus:ring-brand-primary/30 dark:text-zinc-200 dark:hover:bg-zinc-800 dark:focus:ring-brand-primary-dark/30",
         danger:
             "bg-red-600 text-white hover:bg-red-600/90 focus:ring-red-600/40",
     };

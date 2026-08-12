@@ -21,11 +21,11 @@ export function Sidebar() {
         <aside className="h-screen hidden md:flex flex-col w-64 border border-black/10 dark:border-zinc-700 bg-gray-100 dark:bg-zinc-900 px-4 py-6">
 
             <div className="flex items-center border-b border-black/10 pb-5 dark:border-white/10">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl text-white shadow-sm shadow-violet-500/25">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl text-brand-primary dark:text-brand-primary-dark">
                     <CompassIcon size={24} strokeWidth={1.5} />
                 </div>
                 <h1 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white">
-                    Dev<span className="text-brand-primary dark:text-violet-400">Atlas</span>
+                    Dev<span className="text-brand-primary dark:text-brand-primary-dark">Atlas</span>
                 </h1>
             </div>
 
@@ -44,8 +44,8 @@ export function Sidebar() {
                                     : false;
 
                                 return `group flex items-center gap-3 px-3 py-2 rounded-lg transition text-sm font-medium ${isActive || matchesPrefix
-                                    ? "bg-brand-primary/90 text-white dark:text-white"
-                                    : "text-zinc-600 hover:bg-brand-primary/10 hover:text-zinc-950 dark:text-white/60 dark:hover:text-white"
+                                    ? "bg-brand-primary text-white dark:bg-brand-primary-dark dark:text-cyan-950"
+                                    : "text-zinc-600 hover:bg-brand-primary/10 hover:text-zinc-950 dark:text-white/60 dark:hover:bg-brand-primary-dark/10 dark:hover:text-brand-primary-dark"
                                     }`;
                             }}
                         >

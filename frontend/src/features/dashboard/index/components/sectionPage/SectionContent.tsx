@@ -22,7 +22,7 @@ export function SectionContent({ section }: SectionContentProps) {
         <div className="min-w-0 space-y-6">
             <section className="overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-sm dark:border-dark-border dark:bg-dark-card dark:shadow-black/20">
                 <div className="flex items-center gap-2 border-b border-neutral-200 px-5 py-4 dark:border-dark-border">
-                    <BookOpen size={18} className="text-brand-primary dark:text-violet-300" aria-hidden="true" />
+                    <BookOpen size={18} className="text-brand-primary dark:text-brand-primary-dark" aria-hidden="true" />
                     <h2 className="font-semibold text-neutral-950 dark:text-dark-text">Overview</h2>
                 </div>
                 <div className="px-5 py-6 sm:px-7">
@@ -36,7 +36,7 @@ export function SectionContent({ section }: SectionContentProps) {
                 <section className="overflow-hidden rounded-xl border border-neutral-200 bg-neutral-950 shadow-sm dark:border-dark-border dark:bg-black/30 dark:shadow-black/20">
                     <div className="flex items-center justify-between border-b border-white/10 px-5 py-3">
                         <div className="flex items-center gap-2">
-                            <Code2 size={17} className="text-violet-300" aria-hidden="true" />
+                            <Code2 size={17} className="text-brand-primary-dark" aria-hidden="true" />
                             <h2 className="text-sm font-semibold text-neutral-100">Code example</h2>
                         </div>
                         <Button

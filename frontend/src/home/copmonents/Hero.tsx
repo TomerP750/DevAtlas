@@ -12,7 +12,7 @@ export function Hero() {
             />
             <div
                 aria-hidden="true"
-                className="pointer-events-none absolute left-1/2 top-[-18rem] -z-10 h-[36rem] w-[56rem] -translate-x-1/2 rounded-full bg-brand-primary/25 blur-[120px]"
+                className="pointer-events-none absolute left-1/2 top-[-18rem] -z-10 h-[36rem] w-[56rem] -translate-x-1/2 rounded-full bg-brand-primary-dark/20 blur-[120px]"
             />
 
             <nav className="mx-auto flex h-20 w-full max-w-6xl items-center justify-between px-6 md:px-10">
@@ -20,16 +20,10 @@ export function Hero() {
                     to="/"
                     className="text-2xl font-bold tracking-tight text-white"
                 >
-                    Dev<span className="text-violet-400">Atlas</span>
+                    Dev<span className="text-brand-primary-dark">Atlas</span>
                 </Link>
 
                 <div className="flex items-center gap-2">
-                    <Link
-                        to="/dashboard"
-                        className="rounded-lg px-4 py-2 text-sm font-medium text-zinc-400 transition hover:text-white"
-                    >
-                        Dashboard
-                    </Link>
                     <Link
                         to="/auth/login"
                         className="rounded-lg border border-white/10 bg-white/5 dark:bg-stone-900/80 px-4 py-2 text-sm font-medium text-zinc-200 transition hover:border-white/20 hover:bg-white/10"
@@ -48,7 +42,7 @@ export function Hero() {
 
                 <h1 className="mt-6 text-balance text-4xl font-bold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-6xl">
                     Organize your developer knowledge in{" "}
-                    <span className="bg-gradient-to-r from-purple-500 to-indigo-400 bg-clip-text text-transparent">
+                    <span className="bg-gradient-to-r from-brand-primary-dark-active to-brand-primary-dark-hover bg-clip-text text-transparent">
                         one place
                     </span>.
                 </h1>
@@ -61,7 +55,7 @@ export function Hero() {
                 <div className="mt-9 flex flex-col items-center gap-3 sm:flex-row">
                     <Link
                         to="/auth/signup"
-                        className="group inline-flex items-center gap-2 rounded-xl bg-brand-primary px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-brand-primary/25 transition hover:bg-brand-primary-hover"
+                        className="group inline-flex items-center gap-2 rounded-xl bg-brand-primary-dark px-6 py-3 text-sm font-semibold text-cyan-950 shadow-lg shadow-brand-primary-dark/20 transition hover:bg-brand-primary-dark-hover"
                     >
                         Get started
                         <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
@@ -69,7 +63,7 @@ export function Hero() {
                 </div>
             </div>
 
-            <figure className="shadow-2xl shadow-indigo-500/50 mx-auto mt-14 flex w-full max-w-6xl justify-center px-6 sm:px-10">
+            <figure className="mx-auto mt-14 flex w-full max-w-6xl justify-center px-6 shadow-2xl shadow-cyan-500/30 sm:px-10">
                 <img
                     src={previewImage}
                     alt="DevAtlas dashboard preview"

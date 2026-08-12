@@ -30,7 +30,7 @@ export function SignupPage() {
         signUpUser(dto);
     }
 
-    const inputClassName = "h-11 rounded-xl !border-zinc-300 !bg-white/50 px-4 text-zinc-950 shadow-sm placeholder:text-zinc-400 hover:!border-zinc-400 focus:!border-brand-primary focus:!bg-white/75 focus:ring-4 focus:ring-brand-primary/10 dark:!border-violet-300/30 dark:!bg-indigo-950/25 dark:text-white dark:placeholder:text-indigo-200/40 dark:hover:!border-violet-300/50 dark:focus:!border-violet-400 dark:focus:!bg-indigo-950/40 dark:focus:ring-violet-400/10";
+    const inputClassName = "h-11 rounded-xl !border-zinc-300 !bg-white/50 px-4 text-zinc-950 shadow-sm placeholder:text-zinc-400 hover:!border-zinc-400 focus:!border-brand-primary focus:!bg-white/75 focus:ring-4 focus:ring-brand-primary/10 dark:!border-cyan-300/30 dark:!bg-cyan-950/20 dark:text-white dark:placeholder:text-cyan-100/40 dark:hover:!border-cyan-300/50 dark:focus:!border-brand-primary-dark dark:focus:!bg-cyan-950/35 dark:focus:ring-brand-primary-dark/10";
 
     return (
         <section className="w-full max-w-lg" aria-labelledby="signup-heading">
@@ -39,7 +39,7 @@ export function SignupPage() {
                 onSubmit={handleSubmit(handleSignUp)}
             >
                 <header className="mb-8">
-                    <p className="mb-2 text-sm font-semibold text-brand-primary dark:text-violet-400">
+                    <p className="mb-2 text-sm font-semibold text-brand-primary dark:text-brand-primary-dark">
                         Start building your atlas
                     </p>
                     <h1
@@ -138,7 +138,7 @@ export function SignupPage() {
                     type="submit"
                     disabled={isPending}
                     variant="primary"
-                    className="mt-2 h-11 w-full rounded-xl shadow-lg shadow-brand-primary/20">
+                    className="mt-2 h-11 w-full rounded-xl shadow-lg shadow-brand-primary/20 dark:shadow-brand-primary-dark/20">
                     {isPending ? "Creating account..." : "Create account"}
                 </Button>
                 </div>
@@ -146,7 +146,7 @@ export function SignupPage() {
                 <p className="mt-6 border-t border-zinc-200 pt-6 text-center text-sm text-zinc-500 dark:border-white/10 dark:text-zinc-400">
                     Already have an account? {" "}
                     <Link to="/auth/login"
-                        className="font-semibold text-brand-primary hover:text-brand-primary-hover dark:text-violet-400 dark:hover:text-violet-300">
+                        className="font-semibold text-brand-primary hover:text-brand-primary-hover dark:text-brand-primary-dark dark:hover:text-brand-primary-dark-hover">
                         Sign in
                     </Link>
                 </p>

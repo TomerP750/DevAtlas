@@ -6,12 +6,6 @@ interface SectionAsideProps {
     section: SectionDto;
 }
 
-const confidenceStyles: Record<ConfidenceLevel, string> = {
-    [ConfidenceLevel.LOW]: "border-red-200 bg-red-50 text-red-700 dark:border-red-900/60 dark:bg-red-950/30 dark:text-red-300",
-    [ConfidenceLevel.MEDIUM]: "border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900/60 dark:bg-amber-950/30 dark:text-amber-300",
-    [ConfidenceLevel.HIGH]: "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-900/60 dark:bg-emerald-950/30 dark:text-emerald-300",
-};
-
 const confidenceLineStyles: Record<ConfidenceLevel, string> = {
     [ConfidenceLevel.LOW]: "bg-red-500",
     [ConfidenceLevel.MEDIUM]: "bg-amber-400",
@@ -62,9 +56,9 @@ export function SectionAside({ section }: SectionAsideProps) {
                 </div>
             </section>
 
-            <div className="rounded-xl border border-violet-100 bg-violet-50/70 p-5 dark:border-violet-500/20 dark:bg-violet-500/10">
-                <p className="text-sm font-semibold text-violet-950 dark:text-violet-200">Ready to move on?</p>
-                <p className="mt-1.5 text-sm leading-5 text-violet-700/80 dark:text-violet-300/70">
+            <div className="rounded-xl border border-violet-100 bg-violet-50/70 p-5 dark:border-dark-border dark:bg-black/20">
+                <p className="text-sm font-semibold text-violet-950 dark:text-brand-primary-dark">Ready to move on?</p>
+                <p className="mt-1.5 text-sm leading-5 text-violet-700/80 dark:text-white/80">
                     Mark this section complete when you feel comfortable with the material.
                 </p>
             </div>

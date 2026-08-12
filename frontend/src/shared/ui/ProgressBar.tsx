@@ -34,7 +34,7 @@ export function ProgressBar({ completedCount, totalCount, className = "", square
 
             <div className={`h-2 w-full overflow-hidden bg-neutral-200 dark:bg-dark-input-hover ${square ? "" : "rounded-full"}`}>
                 <div
-                    className={`h-full bg-brand-primary transition-all duration-300 ${square ? "" : "rounded-full"}`}
+                    className={`h-full bg-brand-primary transition-all duration-300 dark:bg-brand-primary-dark ${square ? "" : "rounded-full"}`}
                     style={{ width: `${progress}%` }}
                 />
             </div>
