@@ -1,6 +1,6 @@
-import { Button } from "../../../../../shared/ui/Button";
-import { Modal } from "../../../../../shared/ui/Modal";
-import learningPathService from "../../api/learningPathService";
+import { Button } from "../../../../../../shared/ui/Button";
+import { Modal } from "../../../../../../shared/ui/Modal";
+import learningPathService from "../../../api/learningPathService";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 

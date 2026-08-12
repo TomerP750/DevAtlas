@@ -8,6 +8,7 @@ import { lazy, Suspense } from "react";
 import { DashboardIndex } from "../features/dashboard/index/pages/DashboardIndex";
 import { LearningPathPage } from "../features/dashboard/index/pages/LearningPathPage";
 import { ProtectedRoute } from "../features/authentication/components/ProtectedRoute";
+import { TopicPage } from "../features/dashboard/index/pages/TopicPage";
 
 const SettingsPage = lazy(() => import("../features/dashboard/settings/pages/SettingsPage"));
 
@@ -27,6 +28,12 @@ export function Routing() {
                 <Route index element={
                     <SuspenseWrapper>
                         <DashboardIndex />
+                    </SuspenseWrapper>}
+                />
+
+                <Route path="learning-path/:learningPathId/topic/:id" element={
+                    <SuspenseWrapper>
+                        <TopicPage />
                     </SuspenseWrapper>}
                 />
 

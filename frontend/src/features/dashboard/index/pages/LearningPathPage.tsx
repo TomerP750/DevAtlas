@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import { dummyData } from "../components/dummies/dummyData";
 import { dummyTopics } from "../components/dummies/dummyTopics";
-import { LearningPathSummaryCard } from "../components/LearningPathSummaryCard";
-import { TopicRowCard } from "../components/TopicRowCard";
+import { LearningPathSummaryCard } from "../components/learningPathPage/LearningPathSummaryCard";
+import { TopicRowCard } from "../components/learningPathPage/TopicRowCard";
 
 export function LearningPathPage() {
     const { id } = useParams();

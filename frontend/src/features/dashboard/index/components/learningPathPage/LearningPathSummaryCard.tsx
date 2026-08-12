@@ -1,7 +1,7 @@
 import { BookOpen, CircleCheck, Layers } from "lucide-react";
-import { ProgressBar } from "../../../../shared/ui/ProgressBar";
-import type { LearningPathDto } from "../models/learningPath/LearningPathDto";
-import { Difficulty } from "../models/learningPath/enums/Difficulty";
+import { ProgressBar } from "../../../../../shared/ui/ProgressBar";
+import type { LearningPathDto } from "../../models/learningPath/LearningPathDto";
+import { Difficulty } from "../../models/learningPath/enums/Difficulty";
 
 interface LearningPathSummaryCardProps {
     learningPath: LearningPathDto;
@@ -85,11 +85,11 @@ export function LearningPathSummaryCard({ learningPath }: LearningPathSummaryCar
                 </div>
 
                 <div className="mt-5 border border-neutral-200 p-4 dark:border-neutral-700">
-                <ProgressBar
-                    completedTopicsCount={learningPath.completedTopicsCount}
-                    totalTopicsCount={learningPath.totalTopicsCount}
-                    square
-                />
+                    <ProgressBar
+                        completedTopicsCount={learningPath.completedTopicsCount}
+                        totalTopicsCount={learningPath.totalTopicsCount}
+                        square
+                    />
                 </div>
             </div>
         </aside>

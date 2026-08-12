@@ -1,15 +1,15 @@
 import { useForm } from "react-hook-form";
-import { Input } from "../../../../../shared/ui/Input";
-import { Modal } from "../../../../../shared/ui/Modal";
-import { Select } from "../../../../../shared/ui/Select";
-import { TextArea } from "../../../../../shared/ui/TextArea";
-import { Category } from "../../models/learningPath/enums/Category";
-import { Difficulty } from "../../models/learningPath/enums/Difficulty";
-import type { UpdateLearningPathDto } from "../../models/crud_requests/UpdateLearningPathDto";
-import learningPathService from "../../api/learningPathService";
+import { Input } from "../../../../../../shared/ui/Input";
+import { Modal } from "../../../../../../shared/ui/Modal";
+import { Select } from "../../../../../../shared/ui/Select";
+import { TextArea } from "../../../../../../shared/ui/TextArea";
+import { Category } from "../../../models/learningPath/enums/Category";
+import { Difficulty } from "../../../models/learningPath/enums/Difficulty";
+import type { UpdateLearningPathDto } from "../../../models/crud_requests/UpdateLearningPathDto";
+import learningPathService from "../../../api/learningPathService";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { Button } from "../../../../../shared/ui/Button";
+import { Button } from "../../../../../../shared/ui/Button";
 
 
 interface EditModalProps {

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { DashboardHeader } from "../../shared/components/DashboardHeader";
-import { ActionButtons } from "../components/ActionButtons";
-import { LearningPathCard } from "../components/LearningPathCard";
+import { ActionButtons } from "../components/index/ActionButtons";
+import { LearningPathCard } from "../components/index/LearningPathCard";
 import { useQuery } from "@tanstack/react-query";
 import learningPathService from "../api/learningPathService";
 import { dummyData } from "../components/dummies/dummyData";

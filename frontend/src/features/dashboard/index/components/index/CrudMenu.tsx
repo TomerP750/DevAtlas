@@ -10,7 +10,6 @@ interface CrudMenuProps {
 }
 
 export function CrudMenu({ isOpen, learningPathId, learningPathTitle }: CrudMenuProps) {
-
     const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
     const [editModalOpen, setEditModalOpen] = useState<boolean>(false);
 
@@ -18,7 +17,6 @@ export function CrudMenu({ isOpen, learningPathId, learningPathTitle }: CrudMenu
 
     return (
         <div className="absolute right-0 top-8 z-10 w-40 rounded-lg border border-neutral-200 bg-white dark:border-zinc-700 dark:bg-zinc-900 p-1 shadow-lg">
-    
             <button
                 onClick={() => setEditModalOpen(true)}
                 className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm text-neutral-700 dark:text-zinc-400 transition hover:bg-neutral-100 dark:hover:bg-zinc-800"
@@ -47,7 +45,6 @@ export function CrudMenu({ isOpen, learningPathId, learningPathTitle }: CrudMenu
                 isOpen={editModalOpen}
                 onClose={() => setEditModalOpen(false)}
             />
-
         </div>
     );
 }
