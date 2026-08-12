@@ -3,14 +3,13 @@ import type { Difficulty } from "./Difficulty";
 
 export interface LearningPathDto {
     id: string;
-    title: string;
+    name: string;
     description: string;
     category: Category;
     difficulty: Difficulty;
     totalSectionsCount: number;
     totalTopicsCount: number;
-    completedTopicsCount: number;
-    createdAt: Date;
+    completedSectionsCount: number;
+    createdAt: string;
     avatarUrl?: string;
 }
-

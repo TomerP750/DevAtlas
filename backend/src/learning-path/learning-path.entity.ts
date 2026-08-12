@@ -50,8 +50,8 @@ export class LearningPath {
   @ManyToOne(() => User, { nullable: false })
   user!: User;
 
-  @Column()
-  avatarUrl!: string;
+  @Column({ nullable: true })
+  avatarUrl?: string;
 
   @CreateDateColumn()
   createdAt!: Date;

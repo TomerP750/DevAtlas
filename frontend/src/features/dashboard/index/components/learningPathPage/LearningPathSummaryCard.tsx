@@ -42,7 +42,7 @@ export function LearningPathSummaryCard({ learningPath }: LearningPathSummaryCar
                 </div>
 
                 <h1 className="mt-4 text-2xl font-bold tracking-tight text-neutral-950 dark:text-dark-text">
-                    {learningPath.title}
+                    {learningPath.name}
                 </h1>
                 <p className="mt-2 text-sm leading-6 text-neutral-500 dark:text-dark-text-muted">
                     {learningPath.description}
@@ -76,7 +76,7 @@ export function LearningPathSummaryCard({ learningPath }: LearningPathSummaryCar
                     <div className="border border-t-2 border-neutral-200 border-t-emerald-500 bg-neutral-50 p-3 dark:border-neutral-700 dark:border-t-emerald-400 dark:bg-dark-input">
                         <CircleCheck className="text-emerald-500 dark:text-emerald-300" size={17} aria-hidden="true" />
                         <div className="mt-3 text-2xl font-bold tabular-nums text-neutral-950 dark:text-dark-text">
-                            {learningPath.completedTopicsCount}
+                            {learningPath.completedSectionsCount}
                         </div>
                         <div className="mt-0.5 text-xs text-neutral-500 dark:text-dark-text-muted">
                             Completed
@@ -86,8 +86,8 @@ export function LearningPathSummaryCard({ learningPath }: LearningPathSummaryCar
 
                 <div className="mt-5 border border-neutral-200 p-4 dark:border-neutral-700">
                     <ProgressBar
-                        completedCount={learningPath.completedTopicsCount}
-                        totalCount={learningPath.totalTopicsCount}
+                        completedCount={learningPath.completedSectionsCount}
+                        totalCount={learningPath.totalSectionsCount}
                         square
                     />
                 </div>

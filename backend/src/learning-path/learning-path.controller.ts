@@ -1,4 +1,4 @@
-import { Controller, Param, Get, Post, Body, Delete, Put, Query } from '@nestjs/common';
+import { Controller, Param, Get, Post, Body, Delete, Put, Query, ParseUUIDPipe } from '@nestjs/common';
 import { LearningPathService } from './learning-path.service';
 import { CreateLearningPathDto } from './dtos/create-learning-path-dto';
 import { CurrentUserId } from '../authentication/decorators/current-user.decorator';
@@ -21,7 +21,7 @@ export class LearningPathController {
         return this.learningPathService.create(userId, createLearningPathDto);
     }
 
-    @Get("/all")
+    @Get('/all')
     @Serialize(PaginatedLearningPathDto)
     findAll(@CurrentUserId() userId: string, @Query() query: LearningPathQueryDto) {
         return this.learningPathService.findAll(userId, query);
@@ -29,13 +29,13 @@ export class LearningPathController {
 
     @Get('/:id')
     @Serialize(LearningPathDto)
-    findOne(@Param('id') id: string, @CurrentUserId() userId: string) {
+    findOne(@Param('id', ParseUUIDPipe) id: string, @CurrentUserId() userId: string) {
         return this.learningPathService.findOne(id, userId);
     }
 
     @Put('/update/:id')
     @Serialize(LearningPathDto)
-    update(@Param('id') id: string,
+    update(@Param('id', ParseUUIDPipe) id: string,
         @CurrentUserId() userId: string,
         @Body() updateLearningPathDto: UpdateLearningPathDto,
     ) {
@@ -44,7 +44,7 @@ export class LearningPathController {
 
     @Delete('/delete/:id')
     @Serialize(LearningPathDto)
-    delete(@Param('id') id: string, @CurrentUserId() userId: string) {
+    delete(@Param('id', ParseUUIDPipe) id: string, @CurrentUserId() userId: string) {
         return this.learningPathService.delete(id, userId);
     }
 }

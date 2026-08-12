@@ -8,7 +8,7 @@ import { Difficulty } from "../../../models/learningPath/Difficulty";
 import { TextArea } from "../../../../../../shared/ui/TextArea";
 import { Category } from "../../../models/learningPath/Category";
 import learningPathService from "../../../api/learningPathService";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 
 interface CreateModalProps {
@@ -28,15 +28,19 @@ const categoryOptions = Object.values(Category).map((category) => ({
 
 export function CreateModal({ isOpen, onClose }: CreateModalProps) {
 
-    const { register, handleSubmit, formState: { errors } } = useForm<CreateLearningPathDto>();
+    const { register, handleSubmit, reset, formState: { errors } } = useForm<CreateLearningPathDto>();
+
+    const queryClient = useQueryClient();
 
     const { mutate: createLearningPath, isPending  } = useMutation({
         mutationFn: (data: CreateLearningPathDto) => learningPathService.createLearningPath(data),
         onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["learningPaths"] });
+            reset();
             onClose();
             toast.success("Learning path created successfully");
         },
-        onError: (error) => {
+        onError: () => {
             toast.error("Failed to create learning path");
         },
     });
@@ -51,8 +55,8 @@ export function CreateModal({ isOpen, onClose }: CreateModalProps) {
                 <Input
                     label="Title"
                     required
-                    error={errors.title?.message}
-                    {...register("title", {
+                    error={errors.name?.message}
+                    {...register("name", {
                         required: "Title is required",
                         minLength: { value: 3, message: "Title must be at least 3 characters long" },
                         maxLength: { value: 40, message: "Title must be less than 40 characters long" },

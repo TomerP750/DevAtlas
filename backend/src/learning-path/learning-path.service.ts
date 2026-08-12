@@ -31,7 +31,8 @@ export class LearningPathService {
             });
         await this.learningPathRepository.save(learningPath);
 
-        return learningPath;
+        // Re-read so the DB defaults for the counters are part of the response.
+        return this.findOne(learningPath.id, userId);
     }
 
     async findOne(id: string, userId: string) {
@@ -44,7 +45,7 @@ export class LearningPathService {
         return learningPath;
     }
 
-    async findAll(userId: string, query: LearningPathQueryDto) {
+    async findAll(userId: string, query: LearningPathQueryDto): Promise<Page<LearningPath>> {
 
         const { page, size, search, sortBy, sortOrder } = query;
         const ownedByUser = learningPathOwnedBy(userId);
@@ -74,12 +75,13 @@ export class LearningPathService {
     async update(id: string, userId: string, updateLearningPathDto: UpdateLearningPathDto) {
         const learningPath = await this.findOne(id, userId);
         this.learningPathRepository.merge(learningPath, updateLearningPathDto);
-        await this.learningPathRepository.save(learningPath);
+        return this.learningPathRepository.save(learningPath);
     }
 
     async delete(id: string, userId: string) {
         const learningPath = await this.findOne(id, userId);
-        await this.learningPathRepository.delete(id);
+        await this.learningPathRepository.delete(learningPath.id);
+        return learningPath;
     }
 
     async updateLearningPathSectionCompletion(userId: string, id: string, amount: number) {

@@ -1,4 +1,4 @@
-import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { Category } from '../category';
 import { Difficulty } from '../difficulty';
 
@@ -20,8 +20,8 @@ export class CreateLearningPathDto {
     @IsEnum(Difficulty)
     difficulty!: Difficulty;
 
-    @IsNotEmpty()
+    @IsOptional()
     @IsString()
-    avatarUrl!: string;
+    avatarUrl?: string;
 
 }

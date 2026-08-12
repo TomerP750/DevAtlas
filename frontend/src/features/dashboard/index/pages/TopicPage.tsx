@@ -45,7 +45,7 @@ export default function TopicPage() {
                             Learning path
                         </p>
                         <h1 className="mt-1 truncate text-2xl font-bold tracking-tight text-neutral-950 dark:text-dark-text">
-                            {learningPath?.title ?? "Learning Path"}
+                            {learningPath?.name ?? "Learning Path"}
                         </h1>
                     </div>
                 </div>

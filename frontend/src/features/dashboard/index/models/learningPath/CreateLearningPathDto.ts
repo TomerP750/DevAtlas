@@ -2,9 +2,9 @@ import type { Category } from "./Category";
 import type { Difficulty } from "./Difficulty";
 
 export interface CreateLearningPathDto {
-    title: string;
+    name: string;
     description: string;
     difficulty: Difficulty;
     category: Category;
-    ImageUrl?: string;
+    avatarUrl?: string;
 }

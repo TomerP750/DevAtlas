@@ -6,10 +6,10 @@ import { EditModal } from "./modals/EditModal";
 interface CrudMenuProps {
     isOpen: boolean;
     learningPathId: string;
-    learningPathTitle: string;
+    learningPathName: string;
 }
 
-export function CrudMenu({ isOpen, learningPathId, learningPathTitle }: CrudMenuProps) {
+export function CrudMenu({ isOpen, learningPathId, learningPathName }: CrudMenuProps) {
     const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
     const [editModalOpen, setEditModalOpen] = useState<boolean>(false);
 
@@ -35,13 +35,13 @@ export function CrudMenu({ isOpen, learningPathId, learningPathTitle }: CrudMenu
 
             <DeleteModal
                 learningPathId={learningPathId}
-                learningPathTitle={learningPathTitle}
+                learningPathName={learningPathName}
                 isOpen={deleteModalOpen}
                 onClose={() => setDeleteModalOpen(false)}
             />
             <EditModal
                 learningPathId={learningPathId}
-                learningPathTitle={learningPathTitle}
+                learningPathName={learningPathName}
                 isOpen={editModalOpen}
                 onClose={() => setEditModalOpen(false)}
             />

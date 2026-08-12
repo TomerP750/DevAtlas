@@ -7,29 +7,33 @@ import { Category } from "../../../models/learningPath/Category";
 import { Difficulty } from "../../../models/learningPath/Difficulty";
 import type { UpdateLearningPathDto } from "../../../models/learningPath/UpdateLearningPathDto";
 import learningPathService from "../../../api/learningPathService";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { Button } from "../../../../../../shared/ui/Button";
 
 
 interface EditModalProps {
     learningPathId: string;
-    learningPathTitle: string;
+    learningPathName: string;
     isOpen: boolean;
     onClose: () => void;
 }
 
-export function EditModal({ learningPathId, learningPathTitle, isOpen, onClose }: EditModalProps) {
+export function EditModal({ learningPathId, learningPathName, isOpen, onClose }: EditModalProps) {
 
     const { register, handleSubmit, formState: { errors } } = useForm<UpdateLearningPathDto>();
+
+    const queryClient = useQueryClient();
 
     const { mutate: updateLearningPath, isPending } = useMutation({
         mutationFn: (data: UpdateLearningPathDto) => learningPathService.updateLearningPath(learningPathId, data),
         onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["learningPaths"] });
+            queryClient.invalidateQueries({ queryKey: ["learningPath", learningPathId] });
             onClose();
             toast.success("Learning path updated successfully");
         },
-        onError: (error) => {
+        onError: () => {
             toast.error("Failed to update learning path");
         },
     });
@@ -49,14 +53,14 @@ export function EditModal({ learningPathId, learningPathTitle, isOpen, onClose }
     }));
 
     return (
-        <Modal title={`Editing ${learningPathTitle}`} isOpen={isOpen} onClose={onClose}>
+        <Modal title={`Editing ${learningPathName}`} isOpen={isOpen} onClose={onClose}>
             <form className="flex flex-col gap-4"
                 onSubmit={handleSubmit(handleUpdateLearningPath)}>
                 <Input
                     label="Title"
                     required
-                    error={errors.title?.message}
-                    {...register("title", {
+                    error={errors.name?.message}
+                    {...register("name", {
                         required: "Title is required",
                         minLength: { value: 3, message: "Title must be at least 3 characters long" },
                         maxLength: { value: 40, message: "Title must be less than 40 characters long" },

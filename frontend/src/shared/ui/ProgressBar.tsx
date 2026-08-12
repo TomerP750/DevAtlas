@@ -9,11 +9,7 @@ interface ProgressBarProps {
 }
 
 export function ProgressBar({ completedCount, totalCount, className = "", square = false, showCount = false }: ProgressBarProps) {
-    const progress = Math.round((completedCount / totalCount) * 100);
-
-    if (totalCount === 0) {
-        return 0;
-    }
+    const progress = totalCount === 0 ? 0 : Math.round((completedCount / totalCount) * 100);
 
     return (
         <div className={`flex flex-col gap-2 ${className}`}>

@@ -14,7 +14,13 @@ export class LearningPathDto {
     @Expose()
     difficulty!: Difficulty;
     @Expose()
-    avatarUrl!: string;
+    avatarUrl?: string;
+    @Expose()
+    totalSectionsCount!: number;
+    @Expose()
+    totalTopicsCount!: number;
+    @Expose()
+    completedSectionsCount!: number;
     @Expose()
     createdAt!: Date;
 }
