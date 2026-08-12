@@ -9,7 +9,7 @@ import { LayoutDashboardIcon } from "lucide-react";
 
 export type GridLayout = "grid" | "row";
 
-export function DashboardIndex() {
+export default function DashboardIndex() {
 
     const [gridLayout, setGridLayout] = useState<GridLayout>("grid");
 

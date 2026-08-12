@@ -4,7 +4,7 @@ import { dummyTopics } from "../components/dummies/dummyTopics";
 import { LearningPathSummaryCard } from "../components/learningPathPage/LearningPathSummaryCard";
 import { TopicRowCard } from "../components/learningPathPage/TopicRowCard";
 
-export function LearningPathPage() {
+export default function LearningPathPage() {
     const { id } = useParams();
     // const { data: learningPath } = useQuery({
     //     queryKey: ["learningPath", id],

@@ -5,12 +5,14 @@ import { LoginPage } from "../features/authentication/pages/LoginPage";
 import { SignupPage } from "../features/authentication/pages/SignupPage";
 import { DashboardLayout } from "../features/dashboard/layout/DashboardLayout";
 import { lazy, Suspense } from "react";
-import { DashboardIndex } from "../features/dashboard/index/pages/DashboardIndex";
-import { LearningPathPage } from "../features/dashboard/index/pages/LearningPathPage";
 import { ProtectedRoute } from "../features/authentication/components/ProtectedRoute";
-import { TopicPage } from "../features/dashboard/index/pages/TopicPage";
+import { LoadingPage } from "../shared/ui/LoadingPage";
+import NotFoundPage from "../shared/pages/NotFoundPage";
 
 const SettingsPage = lazy(() => import("../features/dashboard/settings/pages/SettingsPage"));
+const TopicPage = lazy(() => import("../features/dashboard/index/pages/TopicPage"));
+const LearningPathPage = lazy(() => import("../features/dashboard/index/pages/LearningPathPage"));
+const DashboardIndex = lazy(() => import("../features/dashboard/index/pages/DashboardIndex"));
 
 export function Routing() {
     return (
@@ -31,7 +33,7 @@ export function Routing() {
                     </SuspenseWrapper>}
                 />
 
-                <Route path="learning-path/:learningPathId/topic/:id" element={
+                <Route path="learning-path/:learningPathId/topic/:topicId" element={
                     <SuspenseWrapper>
                         <TopicPage />
                     </SuspenseWrapper>}
@@ -49,9 +51,9 @@ export function Routing() {
                     </SuspenseWrapper>}
                 />
 
-
-
             </Route>
+
+            <Route path="*" element={<NotFoundPage />} />
             {/* </Route> */}
         </Routes>
     )
@@ -59,7 +61,7 @@ export function Routing() {
 
 const SuspenseWrapper = ({ children }: { children: React.ReactNode }) => {
     return (
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<LoadingPage message="Loading..." />}>
             {children}
         </Suspense>
     )
