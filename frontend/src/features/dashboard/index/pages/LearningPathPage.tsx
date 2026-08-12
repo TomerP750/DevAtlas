@@ -8,20 +8,27 @@ import learningPathService from "../api/learningPathService";
 import topicService from "../api/topicService";
 import { Button } from "../../../../shared/ui/Button";
 import { Plus } from "lucide-react";
-
+import { useState } from "react";
+import { CreateTopicModal } from "../components/learningPathPage/CreateTopicModal";
+import { UpdateLearningPathModal } from "../components/learningPathPage/UpdateLearningPathModal";
+import { DeleteLearningPathModal } from "../components/learningPathPage/DeleteLearningPathModal";
 
 export default function LearningPathPage() {
-    
     const { id } = useParams();
-    
+    const [isCreateTopicOpen, setIsCreateTopicOpen] = useState(false);
+    const [isUpdateLearningPathOpen, setIsUpdateLearningPathOpen] = useState(false);
+    const [isDeleteLearningPathOpen, setIsDeleteLearningPathOpen] = useState(false);
+
     const { data: learningPath } = useQuery<LearningPathDto>({
         queryKey: ["learningPath", id],
         queryFn: () => learningPathService.oneLearningPath(id!),
+        enabled: Boolean(id),
     });
 
-    const { data: topics } = useQuery<TopicDto[]>({
+    const { data: topics = [] } = useQuery<TopicDto[]>({
         queryKey: ["topics", id],
         queryFn: () => topicService.allTopics(id!),
+        enabled: Boolean(id),
     });
 
     return (
@@ -32,24 +39,58 @@ export default function LearningPathPage() {
                         variant="ghost"
                         leftIcon={<Plus size={16} aria-hidden="true" />}
                         className="mb-4 w-full shrink-0 rounded-lg border border-dashed border-neutral-300 text-sm text-neutral-600 hover:border-brand-primary hover:bg-violet-50 hover:text-brand-primary dark:border-dark-border dark:text-dark-text-muted dark:hover:border-violet-400 dark:hover:bg-violet-500/10 dark:hover:text-violet-300"
+                        onClick={() => setIsCreateTopicOpen(true)}
                     >
                         Add Topic
                     </Button>
 
                     <div className="grid min-h-0 flex-1 grid-cols-1 gap-3 overflow-y-auto pr-2">
-                        {topics?.map((topic) => (
-                            <TopicRowCard
-                                key={topic.id}
-                                topic={topic}
-                            />
-                        ))}
+                        {topics.length === 0 ? (
+                            <div className="flex min-h-40 items-center justify-center rounded-xl border border-dashed border-zinc-300 px-6 text-center text-sm text-zinc-500 dark:border-zinc-700 dark:text-zinc-400">
+                                No topics yet. Add the first topic to start building this path.
+                            </div>
+                        ) : (
+                            topics.map((topic) => (
+                                <TopicRowCard
+                                    key={topic.id}
+                                    topic={topic}
+                                />
+                            ))
+                        )}
                     </div>
                 </div>
 
                 {learningPath && (
-                    <LearningPathSummaryCard learningPath={learningPath} />
+                    <LearningPathSummaryCard
+                        learningPath={learningPath}
+                        onEdit={() => setIsUpdateLearningPathOpen(true)}
+                        onDelete={() => setIsDeleteLearningPathOpen(true)}
+                    />
                 )}
             </div>
+
+            {id && (
+                <CreateTopicModal
+                    isOpen={isCreateTopicOpen}
+                    onClose={() => setIsCreateTopicOpen(false)}
+                    learningPathId={id}
+                />
+            )}
+            {id && (
+                <UpdateLearningPathModal
+                    isOpen={isUpdateLearningPathOpen}
+                    onClose={() => setIsUpdateLearningPathOpen(false)}
+                    learningPathId={id}
+                />
+            )}
+            {id && learningPath && (
+                <DeleteLearningPathModal
+                    isOpen={isDeleteLearningPathOpen}
+                    onClose={() => setIsDeleteLearningPathOpen(false)}
+                    learningPathId={id}
+                    learningPathName={learningPath.name}
+                />
+            )}
         </div>
     );
 }

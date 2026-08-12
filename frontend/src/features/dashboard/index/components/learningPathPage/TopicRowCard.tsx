@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import { Button } from "../../../../../shared/ui/Button";
 import { ConfidenceLevel } from "../../models/shared/ConfidenceLevel";
 import type { TopicDto } from "../../models/topic/TopicDto";
+import { useState } from "react";
+import { UpdateTopicModal } from "./UpdateTopicModal";
+import { DeleteTopicModal } from "./DeleteTopicModal";
 
 interface TopicRowCardProps {
     topic: TopicDto;
@@ -19,6 +22,10 @@ function getConfidenceLineClass(confidenceLevel: ConfidenceLevel) {
 }
 
 export function TopicRowCard({ topic }: TopicRowCardProps) {
+
+    const [isUpdateTopicModalOpen, setIsUpdateTopicModalOpen] = useState(false);
+    const [isDeleteTopicModalOpen, setIsDeleteTopicModalOpen] = useState(false);
+
     const { name, description, order, confidenceLevel } = topic;
 
     return (
@@ -52,6 +59,7 @@ export function TopicRowCard({ topic }: TopicRowCardProps) {
                 <Button
                     variant="ghost"
                     size="sm"
+                    onClick={() => setIsUpdateTopicModalOpen(true)}
                     leftIcon={<Pencil size={16} aria-hidden="true" />}
                     className="h-9 w-9 bg-neutral-100 p-0! dark:bg-white/5"
                     aria-label={`Update ${name}`}
@@ -60,6 +68,7 @@ export function TopicRowCard({ topic }: TopicRowCardProps) {
                 <Button
                     variant="ghost"
                     size="sm"
+                    onClick={() => setIsDeleteTopicModalOpen(true)}
                     leftIcon={<Trash2 size={16} aria-hidden="true" />}
                     className="h-9 w-9 bg-neutral-100 p-0! dark:bg-white/5"
                     aria-label={`Delete ${name}`}
@@ -74,6 +83,18 @@ export function TopicRowCard({ topic }: TopicRowCardProps) {
                     title="View topic"
                 />
             </div>
+            <UpdateTopicModal
+                isOpen={isUpdateTopicModalOpen}
+                onClose={() => setIsUpdateTopicModalOpen(false)}
+                topic={topic}
+            />
+            <DeleteTopicModal
+                isOpen={isDeleteTopicModalOpen}
+                onClose={() => setIsDeleteTopicModalOpen(false)}
+                topicId={topic.id}
+                topicName={topic.name}
+                learningPathId={topic.learningPathId}
+            />
         </article>
     );
 }

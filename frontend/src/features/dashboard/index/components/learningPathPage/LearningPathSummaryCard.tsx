@@ -1,10 +1,13 @@
-import { BookOpen, CircleCheck, Layers } from "lucide-react";
+import { BookOpen, CircleCheck, Layers, Pencil, Trash2 } from "lucide-react";
+import { Button } from "../../../../../shared/ui/Button";
 import { ProgressBar } from "../../../../../shared/ui/ProgressBar";
 import type { LearningPathDto } from "../../models/learningPath/LearningPathDto";
 import { Difficulty } from "../../models/learningPath/Difficulty";
 
 interface LearningPathSummaryCardProps {
     learningPath: LearningPathDto;
+    onEdit: () => void;
+    onDelete: () => void;
 }
 
 function getDifficultyStyles(difficulty: Difficulty) {
@@ -26,7 +29,11 @@ function getDifficultyStyles(difficulty: Difficulty) {
     return styles[difficulty];
 }
 
-export function LearningPathSummaryCard({ learningPath }: LearningPathSummaryCardProps) {
+export function LearningPathSummaryCard({
+    learningPath,
+    onEdit,
+    onDelete,
+}: LearningPathSummaryCardProps) {
     const difficultyStyles = getDifficultyStyles(learningPath.difficulty);
 
     return (
@@ -41,9 +48,31 @@ export function LearningPathSummaryCard({ learningPath }: LearningPathSummaryCar
                     </span>
                 </div>
 
-                <h1 className="mt-4 text-2xl font-bold tracking-tight text-neutral-950 dark:text-dark-text">
-                    {learningPath.name}
-                </h1>
+                <div className="mt-4 flex items-start justify-between gap-3">
+                    <h1 className="min-w-0 text-2xl font-bold tracking-tight text-neutral-950 dark:text-dark-text">
+                        {learningPath.name}
+                    </h1>
+                    <div className="flex shrink-0 gap-1">
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-9 w-9 p-0!"
+                            leftIcon={<Pencil size={16} aria-hidden="true" />}
+                            onClick={onEdit}
+                            aria-label={`Edit ${learningPath.name}`}
+                            title="Edit learning path"
+                        />
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-9 w-9 p-0! text-red-600 hover:bg-red-50 hover:text-red-700 dark:text-red-400 dark:hover:bg-red-950/40"
+                            leftIcon={<Trash2 size={16} aria-hidden="true" />}
+                            onClick={onDelete}
+                            aria-label={`Delete ${learningPath.name}`}
+                            title="Delete learning path"
+                        />
+                    </div>
+                </div>
                 <p className="mt-2 text-sm leading-6 text-neutral-500 dark:text-dark-text-muted">
                     {learningPath.description}
                 </p>
