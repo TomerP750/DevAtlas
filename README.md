@@ -1,94 +1,122 @@
 # 🧭 DevAtlas
 
-DevAtlas is a full-stack learning-path manager for developers. It provides a
-single place to create technical roadmaps, organize them into sections and
-topics, and track progress from start to completion.
+DevAtlas is a full-stack learning workspace for developers. It helps users turn
+technical goals into structured learning paths, break them into topics and
+study sections, save notes and code snippets, and track progress from one
+dashboard.
 
-The project combines a React dashboard with a REST API backed by MongoDB. It is
-currently under active development.
+The project combines a React single-page application with a modular NestJS REST
+API and a MySQL database.
 
-## ✨ Features
+## Features
 
-- **Structured learning roadmaps** — organize a learning path into ordered
-  sections and focused topics.
-- **Progress-focused workspace** — track section and topic states and visualize
-  completion directly from the dashboard.
-- **Personalized path organization** — group goals by technical category and
-  difficulty, from beginner through advanced.
-- **Secure user accounts** — password hashing, expiring JWT sessions, profile
-  management, password changes, and account deletion.
-- **Flexible dashboard experience** — switch between responsive grid and list
-  layouts to review learning paths comfortably.
-- **Persistent theming** — light and dark preferences are saved across sessions.
-- **Reliable data boundaries** — Zod validation, ownership checks, and
-  centralized error handling protect the learning domain.
+- Create learning paths and classify them by technical category and difficulty.
+- Organize each path into ordered topics and focused study sections.
+- Record descriptions, confidence levels, and reusable code snippets.
+- Mark sections as complete and view aggregated progress across topics and paths.
+- Browse learning paths through a paginated grid or list dashboard.
+- Manage profile information, passwords, account deletion, and display settings.
+- Use a responsive interface with persistent light and dark themes.
 
-## 🏗️ Architecture
+## Authentication and data security
+
+- Short-lived JWT access tokens protect API requests.
+- Refresh tokens are delivered through path-scoped, HTTP-only cookies.
+- Refresh-token values are SHA-256 hashed before database storage.
+- Token rotation uses a database transaction and pessimistic lock to prevent
+  concurrent reuse.
+- Passwords are salted and hashed with Node.js `scrypt`.
+- Global NestJS guards secure routes by default, with explicit public-route
+  metadata for authentication endpoints.
+- Ownership-scoped queries prevent users from accessing another user's learning
+  paths, topics, or sections.
+- DTO validation and response serialization constrain request data and exclude
+  sensitive fields.
+
+## Architecture
 
 ```mermaid
 flowchart LR
-    UI[React + Vite client] -->|REST / JSON| API[Express API]
-    API --> AUTH[JWT authentication]
-    API --> VALIDATION[Zod validation]
-    API --> DB[(MongoDB)]
+    UI[React + Vite SPA]
+    QUERY[TanStack Query + Axios]
+    API[NestJS REST API]
+    AUTH[JWT guards and refresh-token rotation]
+    ORM[TypeORM]
+    DB[(MySQL)]
+
+    UI --> QUERY
+    QUERY -->|REST / JSON| API
+    API --> AUTH
+    API --> ORM
+    ORM --> DB
 ```
 
-The frontend is organized by feature and uses React Query for server-state
-management. The backend follows a route/controller/service/repository structure
-for its learning resources.
+The frontend uses a feature-based structure, protected nested routes, lazy-loaded
+pages, reusable UI components, and TanStack Query for server-state caching,
+pagination, mutations, and cache invalidation.
 
-### 🧩 Data Model
+The backend is split into authentication, user, learning-path, topic, and section
+modules. Each domain module follows NestJS controller/service/repository
+boundaries and persists data through TypeORM.
+
+### Domain model
 
 ```text
 User
 └── Learning Path
-    └── Section
-        └── Topic
+    └── Topic
+        └── Section
 ```
 
-Learning paths belong to a user. Sections belong to a learning path, and topics
-belong to a section. Section and topic records carry progress states such as
-`NOT_STARTED`, `IN_PROGRESS`, and `COMPLETED`.
+Topics have a stable display order. Sections store study content, optional code
+snippets, confidence levels, and completion state. Denormalized counters on
+topics and learning paths provide progress summaries without repeatedly
+recalculating the full hierarchy.
 
-## 🛠️ Tech Stack
+### Session flow
 
-### ⚛️ Frontend
+1. Login or signup returns an access token and sets a refresh-token cookie.
+2. The client keeps the access token in memory and attaches it to API requests.
+3. When an access token expires, an Axios interceptor performs one refresh and
+   replays the failed request.
+4. Concurrent refresh attempts share the same request so a rotating token is
+   not consumed twice.
+5. Logout revokes the stored refresh token and clears local session state.
 
-- React 19 and TypeScript
-- Vite 8
+## Tech stack
+
+### Frontend
+
+- React 19, TypeScript, and Vite
 - React Router
 - TanStack React Query
-- Tailwind CSS 4
-- React Hook Form
 - Axios
+- React Hook Form
+- Tailwind CSS 4
 - Lucide React and React Toastify
 
-### 🖥️ Backend
+### Backend
 
-- Node.js and TypeScript
-- Express 5
-- MongoDB and Mongoose
-- JSON Web Tokens
-- bcrypt.js
-- Zod
+- Node.js, TypeScript, and NestJS 11
+- TypeORM and MySQL
+- JWT authentication
+- `class-validator` and `class-transformer`
+- Jest and Supertest
 
-## 📁 Project Structure
+## Project structure
 
 ```text
 DevAtlas/
 ├── backend/
 │   ├── src/
-│   │   ├── features/
-│   │   │   ├── authentication/
-│   │   │   ├── learning/
-│   │   │   │   ├── learning-path/
-│   │   │   │   ├── section/
-│   │   │   │   └── topic/
-│   │   │   └── user/
-│   │   ├── shared/
-│   │   └── app.ts
-│   ├── package.json
-│   └── tsconfig.json
+│   │   ├── authentication/
+│   │   ├── learning-path/
+│   │   ├── section/
+│   │   ├── topic/
+│   │   ├── user/
+│   │   └── shared/
+│   ├── test/
+│   └── package.json
 ├── frontend/
 │   ├── public/
 │   ├── src/
@@ -98,13 +126,27 @@ DevAtlas/
 │   │   ├── home/
 │   │   ├── layout/
 │   │   └── shared/
-│   ├── package.json
-│   └── vite.config.ts
+│   └── package.json
 └── README.md
 ```
 
-## 🚧 Development Status
 
-DevAtlas is a work in progress. The core UI and domain layers are present.
+## API overview
 
+The main API groups are:
 
+- `/api/auth` — signup, login, logout, and refresh-token rotation
+- `/api/user` — current user, profile, password, and account management
+- `/api/learning-path` — learning-path management and paginated listing
+- `/api/topic` — ordered topics within a learning path
+- `/api/section` — study sections and completion tracking
+
+All routes are authenticated by default except the public authentication
+endpoints.
+
+## Development status
+
+DevAtlas is under active development. Core authentication, learning-path
+management, nested topic and section workflows, progress tracking, account
+settings, and theming are implemented. Automated frontend tests, production
+database migrations, and some dashboard controls are still planned.
