@@ -5,11 +5,11 @@ import {
     Circle,
 } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
-import { Button } from "../../../../shared/ui/Button";
-import sectionService from "../api/sectionService";
-import { SectionAside } from "../components/sectionPage/SectionAside";
-import { SectionContent } from "../components/sectionPage/SectionContent";
-import type { SectionDto } from "../models/section/SectionDto";
+import { Button } from "../../../../../../shared/ui/Button";
+import sectionService from "../../../api/sectionService";
+import { SectionAside } from "./sectionPage/SectionAside";
+import { SectionContent } from "./sectionPage/SectionContent";
+import type { SectionDto } from "../../../models/section/SectionDto";
 
 export default function SectionPage() {
     

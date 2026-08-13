@@ -1,17 +1,17 @@
 import { useParams } from "react-router-dom";
-import { LearningPathSummaryCard } from "../components/learningPathPage/LearningPathSummaryCard";
-import { TopicCard } from "../components/learningPathPage/TopicCard";
+import { LearningPathSummaryCard } from "./LearningPathSummaryCard";
+import { TopicCard } from "../topic/TopicCard";
 import { useQuery } from "@tanstack/react-query";
-import type { TopicDto } from "../models/topic/TopicDto";
-import type { LearningPathDto } from "../models/learningPath/LearningPathDto";
-import learningPathService from "../api/learningPathService";
-import topicService from "../api/topicService";
-import { Button } from "../../../../shared/ui/Button";
+import type { TopicDto } from "../../../models/topic/TopicDto";
+import type { LearningPathDto } from "../../../models/learningPath/LearningPathDto";
+import learningPathService from "../../../api/learningPathService";
+import topicService from "../../../api/topicService";
+import { Button } from "../../../../../../shared/ui/Button";
 import { Plus } from "lucide-react";
 import { useState } from "react";
-import { CreateTopicModal } from "../components/learningPathPage/CreateTopicModal";
-import { UpdateLearningPathModal } from "../components/learningPathPage/UpdateLearningPathModal";
-import { DeleteLearningPathModal } from "../components/learningPathPage/DeleteLearningPathModal";
+import { CreateTopicModal } from "../topic/CreateTopicModal";
+import { UpdateLearningPathModal } from "./UpdateLearningPathModal";
+import { DeleteLearningPathModal } from "./DeleteLearningPathModal";
 
 export default function LearningPathPage() {
     const { id } = useParams();

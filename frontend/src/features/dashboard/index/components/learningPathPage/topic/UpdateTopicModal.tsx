@@ -2,15 +2,15 @@ import { useEffect } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { Button } from "../../../../../shared/ui/Button";
-import { Input } from "../../../../../shared/ui/Input";
-import { Modal } from "../../../../../shared/ui/Modal";
-import { Select } from "../../../../../shared/ui/Select";
-import { TextArea } from "../../../../../shared/ui/TextArea";
-import topicService from "../../api/topicService";
-import { ConfidenceLevel } from "../../models/shared/ConfidenceLevel";
-import type { TopicDto } from "../../models/topic/TopicDto";
-import type { UpdateTopicDto } from "../../models/topic/UpdateTopicDto";
+import { Button } from "../../../../../../shared/ui/Button";
+import { Input } from "../../../../../../shared/ui/Input";
+import { Modal } from "../../../../../../shared/ui/Modal";
+import { Select } from "../../../../../../shared/ui/Select";
+import { TextArea } from "../../../../../../shared/ui/TextArea";
+import topicService from "../../../api/topicService";
+import { ConfidenceLevel } from "../../../models/shared/ConfidenceLevel";
+import type { TopicDto } from "../../../models/topic/TopicDto";
+import type { UpdateTopicDto } from "../../../models/topic/UpdateTopicDto";
 
 interface UpdateTopicModalProps {
     isOpen: boolean;

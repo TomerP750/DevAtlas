@@ -1,6 +1,7 @@
 import { CheckCircle2, Circle, Gauge } from "lucide-react";
-import type { SectionDto } from "../../models/section/SectionDto";
-import { ConfidenceLevel } from "../../models/shared/ConfidenceLevel";
+import type { SectionDto } from "../../../../models/section/SectionDto";
+import { ConfidenceLevel } from "../../../../models/shared/ConfidenceLevel";
+
 
 interface SectionAsideProps {
     section: SectionDto;

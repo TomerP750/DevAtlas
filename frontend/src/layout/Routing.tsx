@@ -9,10 +9,10 @@ import { ProtectedRoute } from "../features/authentication/components/ProtectedR
 import { LoadingPage } from "../shared/ui/LoadingPage";
 
 const SettingsPage = lazy(() => import("../features/dashboard/settings/pages/SettingsPage"));
-const TopicPage = lazy(() => import("../features/dashboard/index/pages/TopicPage"));
-const LearningPathPage = lazy(() => import("../features/dashboard/index/pages/LearningPathPage"));
-const DashboardIndex = lazy(() => import("../features/dashboard/index/pages/DashboardIndex"));
-const SectionPage = lazy(() => import("../features/dashboard/index/pages/SectionPage"));
+const TopicPage = lazy(() => import("../features/dashboard/index/models/topic/TopicPage"));
+const LearningPathPage = lazy(() => import("../features/dashboard/index/components/learningPathPage/learningPath/LearningPathPage"));
+const DashboardIndex = lazy(() => import("../features/dashboard/index/components/index/DashboardIndex"));
+const SectionPage = lazy(() => import("../features/dashboard/index/components/topicPage/section/SectionPage"));
 const NotFoundPage = lazy(() => import("../shared/pages/NotFoundPage"));
 
 export function Routing() {

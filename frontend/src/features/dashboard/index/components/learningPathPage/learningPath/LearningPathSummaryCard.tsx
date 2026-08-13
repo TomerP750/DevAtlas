@@ -1,8 +1,8 @@
 import { BookOpen, CircleCheck, Layers, Pencil, Trash2 } from "lucide-react";
-import { Button } from "../../../../../shared/ui/Button";
-import { ProgressBar } from "../../../../../shared/ui/ProgressBar";
-import type { LearningPathDto } from "../../models/learningPath/LearningPathDto";
-import { Difficulty } from "../../models/learningPath/Difficulty";
+import { Button } from "../../../../../../shared/ui/Button";
+import { ProgressBar } from "../../../../../../shared/ui/ProgressBar";
+import type { LearningPathDto } from "../../../models/learningPath/LearningPathDto";
+import { Difficulty } from "../../../models/learningPath/Difficulty";
 
 interface LearningPathSummaryCardProps {
     learningPath: LearningPathDto;

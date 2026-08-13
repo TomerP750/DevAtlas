@@ -2,9 +2,9 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AlertTriangle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Button } from "../../../../../shared/ui/Button";
-import { Modal } from "../../../../../shared/ui/Modal";
-import learningPathService from "../../api/learningPathService";
+import { Button } from "../../../../../../shared/ui/Button";
+import { Modal } from "../../../../../../shared/ui/Modal";
+import learningPathService from "../../../api/learningPathService";
 
 interface DeleteLearningPathModalProps {
     isOpen: boolean;

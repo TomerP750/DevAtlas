@@ -1,12 +1,12 @@
 import { MenuIcon, Pencil, Trash2 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Button } from "../../../../../shared/ui/Button";
-import { ConfidenceLevel } from "../../models/shared/ConfidenceLevel";
-import type { TopicDto } from "../../models/topic/TopicDto";
+import { Button } from "../../../../../../shared/ui/Button";
+import { ConfidenceLevel } from "../../../models/shared/ConfidenceLevel";
+import type { TopicDto } from "../../../models/topic/TopicDto";
 import { useState } from "react";
 import { UpdateTopicModal } from "./UpdateTopicModal";
+import { ProgressBar } from "../../../../../../shared/ui/ProgressBar";
 import { DeleteTopicModal } from "./DeleteTopicModal";
-import { ProgressBar } from "../../../../../shared/ui/ProgressBar";
 
 interface TopicCardProps {
     topic: TopicDto;

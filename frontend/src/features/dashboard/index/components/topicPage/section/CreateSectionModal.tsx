@@ -1,14 +1,14 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { Button } from "../../../../../shared/ui/Button";
-import { Input } from "../../../../../shared/ui/Input";
-import { Modal } from "../../../../../shared/ui/Modal";
-import { Select } from "../../../../../shared/ui/Select";
-import { TextArea } from "../../../../../shared/ui/TextArea";
-import sectionService from "../../api/sectionService";
-import type { CreateSectionDto } from "../../models/section/CreateSectionDto";
-import { ConfidenceLevel } from "../../models/shared/ConfidenceLevel";
+import { Button } from "../../../../../../shared/ui/Button";
+import { Input } from "../../../../../../shared/ui/Input";
+import { Modal } from "../../../../../../shared/ui/Modal";
+import { Select } from "../../../../../../shared/ui/Select";
+import { TextArea } from "../../../../../../shared/ui/TextArea";
+import sectionService from "../../../api/sectionService";
+import type { CreateSectionDto } from "../../../models/section/CreateSectionDto";
+import { ConfidenceLevel } from "../../../models/shared/ConfidenceLevel";
 
 interface CreateSectionModalProps {
     isOpen: boolean;

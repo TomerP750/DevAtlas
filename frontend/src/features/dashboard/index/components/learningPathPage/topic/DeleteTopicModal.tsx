@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AlertTriangle } from "lucide-react";
 import { toast } from "react-toastify";
-import { Button } from "../../../../../shared/ui/Button";
-import { Modal } from "../../../../../shared/ui/Modal";
-import topicService from "../../api/topicService";
+import { Button } from "../../../../../../shared/ui/Button";
+import { Modal } from "../../../../../../shared/ui/Modal";
+import topicService from "../../../api/topicService";
 
 interface DeleteTopicModalProps {
     isOpen: boolean;

@@ -1,7 +1,8 @@
 import { BookOpen, Check, Code2, Copy } from "lucide-react";
 import { useState } from "react";
-import { Button } from "../../../../../shared/ui/Button";
-import type { SectionDto } from "../../models/section/SectionDto";
+import { Button } from "../../../../../../../shared/ui/Button";
+import type { SectionDto } from "../../../../models/section/SectionDto";
+
 
 interface SectionContentProps {
     section: SectionDto;

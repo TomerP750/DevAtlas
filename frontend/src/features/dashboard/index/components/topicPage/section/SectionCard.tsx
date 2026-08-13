@@ -1,13 +1,13 @@
 import { Check, Circle, MenuIcon, Pencil, ShieldCheck, Trash2 } from "lucide-react";
-import { Button } from "../../../../../shared/ui/Button";
-import type { SectionDto } from "../../models/section/SectionDto";
-import { ConfidenceLevel } from "../../models/shared/ConfidenceLevel";
+import { Button } from "../../../../../../shared/ui/Button";
+import type { SectionDto } from "../../../models/section/SectionDto";
+import { ConfidenceLevel } from "../../../models/shared/ConfidenceLevel";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import sectionService from "../../api/sectionService";
+import sectionService from "../../../api/sectionService";
 import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
-import { UpdateSectionModal } from "../learningPathPage/UpdateSectionModal";
-import { DeleteSectionModal } from "../learningPathPage/DeleteSectionModal";
+import { UpdateSectionModal } from "./UpdateSectionModal";
+import { DeleteSectionModal } from "./DeleteSectionModal";
 
 interface SectionCardProps {
     section: SectionDto;

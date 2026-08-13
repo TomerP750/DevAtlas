@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { DashboardHeader } from "../../shared/components/DashboardHeader";
-import { ActionButtons } from "../components/index/ActionButtons";
-import { LearningPathCard } from "../components/index/LearningPathCard";
+import { DashboardHeader } from "../../../shared/components/DashboardHeader";
+import { ActionButtons } from "./ActionButtons";
+import { LearningPathCard } from "./LearningPathCard";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import learningPathService from "../api/learningPathService";
+import learningPathService from "../../api/learningPathService";
 import { LayoutDashboardIcon } from "lucide-react";
-import { Button } from "../../../../shared/ui/Button";
+import { Button } from "../../../../../shared/ui/Button";
 
 export type GridLayout = "grid" | "row";
 
