@@ -13,12 +13,14 @@ import sectionService from "../api/sectionService";
 import learningPathService from "../api/learningPathService";
 import { UpdateTopicModal } from "../components/learningPathPage/UpdateTopicModal";
 import { DeleteTopicModal } from "../components/learningPathPage/DeleteTopicModal";
+import { CreateSectionModal } from "../components/learningPathPage/CreateSectionModal";
 
 export default function TopicPage() {
     const { learningPathId, topicId } = useParams();
     const navigate = useNavigate();
     const [isUpdateTopicOpen, setIsUpdateTopicOpen] = useState(false);
     const [isDeleteTopicOpen, setIsDeleteTopicOpen] = useState(false);
+    const [isCreateSectionOpen, setIsCreateSectionOpen] = useState(false);
 
     const { data: learningPath } = useQuery<LearningPathDto | null>({
         queryKey: ["learningPath", learningPathId],
@@ -100,7 +102,8 @@ export default function TopicPage() {
             <Button
                 variant="ghost"
                 leftIcon={<Plus size={16} aria-hidden="true" />}
-                className="mb-7 w-full shrink-0 rounded-lg border border-dashed border-neutral-300 text-sm text-neutral-600 hover:border-brand-primary hover:bg-violet-50 hover:text-brand-primary dark:border-dark-border dark:text-dark-text-muted dark:hover:border-violet-400 dark:hover:bg-violet-500/10 dark:hover:text-violet-300"
+                className="mb-7 w-full shrink-0 rounded-lg border border-dashed border-neutral-300 text-sm text-neutral-600 hover:border-brand-primary hover:bg-violet-50 hover:text-brand-primary dark:border-dark-border dark:text-dark-text-muted dark:hover:border-brand-primary-dark dark:hover:bg-brand-primary-dark/10 dark:hover:text-brand-primary-dark"
+                onClick={() => setIsCreateSectionOpen(true)}
             >
                 Add Section
             </Button>
@@ -113,6 +116,11 @@ export default function TopicPage() {
                 ))}
             </ul>}
 
+            <CreateSectionModal
+                isOpen={isCreateSectionOpen}
+                onClose={() => setIsCreateSectionOpen(false)}
+                topicId={topic.id}
+            />
             <UpdateTopicModal
                 isOpen={isUpdateTopicOpen}
                 onClose={() => setIsUpdateTopicOpen(false)}

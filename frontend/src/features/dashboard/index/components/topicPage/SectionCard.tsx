@@ -4,7 +4,10 @@ import type { SectionDto } from "../../models/section/SectionDto";
 import { ConfidenceLevel } from "../../models/shared/ConfidenceLevel";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import sectionService from "../../api/sectionService";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useState } from "react";
+import { UpdateSectionModal } from "../learningPathPage/UpdateSectionModal";
+import { DeleteSectionModal } from "../learningPathPage/DeleteSectionModal";
 
 interface SectionCardProps {
     section: SectionDto;
@@ -22,14 +25,18 @@ function getConfidenceLineClass(confidenceLevel: ConfidenceLevel) {
 
 export function SectionCard({ section }: SectionCardProps) {
 
+    const { topicId = "" } = useParams();
     const { name, description, confidenceLevel, completed } = section;
+    const [isUpdateSectionOpen, setIsUpdateSectionOpen] = useState(false);
+    const [isDeleteSectionOpen, setIsDeleteSectionOpen] = useState(false);
 
     const queryClient = useQueryClient(); 
 
     const { mutate: toggleSectionCompletion, isPending } = useMutation({
         mutationFn: (sectionId: string) => sectionService.toggleCompletion(sectionId),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["sections"] });
+            queryClient.invalidateQueries({ queryKey: ["sections", topicId] });
+            queryClient.invalidateQueries({ queryKey: ["topic", topicId] });
         },
     });
 
@@ -93,6 +100,7 @@ export function SectionCard({ section }: SectionCardProps) {
                 <Button
                     variant="ghost"
                     size="sm"
+                    onClick={() => setIsUpdateSectionOpen(true)}
                     leftIcon={<Pencil size={16} aria-hidden="true" />}
                     className="h-9 w-9 bg-neutral-100 p-0! dark:bg-white/5"
                     aria-label={`Update ${name}`}
@@ -101,6 +109,7 @@ export function SectionCard({ section }: SectionCardProps) {
                 <Button
                     variant="ghost"
                     size="sm"
+                    onClick={() => setIsDeleteSectionOpen(true)}
                     leftIcon={<Trash2 size={16} aria-hidden="true" />}
                     className="h-9 w-9 bg-neutral-100 p-0! dark:bg-white/5"
                     aria-label={`Delete ${name}`}
@@ -115,6 +124,19 @@ export function SectionCard({ section }: SectionCardProps) {
                     title="View section"
                 />
             </div>
+            <UpdateSectionModal
+                isOpen={isUpdateSectionOpen}
+                onClose={() => setIsUpdateSectionOpen(false)}
+                section={section}
+                topicId={topicId}
+            />
+            <DeleteSectionModal
+                isOpen={isDeleteSectionOpen}
+                onClose={() => setIsDeleteSectionOpen(false)}
+                sectionId={section.id}
+                sectionName={section.name}
+                topicId={topicId}
+            />
         </article>
     );
 }

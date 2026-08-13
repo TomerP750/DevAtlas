@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { LearningPathSummaryCard } from "../components/learningPathPage/LearningPathSummaryCard";
-import { TopicRowCard } from "../components/learningPathPage/TopicRowCard";
+import { TopicCard } from "../components/learningPathPage/TopicCard";
 import { useQuery } from "@tanstack/react-query";
 import type { TopicDto } from "../models/topic/TopicDto";
 import type { LearningPathDto } from "../models/learningPath/LearningPathDto";
@@ -51,7 +51,7 @@ export default function LearningPathPage() {
                             </div>
                         ) : (
                             topics.map((topic) => (
-                                <TopicRowCard
+                                <TopicCard
                                     key={topic.id}
                                     topic={topic}
                                 />

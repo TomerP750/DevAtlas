@@ -43,7 +43,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
         "w-full rounded-lg border px-3 py-2 text-sm transition-colors",
         "bg-white text-zinc-900",
         "dark:bg-zinc-800 dark:text-zinc-100",
-        "focus:outline-none focus:ring-1 focus:ring-brand-primary/10 focus:border-brand-primary/70",
+        "focus:outline-none focus:ring-1 focus:ring-brand-primary/10 focus:border-brand-primary/70 dark:focus:ring-brand-primary-dark/10 dark:focus:border-brand-primary-dark/70",
         error
             ? "border-red-500 dark:border-red-500"
             : "border-zinc-200 dark:border-zinc-800",

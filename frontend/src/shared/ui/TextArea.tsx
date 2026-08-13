@@ -10,7 +10,7 @@ type TextAreaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
 };
 
 export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(function TextArea(
-    { label, error, helperText, required, id, rows, ...props },
+    { label, error, helperText, required, id, rows, className = "", ...props },
     ref,
 ) {
     const generatedId = useId();
@@ -28,9 +28,10 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(function 
             rows={rows ?? 3}
             aria-invalid={error ? true : undefined}
             aria-describedby={describedBy}
+            {...props}
             className={`p-2 border border-black/10 dark:border-white/10 
             dark:bg-zinc-800 dark:text-zinc-100 focus:outline-none focus:ring-1 focus:ring-brand-primary/10 focus:border-brand-primary/70 dark:focus:ring-brand-primary-dark/20 dark:focus:border-brand-primary-dark/70
-            rounded-none! w-full resize-none ${props.className}`} {...props}
+            rounded-none! w-full resize-none ${className}`}
         />
     )
 
