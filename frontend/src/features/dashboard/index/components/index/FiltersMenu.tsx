@@ -6,10 +6,13 @@ import { useSearchParams } from "react-router-dom";
 
 interface FiltersMenuProps {
     isOpen: boolean;
-    onApply: () => void;
+    onApplied: () => void;
 }
 
-type SortOption = "newest" | "oldest" | "title-asc" | "title-desc";
+// "<sortBy>:<sortOrder>" so one select maps straight onto both query params.
+type SortOption = "createdAt:DESC" | "createdAt:ASC" | "name:ASC" | "name:DESC";
+
+const DEFAULT_SORT: SortOption = "createdAt:DESC";
 
 interface FilterFormValues {
     category: Category | "";
@@ -19,44 +22,63 @@ interface FilterFormValues {
 
 const categoryOptions = Object.values(Category);
 const difficultyOptions = Object.values(Difficulty);
+const sortOptions: { value: SortOption; label: string }[] = [
+    { value: "createdAt:DESC", label: "Newest - Oldest" },
+    { value: "createdAt:ASC", label: "Oldest - Newest" },
+    { value: "name:ASC", label: "Title: A to Z" },
+    { value: "name:DESC", label: "Title: Z to A" },
+];
 const formatCategory = (category: Category) =>
     category
         .toLowerCase()
         .replace(/_/g, " ")
         .replace(/\b\w/g, (letter) => letter.toUpperCase());
 
-export function FiltersMenu({ isOpen, onApply }: FiltersMenuProps) {
+export function FiltersMenu({ isOpen, onApplied }: FiltersMenuProps) {
+
+    if (!isOpen) return null;
+    
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    // The applied filters live in the URL, so the menu opens showing what is active.
+    const appliedSort = sortOptions.find(
+        (option) => option.value === `${searchParams.get("sortBy")}:${searchParams.get("sortOrder")}`,
+    );
 
     const { register, handleSubmit, reset, setValue, watch } = useForm<FilterFormValues>({
         defaultValues: {
-            category: "",
-            difficulty: undefined,
-            sortOption: "newest",
+            category: categoryOptions.find((option) => option === searchParams.get("category")) ?? "",
+            difficulty: difficultyOptions.find((option) => option === searchParams.get("difficulty")),
+            sortOption: appliedSort?.value ?? DEFAULT_SORT,
         },
     });
     const selectedDifficulty = watch("difficulty");
 
-    const [searchParams, setSearchParams] = useSearchParams();
-
     const applyFilters = ({ category, difficulty, sortOption }: FilterFormValues) => {
-        category ? searchParams.set("category", category) : searchParams.delete("category");
-        difficulty ? searchParams.set("difficulty", difficulty) : searchParams.delete("difficulty");
-        sortOption ? searchParams.set("sortOption", sortOption) : searchParams.delete("sortOption");
+        const params = new URLSearchParams(searchParams);
+        const [sortBy, sortOrder] = sortOption.split(":");
 
-        setSearchParams(searchParams);
-        onApply();
+        category ? params.set("category", category) : params.delete("category");
+        difficulty ? params.set("difficulty", difficulty) : params.delete("difficulty");
+        params.set("sortBy", sortBy);
+        params.set("sortOrder", sortOrder);
+
+        setSearchParams(params, { replace: true });
+        onApplied();
     };
 
     const resetFilters = () => {
-        searchParams.delete("category");
-        searchParams.delete("difficulty");
-        searchParams.delete("sortOption");
-        setSearchParams(searchParams);
-        reset();
-        onApply();
-    };
+        const params = new URLSearchParams(searchParams);
 
-    if (!isOpen) return null;
+        params.delete("category");
+        params.delete("difficulty");
+        params.delete("sortBy");
+        params.delete("sortOrder");
+
+        setSearchParams(params, { replace: true });
+        reset({ category: "", difficulty: undefined, sortOption: DEFAULT_SORT });
+        onApplied();
+    };
 
     return (
         <aside
@@ -134,10 +156,11 @@ export function FiltersMenu({ isOpen, onApply }: FiltersMenuProps) {
                                 {...register("sortOption")}
                                 className="h-10 w-full appearance-none rounded-lg border border-zinc-200 bg-zinc-50 px-3 pr-9 text-sm text-zinc-800 outline-none transition hover:border-zinc-300 focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/15 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:border-zinc-600 dark:focus:border-brand-primary-dark dark:focus:ring-brand-primary-dark/15"
                             >
-                                <option value="newest">Newest - Oldest</option>
-                                <option value="oldest">Oldest - Newest</option>
-                                <option value="title-asc">Title: A to Z</option>
-                                <option value="title-desc">Title: Z to A</option>
+                                {sortOptions.map(({ value, label }) => (
+                                    <option key={value} value={value}>
+                                        {label}
+                                    </option>
+                                ))}
                             </select>
                             <ChevronDown
                                 aria-hidden="true"

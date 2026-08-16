@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { DashboardHeader } from "../../../shared/components/DashboardHeader";
 import { ActionButtons } from "./ActionButtons";
 import { LearningPathCard } from "./LearningPathCard";
@@ -8,29 +8,32 @@ import { LayoutDashboardIcon } from "lucide-react";
 import { Button } from "../../../../../shared/ui/Button";
 import type { LearningPathFilters } from "../../models/learningPath/LearningPathQueryDto";
 import { useSearchParams } from "react-router-dom";
-import type { Difficulty } from "../../models/learningPath/Difficulty";
-import type { Category } from "../../models/learningPath/Category";
+import { Difficulty } from "../../models/learningPath/Difficulty";
+import { Category } from "../../models/learningPath/Category";
 
 export type GridLayout = "grid" | "row";
 
 const PAGE_SIZE = 10;
 
+const categories = Object.values(Category);
+const difficulties = Object.values(Difficulty);
+const sortFields = ["name", "createdAt", "updatedAt"] as const;
+const sortOrders = ["ASC", "DESC"] as const;
+
 export default function DashboardIndex() {
 
     const [gridLayout, setGridLayout] = useState<GridLayout>("grid");
     const [search, setSearch] = useState("");
-    const [filters, setFilters] = useState<LearningPathFilters>({});
 
     const [searchParams] = useSearchParams();
 
-    useEffect(() => {
-        const category = searchParams.get("category");
-        const difficulty = searchParams.get("difficulty");
-        setFilters({
-            category: category as Category,
-            difficulty: difficulty as Difficulty,
-        });
-    }, [searchParams]);
+    // Matching against the known values ignores anything hand-typed into the URL.
+    const filters: LearningPathFilters = {
+        category: categories.find((value) => value === searchParams.get("category")),
+        difficulty: difficulties.find((value) => value === searchParams.get("difficulty")),
+        sortBy: sortFields.find((value) => value === searchParams.get("sortBy")) ?? "createdAt",
+        sortOrder: sortOrders.find((value) => value === searchParams.get("sortOrder")) ?? "DESC",
+    };
 
     const {
         data,
@@ -69,7 +72,6 @@ export default function DashboardIndex() {
                 <ActionButtons
                     onLayoutChange={setGridLayout}
                     onAfterSearch={setSearch}
-                    onApplyFilters={setFilters}
                     gridLayout={gridLayout}
                 />
 
