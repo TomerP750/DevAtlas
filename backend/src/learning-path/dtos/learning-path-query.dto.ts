@@ -1,5 +1,7 @@
 import { Type } from 'class-transformer';
-import { IsIn, IsInt, IsOptional, IsString, Max, MaxLength, Min } from 'class-validator';
+import { IsEnum, IsIn, IsInt, IsOptional, IsString, Max, MaxLength, Min } from 'class-validator';
+import { Category } from '../category';
+import { Difficulty } from '../difficulty';
 
 const SORTABLE_FIELDS = ['name', 'createdAt', 'updatedAt'] as const;
 
@@ -22,6 +24,14 @@ export class LearningPathQueryDto {
     @IsString()
     @MaxLength(100)
     search?: string;
+
+    @IsOptional()
+    @IsEnum(Category)
+    category?: Category;
+
+    @IsOptional()
+    @IsEnum(Difficulty)
+    difficulty?: Difficulty;
 
     @IsOptional()
     @IsIn([...SORTABLE_FIELDS])

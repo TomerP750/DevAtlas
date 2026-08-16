@@ -45,21 +45,27 @@ export class LearningPathService {
         return learningPath;
     }
 
+    /**
+     * Find all learning paths owned by a user, 
+     * with optional filtering by category and difficulty.
+     * @param userId 
+     * @param query 
+     * @returns 
+     */
     async findAll(userId: string, query: LearningPathQueryDto): Promise<Page<LearningPath>> {
 
-        const { page, size, search, sortBy, sortOrder } = query;
-        const ownedByUser = learningPathOwnedBy(userId);
+        const { page, size, search, category, difficulty, sortBy, sortOrder } = query;
 
-        let where: FindOptionsWhere<LearningPath> | FindOptionsWhere<LearningPath>[] = ownedByUser;
-        if (search) {
-            // Escape the LIKE wildcards so a search for "100%" does not match everything.
-            const term = `%${search.replace(/[%_\\]/g, '\\$&')}%`;
-            // Added ownedby
-            // This is to prevent users from searching other users' learning paths
-            where = [
-                { ...ownedByUser, name: Like(term) },
-            ];
-        }
+        // Escape the LIKE wildcards so a search for "100%" does not match everything.
+        const term = search && `%${search.replace(/[%_\\]/g, '\\$&')}%`;
+
+        // Ownership is always part of the filter so users cannot read other users' paths.
+        const where: FindOptionsWhere<LearningPath> = {
+            ...learningPathOwnedBy(userId),
+            ...(category && { category }),
+            ...(difficulty && { difficulty }),
+            ...(term && { name: Like(term) }),
+        };
 
         const [items, total] = await this.learningPathRepository.findAndCount({
             where,

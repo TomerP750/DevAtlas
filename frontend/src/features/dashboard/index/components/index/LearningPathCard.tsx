@@ -4,15 +4,28 @@ import { NavLink } from "react-router-dom";
 import { Button } from "../../../../../shared/ui/Button";
 import { ProgressBar } from "../../../../../shared/ui/ProgressBar";
 import type { LearningPathDto } from "../../models/learningPath/LearningPathDto";
+import { Difficulty } from "../../models/learningPath/Difficulty";
 import { CrudMenu } from "./CrudMenu";
 
 interface LearningPathCardProps {
     learningPath: LearningPathDto;
 }
 
+const difficultyStyles: Record<Difficulty, string> = {
+    [Difficulty.BEGINNER]: "bg-emerald-500",
+    [Difficulty.INTERMEDIATE]: "bg-amber-500",
+    [Difficulty.ADVANCED]: "bg-rose-500",
+};
+
+const formatCategory = (category: LearningPathDto["category"]) =>
+    category
+        .toLowerCase()
+        .replace(/_/g, " ")
+        .replace(/\b\w/g, (letter) => letter.toUpperCase());
+
 export function LearningPathCard({ learningPath }: LearningPathCardProps) {
     const [crudMenuOpen, setCrudMenuOpen] = useState<boolean>(false);
-    const { id, name, description, createdAt, totalSectionsCount, totalTopicsCount, completedSectionsCount } = learningPath;
+    const { id, name, description, category, difficulty, createdAt, totalSectionsCount, totalTopicsCount, completedSectionsCount } = learningPath;
 
     return (
         <article className="group rounded-xl border border-neutral-200 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-md dark:border-dark-border dark:bg-dark-card dark:shadow-black/20 dark:hover:border-dark-border-hover dark:hover:bg-dark-card-hover">
@@ -48,6 +61,19 @@ export function LearningPathCard({ learningPath }: LearningPathCardProps) {
                     </div>
                 </div>
 
+                <div className="flex flex-wrap items-center gap-2" aria-label="Learning path details">
+                    <span className="border border-brand-primary dark:border-brand-primary-dark items-center px-2.5 py-1 text-xs font-medium text-neutral-600 dark:text-brand-primary-dark">
+                        {formatCategory(category)}
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-neutral-200 px-2.5 py-1 text-xs font-medium text-neutral-600 dark:border-dark-border dark:text-dark-text-muted">
+                        <span
+                            className={`h-1.5 w-1.5 rounded-full ${difficultyStyles[difficulty]}`}
+                            aria-hidden="true"
+                        />
+                        {difficulty}
+                    </span>
+                </div>
+
                 <p className="line-clamp-2 text-sm text-neutral-600 dark:text-dark-text-muted">
                     {description}
                 </p>
@@ -71,7 +97,7 @@ export function LearningPathCard({ learningPath }: LearningPathCardProps) {
                     </div>
 
                     <NavLink
-                        className="text-sm font-medium text-brand-primary hover:underline dark:text-white dark:hover:text-violet-200"
+                        className="text-sm font-medium text-brand-primary hover:underline text-brand-primary dark:text-brand-primary-dark dark:hover:text-brand-primary-dark-hover"
                         to={`/dashboard/learning-path/${id}`}
                     >
                         Continue

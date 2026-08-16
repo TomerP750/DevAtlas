@@ -5,14 +5,20 @@ import { SearchInput } from "../../../../../shared/ui/SearchInput";
 import type { GridLayout } from "./DashboardIndex";
 import { CreateModal } from "./modals/CreateModal";
 import { FiltersMenu } from "./FiltersMenu";
+import type { LearningPathFilters } from "../../models/learningPath/LearningPathQueryDto";
 
 interface ActionButtonsProps {
     onLayoutChange: (layout: GridLayout) => void;
     onAfterSearch: (searchValue: string) => void;
+    onApplyFilters: (filters: LearningPathFilters) => void;
     gridLayout: GridLayout;
 }
 
-export function ActionButtons({ onLayoutChange, onAfterSearch, gridLayout }: ActionButtonsProps) {
+export function ActionButtons({
+    onLayoutChange,
+    onAfterSearch,
+    gridLayout,
+}: ActionButtonsProps) {
     const [createModalOpen, setCreateModalOpen] = useState<boolean>(false);
     const [filterModalOpen, setFilterModalOpen] = useState<boolean>(false);
 
@@ -59,7 +65,10 @@ export function ActionButtons({ onLayoutChange, onAfterSearch, gridLayout }: Act
                     <ListIcon className="w-4 h-4" />
                 </Button>
 
-                <FiltersMenu isOpen={filterModalOpen} />
+                <FiltersMenu
+                    isOpen={filterModalOpen}
+                    onApply={() => setFilterModalOpen(false)}
+                />
             </div>
 
             <CreateModal isOpen={createModalOpen} onClose={() => setCreateModalOpen(false)} />
