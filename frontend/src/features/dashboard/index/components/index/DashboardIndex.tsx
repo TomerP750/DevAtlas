@@ -14,6 +14,7 @@ const PAGE_SIZE = 10;
 export default function DashboardIndex() {
 
     const [gridLayout, setGridLayout] = useState<GridLayout>("grid");
+    const [search, setSearch] = useState("");
 
     const {
         data,
@@ -23,10 +24,11 @@ export default function DashboardIndex() {
         isLoading,
         isError,
     } = useInfiniteQuery({
-        queryKey: ["learningPaths", PAGE_SIZE],
-        queryFn: ({ pageParam }) => learningPathService.allLearningPaths({
+        queryKey: ["learningPaths", PAGE_SIZE, search],
+        queryFn: ({ pageParam }) => learningPathService.findAll({
             page: pageParam,
             size: PAGE_SIZE,
+            search: search || undefined,
         }),
         initialPageParam: 1,
         getNextPageParam: (lastPage) =>
@@ -47,7 +49,11 @@ export default function DashboardIndex() {
             <div className="p-4 max-w-7xl flex flex-col w-full my-3">
 
                 {/* Action buttons */}
-                <ActionButtons onLayoutChange={setGridLayout} gridLayout={gridLayout} />
+                <ActionButtons
+                    onLayoutChange={setGridLayout}
+                    onAfterSearch={setSearch}
+                    gridLayout={gridLayout}
+                />
 
                 <div className={`mt-5 grid grid-cols-1 gap-4 overflow-y-auto pr-2 ${gridLayout === "grid"
                     ? "md:max-h-[532px] md:auto-rows-[260px] md:grid-cols-2"

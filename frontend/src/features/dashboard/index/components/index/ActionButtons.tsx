@@ -8,10 +8,11 @@ import { FiltersMenu } from "./FiltersMenu";
 
 interface ActionButtonsProps {
     onLayoutChange: (layout: GridLayout) => void;
+    onAfterSearch: (searchValue: string) => void;
     gridLayout: GridLayout;
 }
 
-export function ActionButtons({ onLayoutChange, gridLayout }: ActionButtonsProps) {
+export function ActionButtons({ onLayoutChange, onAfterSearch, gridLayout }: ActionButtonsProps) {
     const [createModalOpen, setCreateModalOpen] = useState<boolean>(false);
     const [filterModalOpen, setFilterModalOpen] = useState<boolean>(false);
 
@@ -29,6 +30,7 @@ export function ActionButtons({ onLayoutChange, gridLayout }: ActionButtonsProps
             <SearchInput
                 placeholder="Search Learning Path"
                 className="h-10 max-w-xl rounded-none!"
+                onAfterSearch={onAfterSearch}
             />
 
             <div className="relative flex gap-1">

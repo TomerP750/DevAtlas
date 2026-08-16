@@ -58,7 +58,6 @@ export class LearningPathService {
             // This is to prevent users from searching other users' learning paths
             where = [
                 { ...ownedByUser, name: Like(term) },
-                { ...ownedByUser, description: Like(term) },
             ];
         }
 
