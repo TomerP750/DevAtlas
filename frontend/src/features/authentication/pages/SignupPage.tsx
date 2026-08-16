@@ -147,7 +147,7 @@ export function SignupPage() {
                     Already have an account? {" "}
                     <Link to="/auth/login"
                         className="font-semibold text-brand-primary hover:text-brand-primary-hover dark:text-brand-primary-dark dark:hover:text-brand-primary-dark-hover">
-                        Sign in
+                        Sign In
                     </Link>
                 </p>
 

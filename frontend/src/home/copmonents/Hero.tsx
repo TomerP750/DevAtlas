@@ -57,7 +57,7 @@ export function Hero() {
                         to="/auth/signup"
                         className="group inline-flex items-center gap-2 rounded-xl bg-brand-primary-dark px-6 py-3 text-sm font-semibold text-cyan-950 shadow-lg shadow-brand-primary-dark/20 transition hover:bg-brand-primary-dark-hover"
                     >
-                        Get started
+                        Get Started
                         <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
                     </Link>
                 </div>

@@ -58,6 +58,7 @@ export function LoginPage() {
                     label="Email"
                     placeholder="you@example.com"
                     className={inputClassName}
+                    required
                     {...register("email", {
                         required: "Email is required",
                         pattern: {
@@ -71,6 +72,7 @@ export function LoginPage() {
                     label="Password"
                     placeholder="Enter your password"
                     className={inputClassName}
+                    required
                     {...register("password", {
                         required: "Password is required",
                         minLength: {
@@ -96,7 +98,7 @@ export function LoginPage() {
                         to="/auth/signup"
                         className="font-semibold text-brand-primary hover:text-brand-primary-hover dark:text-brand-primary-dark dark:hover:text-brand-primary-dark-hover"
                     >
-                        Sign up
+                        Sign Up
                     </Link>
                 </p>
             </form>

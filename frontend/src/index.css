@@ -9,6 +9,10 @@
   --scrollbar-thumb-active: #7c3aed;
 }
 
+* {
+  font-family: 'inter', 'sans-serif';
+}
+
 .dark {
   --scrollbar-track: #111113;
   --scrollbar-thumb: #3f3f46;
