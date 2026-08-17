@@ -70,6 +70,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
                     key={option.value}
                     value={option.value}
                     disabled={option.disabled}
+                    className="even:bg-zinc-100 dark:even:bg-zinc-900"
                 >
                     {option.label}
                 </option>

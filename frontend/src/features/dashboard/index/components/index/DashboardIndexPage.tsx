@@ -20,7 +20,7 @@ const difficulties = Object.values(Difficulty);
 const sortFields = ["name", "createdAt", "updatedAt"] as const;
 const sortOrders = ["ASC", "DESC"] as const;
 
-export default function DashboardIndex() {
+export default function DashboardIndexPage() {
 
     const [gridLayout, setGridLayout] = useState<GridLayout>("grid");
     const [search, setSearch] = useState("");

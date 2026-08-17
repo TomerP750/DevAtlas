@@ -2,7 +2,7 @@ import { FilterIcon, Grid2x2Icon, ListIcon, PlusIcon } from "lucide-react";
 import { useState } from "react";
 import { Button } from "../../../../../shared/ui/Button";
 import { SearchInput } from "../../../../../shared/ui/SearchInput";
-import type { GridLayout } from "./DashboardIndex";
+import type { GridLayout } from "./DashboardIndexPage";
 import { CreateModal } from "./modals/CreateModal";
 import { FiltersMenu } from "./FiltersMenu";
 

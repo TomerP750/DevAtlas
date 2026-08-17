@@ -11,9 +11,10 @@ import { LoadingPage } from "../shared/ui/LoadingPage";
 const SettingsPage = lazy(() => import("../features/dashboard/settings/pages/SettingsPage"));
 const TopicPage = lazy(() => import("../features/dashboard/index/models/topic/TopicPage"));
 const LearningPathPage = lazy(() => import("../features/dashboard/index/components/learningPathPage/learningPath/LearningPathPage"));
-const DashboardIndex = lazy(() => import("../features/dashboard/index/components/index/DashboardIndex"));
+const DashboardIndexPage = lazy(() => import("../features/dashboard/index/components/index/DashboardIndexPage"));
 const SectionPage = lazy(() => import("../features/dashboard/index/components/topicPage/section/SectionPage"));
 const NotFoundPage = lazy(() => import("../shared/pages/NotFoundPage"));
+const AiPathCreatorPage = lazy(() => import("../features/dashboard/ai_path_creator/pages/AiPathCreatorPage"));
 
 export function Routing() {
     return (
@@ -30,7 +31,13 @@ export function Routing() {
 
                     <Route index element={
                         <SuspenseWrapper>
-                            <DashboardIndex />
+                            <DashboardIndexPage />
+                        </SuspenseWrapper>}
+                    />
+
+                    <Route path="ai-path-creator" element={
+                        <SuspenseWrapper>
+                            <AiPathCreatorPage />
                         </SuspenseWrapper>}
                     />
 

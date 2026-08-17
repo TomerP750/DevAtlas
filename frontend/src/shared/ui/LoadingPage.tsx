@@ -24,7 +24,7 @@ export function LoadingPage({
     return (
         <div className={containerClasses} role="status" aria-live="polite" {...props}>
             <Loader2
-                className="h-10 w-10 animate-spin text-brand-primary"
+                className="h-10 w-10 animate-spin dark:text-brand-primary-dark text-brand-primary"
                 aria-hidden="true"
             />
             {message && (

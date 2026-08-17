@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import { HomeIcon, SettingsIcon, WandSparklesIcon } from "lucide-react";
+import { HomeIcon, MessageSquare, SettingsIcon, WandSparklesIcon } from "lucide-react";
 
 type NavItem = {
     label: string;
@@ -21,6 +21,11 @@ export const navItems: NavItem[] = [
         icon: WandSparklesIcon,
         to: "/dashboard/ai-path-creator",
     },
+    // {
+    //     label: "Messages",
+    //     icon: MessageSquare,
+    //     to: "/dashboard/messages"
+    // },
     {
         label: "Settings",
         icon: SettingsIcon,

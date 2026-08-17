@@ -50,7 +50,7 @@ export class LearningPathService {
      * with optional filtering by category and difficulty.
      * @param userId 
      * @param query 
-     * @returns 
+     * @returns Page of LearningPath entities
      */
     async findAll(userId: string, query: LearningPathQueryDto): Promise<Page<LearningPath>> {
 
