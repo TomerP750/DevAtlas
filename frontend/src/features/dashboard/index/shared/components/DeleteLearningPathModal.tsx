@@ -1,6 +1,6 @@
-import { Button } from "../../../../../../shared/ui/Button";
-import { Modal } from "../../../../../../shared/ui/Modal";
-import learningPathService from "../../../api/learningPathService";
+import { Button } from "../../../../../shared/ui/Button";
+import { Modal } from "../../../../../shared/ui/Modal";
+import learningPathService from "../../api/learningPathService";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 
@@ -10,12 +10,12 @@ interface DeleteModalProps {
     isOpen: boolean;
     onClose: () => void;
 }
-export function DeleteModal({ learningPathId, learningPathName, isOpen, onClose }: DeleteModalProps) {
+export function DeleteLearningPathModal({ learningPathId, learningPathName, isOpen, onClose }: DeleteModalProps) {
 
     const queryClient = useQueryClient();
 
     const { mutate: deleteLearningPath, isPending } = useMutation({
-        mutationFn: (learningPathId: string) => learningPathService.deleteLearningPath(learningPathId),
+        mutationFn: (learningPathId: string) => learningPathService.delete(learningPathId),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["learningPaths"] });
             onClose();

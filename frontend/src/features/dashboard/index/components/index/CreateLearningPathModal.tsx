@@ -1,13 +1,13 @@
-import { Modal } from "../../../../../../shared/ui/Modal";
-import { Input } from "../../../../../../shared/ui/Input";
-import { Button } from "../../../../../../shared/ui/Button";
-import { Select } from "../../../../../../shared/ui/Select";
+import { Modal } from "../../../../../shared/ui/Modal";
+import { Input } from "../../../../../shared/ui/Input";
+import { Button } from "../../../../../shared/ui/Button";
+import { Select } from "../../../../../shared/ui/Select";
 import { useForm } from "react-hook-form";
-import { type CreateLearningPathDto } from "../../../models/learningPath/CreateLearningPathDto";
-import { Difficulty } from "../../../models/learningPath/Difficulty";
-import { TextArea } from "../../../../../../shared/ui/TextArea";
-import { Category } from "../../../models/learningPath/Category";
-import learningPathService from "../../../api/learningPathService";
+import { type CreateLearningPathDto } from "../../models/learningPath/CreateLearningPathDto";
+import { Difficulty } from "../../models/learningPath/Difficulty";
+import { TextArea } from "../../../../../shared/ui/TextArea";
+import { Category } from "../../models/learningPath/Category";
+import learningPathService from "../../api/learningPathService";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 
@@ -26,14 +26,14 @@ const categoryOptions = Object.values(Category).map((category) => ({
     label: category.replace(/_/g, " "),
 }));
 
-export function CreateModal({ isOpen, onClose }: CreateModalProps) {
+export function CreateLearningPathModal({ isOpen, onClose }: CreateModalProps) {
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm<CreateLearningPathDto>();
 
     const queryClient = useQueryClient();
 
     const { mutate: createLearningPath, isPending  } = useMutation({
-        mutationFn: (data: CreateLearningPathDto) => learningPathService.createLearningPath(data),
+        mutationFn: (data: CreateLearningPathDto) => learningPathService.create(data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["learningPaths"] });
             reset();

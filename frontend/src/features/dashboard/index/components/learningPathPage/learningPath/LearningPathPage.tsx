@@ -10,8 +10,8 @@ import { Button } from "../../../../../../shared/ui/Button";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 import { CreateTopicModal } from "../topic/CreateTopicModal";
-import { UpdateLearningPathModal } from "./UpdateLearningPathModal";
-import { DeleteLearningPathModal } from "./DeleteLearningPathModal";
+import { UpdateLearningPathModal } from "../../../shared/components/UpdateLearningPathModal";
+import { DeleteLearningPathModal } from "../../../shared/components/DeleteLearningPathModal";
 
 export default function LearningPathPage() {
     const { id } = useParams();
@@ -21,7 +21,7 @@ export default function LearningPathPage() {
 
     const { data: learningPath } = useQuery<LearningPathDto>({
         queryKey: ["learningPath", id],
-        queryFn: () => learningPathService.oneLearningPath(id!),
+        queryFn: () => learningPathService.findOne(id!),
         enabled: Boolean(id),
     });
 

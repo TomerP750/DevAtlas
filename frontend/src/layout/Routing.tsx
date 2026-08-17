@@ -11,7 +11,7 @@ import { LoadingPage } from "../shared/ui/LoadingPage";
 const SettingsPage = lazy(() => import("../features/dashboard/settings/pages/SettingsPage"));
 const TopicPage = lazy(() => import("../features/dashboard/index/models/topic/TopicPage"));
 const LearningPathPage = lazy(() => import("../features/dashboard/index/components/learningPathPage/learningPath/LearningPathPage"));
-const DashboardIndexPage = lazy(() => import("../features/dashboard/index/components/index/DashboardIndexPage"));
+const DashboardIndexPage = lazy(() => import("../features/dashboard/index/components/index/IndexPage"));
 const SectionPage = lazy(() => import("../features/dashboard/index/components/topicPage/section/SectionPage"));
 const NotFoundPage = lazy(() => import("../shared/pages/NotFoundPage"));
 const AiPathCreatorPage = lazy(() => import("../features/dashboard/ai_path_creator/pages/AiPathCreatorPage"));

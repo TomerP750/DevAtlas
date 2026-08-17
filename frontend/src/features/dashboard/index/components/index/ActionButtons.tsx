@@ -2,8 +2,8 @@ import { FilterIcon, Grid2x2Icon, ListIcon, PlusIcon } from "lucide-react";
 import { useState } from "react";
 import { Button } from "../../../../../shared/ui/Button";
 import { SearchInput } from "../../../../../shared/ui/SearchInput";
-import type { GridLayout } from "./DashboardIndexPage";
-import { CreateModal } from "./modals/CreateModal";
+import type { GridLayout } from "./IndexPage";
+import { CreateLearningPathModal } from "./CreateLearningPathModal";
 import { FiltersMenu } from "./FiltersMenu";
 
 interface ActionButtonsProps {
@@ -69,7 +69,7 @@ export function ActionButtons({
                 />
             </div>
 
-            <CreateModal isOpen={createModalOpen} onClose={() => setCreateModalOpen(false)} />
+            <CreateLearningPathModal isOpen={createModalOpen} onClose={() => setCreateModalOpen(false)} />
         </div>
     );
 }

@@ -1,7 +1,8 @@
 import { Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
-import { DeleteModal } from "./modals/DeleteModal";
-import { EditModal } from "./modals/EditModal";
+import { DeleteLearningPathModal } from "../../shared/components/DeleteLearningPathModal";
+import { UpdateLearningPathModal } from "../../shared/components/UpdateLearningPathModal";
+
 
 interface CrudMenuProps {
     isOpen: boolean;
@@ -33,15 +34,14 @@ export function CrudMenu({ isOpen, learningPathId, learningPathName }: CrudMenuP
                 Delete
             </button>
 
-            <DeleteModal
+            <DeleteLearningPathModal
                 learningPathId={learningPathId}
                 learningPathName={learningPathName}
                 isOpen={deleteModalOpen}
                 onClose={() => setDeleteModalOpen(false)}
             />
-            <EditModal
+            <UpdateLearningPathModal
                 learningPathId={learningPathId}
-                learningPathName={learningPathName}
                 isOpen={editModalOpen}
                 onClose={() => setEditModalOpen(false)}
             />
