@@ -1,10 +1,16 @@
-import { ArrowRight, WandSparkles } from "lucide-react";
+import { WandSparkles } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { Button } from "../../../../shared/ui/Button";
 import { Input } from "../../../../shared/ui/Input";
 import type { CreateAIGeneratedLearningPathDto } from "../models/CreateAIGeneratedLearningPathDto";
+import { Difficulty } from "../../index/models/learningPath/Difficulty";
+import { Select } from "../../../../shared/ui/Select";
 
+const levelOptions = Object.values(Difficulty).map((level) => ({
+    value: level,
+    label: level,
+}));
 
 export default function AiPathCreatorPage() {
 
@@ -54,11 +60,27 @@ export default function AiPathCreatorPage() {
                             placeholder="e.g. Learn AWS basics"
                             error={errors.learningGoal?.message}
                             required
-                            className="h-14 rounded-full! border-zinc-300/80! bg-white/80! px-5! text-base! shadow-[0_12px_40px_-20px_rgba(76,29,149,0.45)] backdrop-blur dark:border-white/10! dark:bg-zinc-900/80!"
+                            className="h-14 border-zinc-300/80! bg-white/80! px-5! text-base! shadow-[0_12px_40px_-20px_rgba(76,29,149,0.45)] backdrop-blur dark:border-white/10! dark:bg-zinc-900/80!"
                             {...register("learningGoal", {
                                 required: {
                                     value: true,
                                     message: "Learning goal is required",
+                                    
+                                },
+                            })}
+                        />
+
+                        <Select
+                            label="Level"
+                            placeholder="Choose a level"
+                            options={levelOptions}
+                            error={errors.level?.message}
+                            required
+                            className="h-14 border-zinc-300/80! bg-white/80! px-5! text-base! shadow-[0_12px_40px_-20px_rgba(76,29,149,0.45)] backdrop-blur dark:border-white/10! dark:bg-zinc-900/80!"
+                            {...register("level", {
+                                required: {
+                                    value: true,
+                                    message: "Level is required",
                                 },
                             })}
                         />
