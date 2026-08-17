@@ -26,7 +26,7 @@ export default function AiPathCreatorPage() {
             <div className="relative isolate min-h-full px-4 py-6 sm:px-6 md:flex md:h-full md:items-center md:py-5 lg:px-8 lg:py-6">
                 <div
                     aria-hidden="true"
-                    className="pointer-events-none absolute inset-0 -z-20 bg-linear-to-br from-violet-100/80 via-[#f8f7ff] to-cyan-100/70 dark:from-violet-950/25 dark:via-[#07070a] dark:to-cyan-950/25"
+                    className="pointer-events-none absolute inset-0 -z-20 bg-linear-to-br from-violet-300/80 via-neutral-300/80 to-cyan-200/70 dark:from-violet-950/25 dark:via-[#07070a] dark:to-cyan-950/25"
                 />
                 <div
                     aria-hidden="true"

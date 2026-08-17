@@ -59,14 +59,14 @@ export default function DashboardIndexPage() {
     const learningPaths = data?.pages.flatMap((page) => page.items) ?? [];
 
     return (
-        <section className="">
+        <section className="flex h-full min-h-0 flex-col overflow-hidden">
             <DashboardHeader
                 Icon={LayoutDashboardIcon}
                 title="Dashboard"
                 description="Welcome to your dashboard"
             />
 
-            <div className="p-4 max-w-7xl flex flex-col w-full my-3">
+            <div className="flex min-h-0 w-full max-w-7xl flex-1 flex-col p-4">
 
                 {/* Action buttons */}
                 <ActionButtons
@@ -75,9 +75,9 @@ export default function DashboardIndexPage() {
                     gridLayout={gridLayout}
                 />
 
-                <div className={`mt-5 grid grid-cols-1 gap-4 overflow-y-auto pr-2 ${gridLayout === "grid"
-                    ? "md:max-h-[596px] md:auto-rows-[295px] md:grid-cols-2"
-                    : "max-h-[500px]"
+                <div className={`mt-5 min-h-0 flex-1 grid grid-cols-1 gap-4 overflow-y-auto pr-2 ${gridLayout === "grid"
+                    ? "md:auto-rows-[295px] md:grid-cols-2"
+                    : ""
                     }`}>
 
                     {learningPaths.map((learningPath) => (

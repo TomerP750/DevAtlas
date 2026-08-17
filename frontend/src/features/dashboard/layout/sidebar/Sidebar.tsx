@@ -18,7 +18,7 @@ export function Sidebar() {
     }
 
     return (
-        <aside className="h-screen hidden md:flex flex-col w-64 border border-black/10 dark:border-zinc-700 bg-gray-100 dark:bg-zinc-900 px-4 py-6">
+        <aside className="hidden h-full md:flex flex-col w-64 border border-black/10 dark:border-zinc-700 bg-gray-100 dark:bg-zinc-900 px-4 py-6">
 
             <div className="flex items-center border-b border-black/10 pb-5 dark:border-white/10">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl text-brand-primary dark:text-brand-primary-dark">
