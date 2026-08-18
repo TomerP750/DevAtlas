@@ -85,10 +85,9 @@ export class UserService {
 
         const salt = randomBytes(8).toString('hex');
         const hash = (await scrypt(dto.newPassword, salt, 32)) as Buffer;
-        const result = salt + '.' + hash.toString('hex');
-        
-        await this.userRepository.update(userId, { password: result });
+        user.password = salt + '.' + hash.toString('hex');
 
+        return this.userRepository.save(user);
     }
 
     
